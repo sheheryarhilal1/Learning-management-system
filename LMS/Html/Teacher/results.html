@@ -1,0 +1,1039 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results | Learnora LMS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#07111f;color:#eaf2ff;display:flex;min-height:100vh}
+.sidebar{width:235px;background:#0b1728;border-right:1px solid #1b2b42;padding:26px 16px;flex-shrink:0}
+.logo{font:800 25px Manrope,sans-serif;color:#36bffa;padding:0 12px 32px}
+.logo span{color:white}
+.menu-label{color:#71839c;font-size:11px;letter-spacing:1.5px;margin:12px}
+.nav-link{display:flex;align-items:center;gap:13px;padding:13px 12px;color:#9eafc7;text-decoration:none;border-radius:9px;margin-bottom:6px;font-size:14px}
+.nav-link:hover,.nav-link.active{color:#54c9ff;background:#122b43}
+.main{flex:1;min-width:0}
+.topbar{height:78px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1b2b42;background:#091525}
+.topbar h2{font:700 20px Manrope,sans-serif}
+.topbar p{color:#8294ad;font-size:12px;margin-top:4px}
+.teacher{display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#123a57;color:#58caff;font-weight:700}
+.teacher small{color:#8ea1ba;display:block;margin-top:4px}
+.content{padding:30px 32px}
+.welcome{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+h1{font:800 26px Manrope,sans-serif;margin-bottom:8px}
+.muted{color:#91a3bb;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:23px}
+.card{background:#0d1b2d;border:1px solid #1c3049;border-radius:15px;padding:21px;min-width:0}
+.stat-label{display:flex;justify-content:space-between;align-items:center;color:#a2b2c8;font-size:13px;gap:8px}
+.stat-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#12344d;color:#4cc6ff}
+.stat-number{font:800 28px Manrope,sans-serif;margin-top:15px}
+.stat-note{font-size:12px;color:#8195ae;margin-top:6px}
+.grid{display:grid;grid-template-columns:1fr 1.4fr;gap:20px;align-items:start}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.section-head h3{font:700 16px Manrope,sans-serif}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:12px;color:#a8b8cd;margin-bottom:8px}
+input,select,textarea{width:100%;background:#091525;color:#eaf2ff;border:1px solid #2a3c53;border-radius:9px;padding:12px;font:13px 'DM Sans',sans-serif;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#36bffa}
+select option{background:#0d1b2d}
+.btn{border:0;border-radius:9px;background:#35b8f4;color:#061321;font-weight:700;padding:12px 15px;cursor:pointer;font-size:13px}
+.btn:hover{background:#73d4ff}
+.btn.secondary{background:#152941;color:#bceaff;border:1px solid #28445e}
+.btn.danger{background:#38202a;color:#ff9eaa;border:1px solid #63303d}
+.btn.small{padding:8px 10px;font-size:11px}
+.form-actions{display:flex;gap:9px;flex-wrap:wrap}
+.toolbar{display:flex;gap:10px;margin-bottom:17px}
+.toolbar input{flex:1;min-width:0}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{text-align:left;color:#8195ae;font-size:11px;text-transform:uppercase;letter-spacing:.6px;padding:13px 10px;border-bottom:1px solid #263950}
+td{padding:14px 10px;border-bottom:1px solid #1b2b40;font-size:13px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+.item-title{font-weight:700}
+.item-title small{display:block;color:#8498b1;font-weight:400;margin-top:5px;font-size:11px}
+.pill{display:inline-block;border-radius:20px;padding:6px 9px;font-size:10px;background:#12334b;color:#66ceff;white-space:nowrap}
+.pill.pass{background:#123b30;color:#64e3ae}
+.pill.fail{background:#38202a;color:#ff9eaa}
+.pill.draft{background:#382e19;color:#f4c66d}
+.empty{text-align:center;padding:30px;color:#8498b1;font-size:13px}
+.message{font-size:12px;color:#64e3ae;margin-top:12px;line-height:1.6}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.menu-toggle{display:none;background:none;border:0;color:white;font-size:20px;cursor:pointer}
+.overlay{display:none}
+@media(max-width:1150px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}}
+@media(max-width:700px){
+.sidebar{position:fixed;top:0;bottom:0;left:-250px;z-index:20;transition:left .25s}
+.sidebar.open{left:0}
+.overlay.open{display:block;position:fixed;inset:0;background:#0009;z-index:15}
+.menu-toggle{display:block}
+.topbar{padding:0 17px;gap:10px}
+.topbar h2{font-size:16px}
+.content{padding:22px 15px}
+.welcome{align-items:flex-start;flex-direction:column}
+h1{font-size:23px}
+.teacher-info{display:none}
+.card{padding:15px}
+.stats{gap:10px}
+}
+@media(max-width:480px){.toolbar{flex-direction:column}}
+@media(max-width:380px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+    <div class="logo">Learn<span>ora.</span></div>
+    <div class="menu-label">TEACHING MENU</div>
+    <a href="teacher.html" class="nav-link"><i class="fa-solid fa-house"></i> Dashboard</a>
+    <a href="courses.html" class="nav-link"><i class="fa-solid fa-book-open"></i> My Courses</a>
+    <a href="attendance.html" class="nav-link"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+    <a href="assignments.html" class="nav-link"><i class="fa-solid fa-file-pen"></i> Assignments</a>
+    <a href="quizzes.html" class="nav-link"><i class="fa-solid fa-circle-question"></i> Quizzes & Exams</a>
+    <a href="results.html" class="nav-link active"><i class="fa-solid fa-chart-column"></i> Results</a>
+    <a href="announcements.html" class="nav-link"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+    <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> My Profile</a>
+    <a href="#" class="nav-link" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+<header class="topbar">
+    <div style="display:flex;align-items:center;gap:14px">
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <div><h2>Results Management</h2><p>Record and manage student marks</p></div>
+    </div>
+    <div class="teacher">
+        <div class="avatar" id="teacherAvatar">T</div>
+        <div class="teacher-info"><strong id="teacherName">Teacher</strong><small>Faculty Member</small></div>
+    </div>
+</header>
+
+<section class="content">
+    <div class="welcome">
+        <div>
+            <h1>Manage <span style="color:#4cc6ff">Student Results</span></h1>
+            <p class="muted">Enter marks, calculate grades and publish results.</p>
+        </div>
+        <span class="muted" id="todayDate"></span>
+    </div>
+
+    <div class="stats">
+        <div class="card"><div class="stat-label">Total Results <span class="stat-icon"><i class="fa-solid fa-file-lines"></i></span></div><div class="stat-number" id="totalCount">0</div><div class="stat-note">Recorded student results</div></div>
+        <div class="card"><div class="stat-label">Published <span class="stat-icon"><i class="fa-solid fa-paper-plane"></i></span></div><div class="stat-number" id="publishedCount">0</div><div class="stat-note">Visible as published records</div></div>
+        <div class="card"><div class="stat-label">Passing Results <span class="stat-icon"><i class="fa-solid fa-circle-check"></i></span></div><div class="stat-number" id="passCount">0</div><div class="stat-note">Marks meeting pass criteria</div></div>
+        <div class="card"><div class="stat-label">Average Percentage <span class="stat-icon"><i class="fa-solid fa-chart-line"></i></span></div><div class="stat-number" id="averageCount">0%</div><div class="stat-note">Across recorded results</div></div>
+    </div>
+
+    <div class="grid">
+        <section class="card">
+            <div class="section-head"><h3><i class="fa-solid fa-circle-plus" style="color:#4cc6ff;margin-right:8px"></i><span id="formHeading">Record Result</span></h3></div>
+
+            <form id="resultForm">
+                <div class="field">
+                    <label for="studentSelect">Student *</label>
+                    <select id="studentSelect" required><option value="">Select student</option></select>
+                </div>
+
+                <div class="field">
+                    <label for="courseSelect">Course / Subject *</label>
+                    <select id="courseSelect" required><option value="">Select course</option></select>
+                </div>
+
+                <div class="field">
+                    <label for="assessmentSelect">Quiz / Exam *</label>
+                    <select id="assessmentSelect" required><option value="">Select assessment</option></select>
+                </div>
+
+                <div class="field">
+                    <label for="totalMarks">Total Marks *</label>
+                    <input id="totalMarks" type="number" min="1" max="10000" required placeholder="e.g. 100">
+                </div>
+
+                <div class="field">
+                    <label for="obtainedMarks">Obtained Marks *</label>
+                    <input id="obtainedMarks" type="number" min="0" step="0.01" required placeholder="e.g. 85">
+                </div>
+
+                <div class="field">
+                    <label for="passPercent">Passing Percentage *</label>
+                    <input id="passPercent" type="number" min="0" max="100" value="50" required>
+                </div>
+
+                <div class="field">
+                    <label for="resultStatus">Result Status</label>
+                    <select id="resultStatus">
+                        <option value="Draft">Save as draft</option>
+                        <option value="Published">Publish result</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="remarks">Teacher Remarks</label>
+                    <textarea id="remarks" maxlength="1000" style="width:100%;min-height:85px;resize:vertical" placeholder="Optional feedback for the student"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Save Result</button>
+                    <button type="button" class="btn secondary" id="cancelEditBtn" hidden>Cancel Edit</button>
+                    <button type="reset" class="btn secondary">Clear</button>
+                </div>
+                <p class="message" id="formMessage" role="status"></p>
+            </form>
+        </section>
+
+        <section class="card">
+            <div class="section-head"><h3><i class="fa-solid fa-list-check" style="color:#4cc6ff;margin-right:8px"></i>Results List</h3></div>
+            <div class="toolbar">
+                <input type="search" id="searchInput" placeholder="Search student, course or assessment...">
+                <select id="statusFilter" aria-label="Filter result status" style="max-width:145px">
+                    <option value="All">All statuses</option>
+                    <option value="Published">Published</option>
+                    <option value="Draft">Draft</option>
+                </select>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Student / Assessment</th><th>Marks</th><th>Grade</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="resultBody"></tbody>
+                </table>
+            </div>
+            <p class="message" id="listMessage" role="status"></p>
+        </section>
+    </div>
+</section>
+</main>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+function readJSON(key, fallback = null) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+/* TEACHER PROFILE AND SIDEBAR */
+
+const teacher = [
+    "learnora_current_user",
+    "current_teacher",
+    "currentTeacher",
+    "logged_in_user"
+].map(key => readJSON(key)).find(
+    user => user && typeof user === "object"
+);
+
+function getTeacherKey(user) {
+    return String(
+        user?.id ||
+        user?.teacherId ||
+        user?.teacher_id ||
+        user?.email ||
+        user?.username ||
+        ""
+    ).trim().toLowerCase();
+}
+
+const currentTeacherKey = getTeacherKey(teacher);
+
+if (!teacher) {
+    alert("Teacher session not found. Please log in again.");
+    location.href = "../login.html";
+}
+
+if (teacher) {
+    const role = String(teacher.role || "").toLowerCase();
+
+    if (role && role !== "teacher") {
+        if (role === "student") location.href = "../student/student.html";
+        else if (role === "parent") location.href = "../parent/parent.html";
+    }
+
+    const name = teacher.name ||
+        teacher.fullName ||
+        teacher.teacherName ||
+        teacher.username ||
+        "Teacher";
+
+    $("teacherName").textContent = name;
+    $("teacherAvatar").textContent = name.trim().charAt(0).toUpperCase();
+}
+
+$("todayDate").textContent = new Date().toLocaleDateString("en-US", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+});
+
+function closeSidebar() {
+    $("sidebar").classList.remove("open");
+    $("overlay").classList.remove("open");
+}
+
+$("menuToggle").addEventListener("click", () => {
+    $("sidebar").classList.toggle("open");
+    $("overlay").classList.toggle("open");
+});
+
+$("overlay").addEventListener("click", closeSidebar);
+
+$("logoutBtn").addEventListener("click", event => {
+    event.preventDefault();
+
+    if (!confirm("Are you sure you want to logout?")) return;
+
+    [
+        "learnora_current_user",
+        "current_teacher",
+        "currentTeacher",
+        "logged_in_user",
+        "logged_in",
+        "user_role",
+        "user_email",
+        "user_id"
+    ].forEach(key => localStorage.removeItem(key));
+
+    location.href = "../login.html";
+});
+
+/* STUDENTS AND COURSES — FIXED TEACHER ASSIGNMENT */
+
+const users = readJSON("learnora_users", []);
+
+const allStudents = Array.isArray(users)
+    ? users.filter(u => String(u.role || "").toLowerCase() === "student")
+    : [];
+
+function studentId(student, index) {
+    return String(
+        student.id ||
+        student.studentId ||
+        student.student_id ||
+        student.email ||
+        student.username ||
+        ("student-" + index)
+    );
+}
+
+function studentName(student) {
+    return student.name ||
+        student.fullName ||
+        student.studentName ||
+        student.username ||
+        student.email ||
+        "Unnamed student";
+}
+
+function normalizeCourse(course) {
+    if (typeof course === "string") {
+        const match = course.trim().match(
+            /^([A-Z]{2,5}[- ]?\d{2,4})\s*[-:|]?\s*(.*)$/i
+        );
+
+        return {
+            code: match
+                ? match[1].replace(/\s/g, "-").toUpperCase()
+                : "",
+            name: match && match[2]
+                ? match[2].trim()
+                : course.trim()
+        };
+    }
+
+    if (!course || typeof course !== "object") {
+        return { code: "", name: "" };
+    }
+
+    return {
+        code: String(
+            course.code ||
+            course.courseCode ||
+            course.course_code ||
+            ""
+        ).trim().toUpperCase(),
+
+        name: String(
+            course.name ||
+            course.title ||
+            course.courseName ||
+            course.subject ||
+            course.code ||
+            ""
+        ).trim()
+    };
+}
+
+function getStudentCourses(student) {
+    let raw = student.courses ||
+        student.enrolledCourses ||
+        student.enrolled_courses ||
+        student.subjects ||
+        [];
+
+    if (!Array.isArray(raw)) raw = [];
+
+    return raw.map(normalizeCourse).filter(
+        course => course.code || course.name
+    );
+}
+
+function sameCourse(a, b) {
+    const codeA = String(a.code || "").trim().toLowerCase();
+    const codeB = String(b.code || "").trim().toLowerCase();
+
+    if (codeA && codeB && codeA === codeB) return true;
+
+    const nameA = String(a.name || "").trim().toLowerCase();
+    const nameB = String(b.name || "").trim().toLowerCase();
+
+    return Boolean(nameA && nameA === nameB);
+}
+
+/*
+ Teacher courses are read from the logged-in teacher's profile.
+ No default/fake courses are inserted.
+*/
+function getCourses() {
+    const raw = teacher && (
+        teacher.assignedCourses ||
+        teacher.assigned_courses ||
+        teacher.courses ||
+        teacher.subjects
+    );
+
+    if (!Array.isArray(raw)) return [];
+
+    return raw.map(normalizeCourse).filter(
+        course => course.code || course.name
+    );
+}
+
+const courses = getCourses();
+
+/*
+ Supports direct student assignments:
+ - student.teacherId / teacher_id
+ - student.assignedTeacherId / assigned_teacher_id
+ - student.teacherEmail / teacher_email
+ - teacher.studentIds / assignedStudentIds
+ - teacher.students / assignedStudents
+
+ If direct assignment information exists in the records,
+ only explicit assignments are accepted.
+
+ Course matching is used only when the data has no direct
+ teacher/student assignment fields at all.
+*/
+
+function getStudentTeacherKey(student) {
+    return String(
+        student.teacherId ||
+        student.teacher_id ||
+        student.assignedTeacherId ||
+        student.assigned_teacher_id ||
+        student.teacherEmail ||
+        student.teacher_email ||
+        ""
+    ).trim().toLowerCase();
+}
+
+function getTeacherStudentIds() {
+    const raw = teacher && (
+        teacher.studentIds ||
+        teacher.student_ids ||
+        teacher.assignedStudentIds ||
+        teacher.assigned_student_ids ||
+        teacher.assignedStudents ||
+        teacher.assigned_students ||
+        teacher.students
+    );
+
+    if (!Array.isArray(raw)) return [];
+
+    return raw.map(item => {
+        if (item && typeof item === "object") {
+            return String(
+                item.id ||
+                item.studentId ||
+                item.student_id ||
+                item.email ||
+                item.username ||
+                ""
+            ).trim().toLowerCase();
+        }
+
+        return String(item || "").trim().toLowerCase();
+    }).filter(Boolean);
+}
+
+const teacherStudentIds = getTeacherStudentIds();
+
+const hasExplicitAssignments =
+    teacherStudentIds.length > 0 ||
+    allStudents.some(student => Boolean(getStudentTeacherKey(student)));
+
+function isAssignedToTeacher(student, index) {
+    if (!teacher || !currentTeacherKey) return false;
+
+    const id = studentId(student, index).trim().toLowerCase();
+    const assignedTeacher = getStudentTeacherKey(student);
+
+    // Explicit teacher assignment on student record.
+    if (assignedTeacher) {
+        return assignedTeacher === currentTeacherKey;
+    }
+
+    // Explicit student list on teacher record.
+    if (teacherStudentIds.length) {
+        return teacherStudentIds.includes(id);
+    }
+
+    /*
+      If the app already stores direct assignments for any
+      student, do not include other students merely because
+      they share a course.
+    */
+    if (hasExplicitAssignments) return false;
+
+    // Fallback only for older data without direct assignments.
+    const studentCourses = getStudentCourses(student);
+
+    return studentCourses.some(studentCourse =>
+        courses.some(teacherCourse =>
+            sameCourse(studentCourse, teacherCourse)
+        )
+    );
+}
+
+let students = allStudents.filter((student, index) =>
+    isAssignedToTeacher(student, index)
+);
+
+/* Populate only the logged-in teacher's students */
+
+$("studentSelect").innerHTML =
+    '<option value="">Select your assigned student</option>';
+
+students.forEach(student => {
+    const index = allStudents.indexOf(student);
+    const option = document.createElement("option");
+
+    option.value = studentId(student, index);
+    option.textContent = studentName(student);
+
+    $("studentSelect").appendChild(option);
+});
+
+/* Populate only the logged-in teacher's courses */
+
+$("courseSelect").innerHTML =
+    '<option value="">Select your assigned course</option>';
+
+courses.forEach(course => {
+    const option = document.createElement("option");
+
+    option.value = course.code || course.name;
+    option.textContent =
+        (course.code ? course.code + " — " : "") + course.name;
+
+    $("courseSelect").appendChild(option);
+});
+
+if (!students.length) {
+    $("studentSelect").innerHTML =
+        '<option value="">No students assigned to you</option>';
+}
+
+if (!courses.length) {
+    $("courseSelect").innerHTML =
+        '<option value="">No courses assigned to you</option>';
+}
+
+function courseLabel(value) {
+    const course = courses.find(
+        c => (c.code || c.name) === value
+    );
+
+    return course
+        ? (course.code ? course.code + " — " : "") + course.name
+        : value || "Unknown course";
+}
+
+/* ASSESSMENTS FROM QUIZZES PAGE */
+
+const academicData = readJSON("learnora_academic_data", {});
+
+const quizzes = academicData &&
+    Array.isArray(academicData.quizzes)
+        ? academicData.quizzes
+        : [];
+
+function getAssessmentTeacherKey(item) {
+    return String(
+        item.teacherId ||
+        item.teacher_id ||
+        item.teacherEmail ||
+        item.teacher_email ||
+        ""
+    ).trim().toLowerCase();
+}
+
+function populateAssessments() {
+    const select = $("assessmentSelect");
+    select.innerHTML = '<option value="">Select assessment</option>';
+
+    quizzes.filter(item => {
+        const status = item.status ||
+            (item.published === false ? "Draft" : "Published");
+
+        const assessmentTeacher = getAssessmentTeacherKey(item);
+
+        // Assessments owned by this teacher, or unassigned legacy items.
+        return status === "Published" &&
+            (!assessmentTeacher ||
+             assessmentTeacher === currentTeacherKey);
+    }).forEach(item => {
+        const option = document.createElement("option");
+
+        option.value = item.id;
+        option.textContent =
+            `${item.title} (${item.type || "Assessment"})`;
+
+        option.dataset.subject = item.subject || "";
+        option.dataset.marks = item.totalMarks || 0;
+        option.dataset.pass = item.passPercent ?? 50;
+
+        select.appendChild(option);
+    });
+}
+
+populateAssessments();
+
+$("assessmentSelect").addEventListener("change", () => {
+    const option = $("assessmentSelect").selectedOptions[0];
+    if (!option || !option.value) return;
+
+    if (option.dataset.subject) {
+        const match = courses.find(c =>
+            c.code === option.dataset.subject ||
+            c.name === option.dataset.subject
+        );
+
+        if (match) {
+            $("courseSelect").value = match.code || match.name;
+        }
+    }
+
+    if (Number(option.dataset.marks) > 0) {
+        $("totalMarks").value = option.dataset.marks;
+    }
+
+    $("passPercent").value = option.dataset.pass || 50;
+});
+
+/* RESULTS STORAGE */
+
+const STORAGE_KEY = "learnora_teacher_results";
+
+let results = readJSON(STORAGE_KEY, []);
+if (!Array.isArray(results)) results = [];
+
+let editingId = null;
+
+function saveResults() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(results));
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function getGrade(percentage) {
+    if (percentage >= 90) return "A+";
+    if (percentage >= 80) return "A";
+    if (percentage >= 70) return "B";
+    if (percentage >= 60) return "C";
+    if (percentage >= 50) return "D";
+    return "F";
+}
+
+function getStudentLabel(id) {
+    const index = students.findIndex((student, i) =>
+        studentId(student, allStudents.indexOf(student)) === String(id)
+    );
+
+    return index >= 0 ? studentName(students[index]) : "Unknown student";
+}
+
+function getAssessmentLabel(id) {
+    const assessment = quizzes.find(q => String(q.id) === String(id));
+
+    return assessment
+        ? assessment.title
+        : "Manual / unavailable assessment";
+}
+
+function resultBelongsToTeacher(result) {
+    return Boolean(currentTeacherKey) &&
+        String(result.teacherId || "").trim().toLowerCase() === currentTeacherKey;
+}
+
+function showMessage(message, error = false) {
+    $("formMessage").style.color = error ? "#ff8585" : "#64e3ae";
+    $("formMessage").textContent = message;
+}
+
+$("resultForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const student = $("studentSelect").value;
+    const course = $("courseSelect").value;
+    const assessmentId = $("assessmentSelect").value;
+    const totalMarks = Number($("totalMarks").value);
+    const obtainedMarks = Number($("obtainedMarks").value);
+    const passPercent = Number($("passPercent").value);
+
+    // SECURITY CHECK: student must be assigned to this teacher.
+    const selectedStudent = students.find((s, index) =>
+        studentId(s, allStudents.indexOf(s)) === student
+    );
+
+    if (
+        !selectedStudent ||
+        !isAssignedToTeacher(
+            selectedStudent,
+            allStudents.indexOf(selectedStudent)
+        )
+    ) {
+        showMessage(
+            "Access denied: you can only upload results for your assigned students.",
+            true
+        );
+        return;
+    }
+
+    // The course must belong to this teacher.
+    if (!courses.some(c => (c.code || c.name) === course)) {
+        showMessage(
+            "Access denied: this course is not assigned to you.",
+            true
+        );
+        return;
+    }
+
+    // The assessment must exist and be available to this teacher.
+    const selectedAssessment = quizzes.find(
+        q => String(q.id) === String(assessmentId)
+    );
+
+    if (!selectedAssessment) {
+        showMessage("Please select a valid assessment.", true);
+        return;
+    }
+
+    const assessmentTeacher = getAssessmentTeacherKey(selectedAssessment);
+
+    if (assessmentTeacher && assessmentTeacher !== currentTeacherKey) {
+        showMessage(
+            "Access denied: this assessment belongs to another teacher.",
+            true
+        );
+        return;
+    }
+
+    if (!student || !course || !assessmentId) {
+        showMessage("Select a student, course and assessment.", true);
+        return;
+    }
+
+    if (
+        !Number.isFinite(totalMarks) ||
+        totalMarks <= 0 ||
+        !Number.isFinite(obtainedMarks) ||
+        obtainedMarks < 0 ||
+        obtainedMarks > totalMarks ||
+        !Number.isFinite(passPercent) ||
+        passPercent < 0 ||
+        passPercent > 100
+    ) {
+        showMessage(
+            "Check marks and passing percentage. Obtained marks cannot exceed total marks.",
+            true
+        );
+        return;
+    }
+
+    const percentage = (obtainedMarks / totalMarks) * 100;
+    const status = $("resultStatus").value;
+
+    const item = {
+        id: editingId || "RES-" + Date.now(),
+        studentId: student,
+        studentName: studentName(selectedStudent),
+        course,
+        assessmentId,
+        assessmentTitle: getAssessmentLabel(assessmentId),
+        totalMarks,
+        obtainedMarks,
+        passPercent,
+        percentage: Number(percentage.toFixed(2)),
+        grade: getGrade(percentage),
+        outcome: percentage >= passPercent ? "Pass" : "Fail",
+        status,
+        remarks: $("remarks").value.trim(),
+
+        // Store a consistent teacher key for strict result filtering.
+        teacherId: currentTeacherKey,
+        teacherName: teacher.name ||
+            teacher.fullName ||
+            teacher.teacherName ||
+            teacher.username ||
+            "Teacher",
+
+        updatedAt: new Date().toISOString()
+    };
+
+    if (editingId) {
+        const index = results.findIndex(r =>
+            r.id === editingId && resultBelongsToTeacher(r)
+        );
+
+        if (index === -1) {
+            showMessage("You cannot edit another teacher's result.", true);
+            return;
+        }
+
+        results[index] = {
+            ...results[index],
+            ...item
+        };
+    } else {
+        results.unshift({
+            ...item,
+            createdAt: new Date().toISOString()
+        });
+    }
+
+    const wasEditing = Boolean(editingId);
+
+    saveResults();
+    renderResults();
+    resetForm();
+
+    showMessage(
+        wasEditing
+            ? "Result updated successfully."
+            : "Result saved successfully."
+    );
+});
+
+function resetForm() {
+    editingId = null;
+    $("resultForm").reset();
+    $("passPercent").value = 50;
+    $("formHeading").textContent = "Record Result";
+    $("submitBtn").innerHTML =
+        '<i class="fa-solid fa-floppy-disk"></i> Save Result';
+    $("cancelEditBtn").hidden = true;
+}
+
+$("cancelEditBtn").addEventListener("click", resetForm);
+
+function renderResults() {
+    const query = $("searchInput").value.trim().toLowerCase();
+    const statusFilter = $("statusFilter").value;
+
+    /*
+      STRICT FILTER:
+      Results without this teacher's ID are not displayed.
+      This prevents old unassigned records from appearing
+      in every teacher's results list.
+    */
+    const scoped = results.filter(result =>
+        resultBelongsToTeacher(result)
+    );
+
+    const visible = scoped.filter(result => {
+        const searchText = `
+            ${result.studentName || getStudentLabel(result.studentId)}
+            ${courseLabel(result.course)}
+            ${result.assessmentTitle || getAssessmentLabel(result.assessmentId)}
+        `.toLowerCase();
+
+        const matchesStatus =
+            statusFilter === "All" || result.status === statusFilter;
+
+        return searchText.includes(query) && matchesStatus;
+    });
+
+    if (!visible.length) {
+        $("resultBody").innerHTML =
+            '<tr><td colspan="5" class="empty">No matching results found.</td></tr>';
+    } else {
+        $("resultBody").innerHTML = visible.map(result => {
+            const student = result.studentName ||
+                getStudentLabel(result.studentId);
+
+            const assessment = result.assessmentTitle ||
+                getAssessmentLabel(result.assessmentId);
+
+            const percentage = Number(result.percentage) || 0;
+
+            return `
+            <tr>
+                <td>
+                    <div class="item-title">
+                        ${escapeHTML(student)}
+                        <small>
+                            ${escapeHTML(courseLabel(result.course))}
+                            · ${escapeHTML(assessment)}
+                        </small>
+                    </div>
+                </td>
+                <td>
+                    ${escapeHTML(result.obtainedMarks)} /
+                    ${escapeHTML(result.totalMarks)}
+                    <small style="display:block;color:#8498b1;margin-top:4px">
+                        ${percentage.toFixed(2)}%
+                    </small>
+                </td>
+                <td>
+                    <span class="pill ${result.outcome === "Pass" ? "pass" : "fail"}">
+                        ${escapeHTML(result.grade || getGrade(percentage))}
+                        · ${escapeHTML(result.outcome || "—")}
+                    </span>
+                </td>
+                <td>
+                    <span class="pill ${result.status === "Draft" ? "draft" : ""}">
+                        ${escapeHTML(result.status)}
+                    </span>
+                </td>
+                <td>
+                    <div class="actions">
+                        <button class="btn secondary small"
+                            data-action="edit"
+                            data-id="${escapeHTML(result.id)}"
+                            title="Edit">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button class="btn danger small"
+                            data-action="delete"
+                            data-id="${escapeHTML(result.id)}"
+                            title="Delete">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>`;
+        }).join("");
+    }
+
+    $("totalCount").textContent = scoped.length;
+
+    $("publishedCount").textContent =
+        scoped.filter(r => r.status === "Published").length;
+
+    $("passCount").textContent =
+        scoped.filter(r => r.outcome === "Pass").length;
+
+    const average = scoped.length
+        ? scoped.reduce(
+            (sum, result) => sum + (Number(result.percentage) || 0),
+            0
+        ) / scoped.length
+        : 0;
+
+    $("averageCount").textContent = average.toFixed(1) + "%";
+}
+
+/* EDIT AND DELETE — TEACHER OWNERSHIP CHECK */
+
+$("resultBody").addEventListener("click", event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+
+    const result = results.find(r =>
+        String(r.id) === String(button.dataset.id) &&
+        resultBelongsToTeacher(r)
+    );
+
+    if (!result) {
+        alert("Access denied: this result does not belong to you.");
+        return;
+    }
+
+    if (button.dataset.action === "edit") {
+        // Verify the student is still assigned to this teacher.
+        const studentStillAssigned = students.some((s, index) =>
+            studentId(s, allStudents.indexOf(s)) === String(result.studentId) &&
+            isAssignedToTeacher(s, allStudents.indexOf(s))
+        );
+
+        if (!studentStillAssigned) {
+            alert("You can only edit results for your assigned students.");
+            return;
+        }
+
+        editingId = result.id;
+
+        $("studentSelect").value = result.studentId;
+        $("courseSelect").value = result.course;
+        $("assessmentSelect").value = result.assessmentId;
+        $("totalMarks").value = result.totalMarks;
+        $("obtainedMarks").value = result.obtainedMarks;
+        $("passPercent").value = result.passPercent ?? 50;
+        $("resultStatus").value = result.status;
+        $("remarks").value = result.remarks || "";
+
+        $("formHeading").textContent = "Edit Result";
+        $("submitBtn").innerHTML =
+            '<i class="fa-solid fa-floppy-disk"></i> Update Result';
+        $("cancelEditBtn").hidden = false;
+        $("formMessage").textContent = "";
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    if (button.dataset.action === "delete") {
+        if (!confirm("Delete this result permanently?")) return;
+
+        results = results.filter(r =>
+            !(String(r.id) === String(result.id) &&
+              resultBelongsToTeacher(r))
+        );
+
+        saveResults();
+        renderResults();
+
+        $("listMessage").textContent = "Result deleted successfully.";
+    }
+});
+
+$("searchInput").addEventListener("input", renderResults);
+$("statusFilter").addEventListener("change", renderResults);
+
+renderResults();
+</script>
+</body>
+</html>

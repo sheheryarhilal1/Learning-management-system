@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assignments | Learnora LMS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#07111f;color:#eaf2ff;display:flex;min-height:100vh}
+.sidebar{width:235px;background:#0b1728;border-right:1px solid #1b2b42;padding:26px 16px;flex-shrink:0}
+.logo{font:800 25px Manrope,sans-serif;color:#36bffa;padding:0 12px 32px}.logo span{color:white}
+.menu-label{color:#71839c;font-size:11px;letter-spacing:1.5px;margin:12px}
+.nav-link{display:flex;align-items:center;gap:13px;padding:13px 12px;color:#9eafc7;text-decoration:none;border-radius:9px;margin-bottom:6px;font-size:14px}
+.nav-link:hover,.nav-link.active{color:#54c9ff;background:#122b43}
+.main{flex:1;min-width:0}.topbar{height:78px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1b2b42;background:#091525}
+.topbar h2{font:700 20px Manrope,sans-serif}.topbar p{color:#8294ad;font-size:12px;margin-top:4px}
+.teacher{display:flex;align-items:center;gap:12px}.avatar{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#123a57;color:#58caff;font-weight:700}
+.teacher small{color:#8ea1ba;display:block;margin-top:4px}
+.content{padding:30px 32px}.welcome{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+h1{font:800 26px Manrope,sans-serif;margin-bottom:8px}.muted{color:#91a3bb;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:23px}
+.card{background:#0d1b2d;border:1px solid #1c3049;border-radius:15px;padding:21px;min-width:0}
+.stat-label{display:flex;justify-content:space-between;align-items:center;color:#a2b2c8;font-size:13px;gap:8px}
+.stat-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#12344d;color:#4cc6ff}
+.stat-number{font:800 28px Manrope,sans-serif;margin-top:15px}.stat-note{font-size:12px;color:#8195ae;margin-top:6px}
+.grid{display:grid;grid-template-columns:1fr 1.4fr;gap:20px;align-items:start}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.section-head h3{font:700 16px Manrope,sans-serif}
+.field{margin-bottom:15px}.field label{display:block;font-size:12px;color:#a8b8cd;margin-bottom:8px}
+input,select,textarea{width:100%;background:#091525;color:#eaf2ff;border:1px solid #2a3c53;border-radius:9px;padding:12px;font:13px 'DM Sans',sans-serif;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#36bffa}select option{background:#0d1b2d}
+textarea{resize:vertical;min-height:110px}
+.btn{border:0;border-radius:9px;background:#35b8f4;color:#061321;font-weight:700;padding:12px 15px;cursor:pointer;font-size:13px}
+.btn:hover{background:#73d4ff}.btn.secondary{background:#152941;color:#bceaff;border:1px solid #28445e}
+.btn.danger{background:#38202a;color:#ff9eaa;border:1px solid #63303d}.btn.small{padding:8px 10px;font-size:11px}
+.form-actions{display:flex;gap:9px;flex-wrap:wrap}
+.toolbar{display:flex;gap:10px;margin-bottom:17px}.toolbar input{flex:1}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:650px}
+th{text-align:left;color:#8195ae;font-size:11px;text-transform:uppercase;letter-spacing:.6px;padding:13px 10px;border-bottom:1px solid #263950}
+td{padding:14px 10px;border-bottom:1px solid #1b2b40;font-size:13px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+.assignment-title{font-weight:700}.assignment-title small{display:block;color:#8498b1;font-weight:400;margin-top:5px;font-size:11px}
+.pill{display:inline-block;border-radius:20px;padding:6px 9px;font-size:10px;background:#12334b;color:#66ceff;white-space:nowrap}
+.pill.pending{background:#382e19;color:#f4c66d}.pill.closed{background:#263142;color:#b7c2d0}
+.empty{text-align:center;padding:30px;color:#8498b1;font-size:13px}
+.message{font-size:12px;color:#64e3ae;margin-top:12px;line-height:1.6}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.menu-toggle{display:none;background:none;border:0;color:white;font-size:20px;cursor:pointer}
+@media(max-width:1150px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}}
+@media(max-width:700px){.sidebar{position:fixed;top:0;bottom:0;left:-250px;z-index:10;transition:left .25s}.sidebar.open{left:0}.menu-toggle{display:block}.topbar{padding:0 17px;gap:10px}.topbar h2{font-size:16px}.content{padding:22px 15px}.welcome{align-items:flex-start;flex-direction:column}h1{font-size:23px}.teacher-info{display:none}.card{padding:15px}.stats{gap:10px}}
+@media(max-width:380px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+    <div class="logo">Learn<span>ora.</span></div>
+    <div class="menu-label">TEACHING MENU</div>
+    <a href="teacher.html" class="nav-link"><i class="fa-solid fa-house"></i> Dashboard</a>
+    <a href="courses.html" class="nav-link"><i class="fa-solid fa-book-open"></i> My Courses</a>
+    <a href="attendance.html" class="nav-link"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+    <a href="assignments.html" class="nav-link active"><i class="fa-solid fa-file-pen"></i> Assignments</a>
+    <a href="quizzes.html" class="nav-link"><i class="fa-solid fa-circle-question"></i> Quizzes & Exams</a>
+    <a href="results.html" class="nav-link"><i class="fa-solid fa-chart-column"></i> Results</a>
+    <a href="announcements.html" class="nav-link"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+    <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> My Profile</a>
+    <a href="#" class="nav-link" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</aside>
+
+<main class="main">
+<header class="topbar">
+    <div style="display:flex;align-items:center;gap:14px">
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <div><h2>Assignment Management</h2><p>Create and manage course assignments</p></div>
+    </div>
+    <div class="teacher">
+        <div class="avatar" id="teacherAvatar">T</div>
+        <div class="teacher-info"><strong id="teacherName">Teacher</strong><small>Faculty Member</small></div>
+    </div>
+</header>
+
+<section class="content">
+    <div class="welcome">
+        <div><h1>Manage <span style="color:#4cc6ff">Assignments</span></h1>
+        <p class="muted">Create tasks for your courses and track their review status.</p></div>
+        <span class="muted" id="todayDate"></span>
+    </div>
+
+    <div class="stats">
+        <div class="card"><div class="stat-label">Total Assignments <span class="stat-icon"><i class="fa-solid fa-file-lines"></i></span></div><div class="stat-number" id="totalCount">0</div><div class="stat-note">Saved assignments</div></div>
+        <div class="card"><div class="stat-label">Published <span class="stat-icon"><i class="fa-solid fa-paper-plane"></i></span></div><div class="stat-number" id="publishedCount">0</div><div class="stat-note">Available to students</div></div>
+        <div class="card"><div class="stat-label">Upcoming Deadlines <span class="stat-icon"><i class="fa-solid fa-clock"></i></span></div><div class="stat-number" id="upcomingCount">0</div><div class="stat-note">Due today or later</div></div>
+        <div class="card"><div class="stat-label">Total Marks <span class="stat-icon"><i class="fa-solid fa-award"></i></span></div><div class="stat-number" id="marksCount">0</div><div class="stat-note">Marks across assignments</div></div>
+    </div>
+
+    <div class="grid">
+        <section class="card">
+            <div class="section-head"><h3><i class="fa-solid fa-circle-plus" style="color:#4cc6ff;margin-right:8px"></i><span id="formHeading">Create Assignment</span></h3></div>
+            <form id="assignmentForm">
+                <div class="field"><label for="assignmentTitle">Assignment Title *</label><input id="assignmentTitle" required maxlength="120" placeholder="e.g. Database Project Report"></div>
+                <div class="field"><label for="courseSelect">Assigned Course *</label><select id="courseSelect" required><option value="">Select course</option></select></div>
+                <div class="field"><label for="assignmentDescription">Instructions / Description *</label><textarea id="assignmentDescription" required maxlength="3000" placeholder="Describe the task, requirements and submission instructions..."></textarea></div>
+                <div class="field"><label for="dueDate">Submission Deadline *</label><input id="dueDate" type="date" required></div>
+                <div class="field"><label for="totalMarks">Total Marks *</label><input id="totalMarks" type="number" min="1" max="1000" value="100" required></div>
+                <div class="field"><label for="assignmentStatus">Status</label><select id="assignmentStatus"><option value="Published">Publish to students</option><option value="Draft">Save as draft</option></select></div>
+                <div class="form-actions">
+                    <button class="btn" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Save Assignment</button>
+                    <button class="btn secondary" type="button" id="cancelEditBtn" hidden>Cancel Edit</button>
+                </div>
+                <p class="message" id="formMessage"></p>
+            </form>
+        </section>
+
+        <section class="card">
+            <div class="section-head"><h3><i class="fa-solid fa-list-check" style="color:#4cc6ff;margin-right:8px"></i>Assignment List</h3></div>
+            <div class="toolbar">
+                <input type="search" id="searchInput" placeholder="Search assignments...">
+                <select id="statusFilter" aria-label="Filter by status" style="max-width:145px">
+                    <option value="All">All statuses</option><option value="Published">Published</option><option value="Draft">Draft</option>
+                </select>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Assignment</th><th>Deadline</th><th>Marks</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="assignmentBody"><tr><td colspan="5" class="empty">No assignments created yet.</td></tr></tbody>
+                </table>
+            </div>
+            <p class="message" id="listMessage"></p>
+        </section>
+    </div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const readJSON=(key,fallback=null)=>{
+    try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}
+};
+const teacher=["learnora_current_user","current_teacher","currentTeacher","logged_in_user"]
+    .map(key=>readJSON(key)).find(user=>user&&typeof user==="object");
+
+if(teacher){
+    const role=String(teacher.role||"").toLowerCase();
+    if(role&&role!=="teacher"){
+        if(role==="student")location.href="../student/student.html";
+        else if(role==="parent")location.href="../parent/parent.html";
+    }
+    const name=teacher.name||teacher.fullName||teacher.teacherName||teacher.username||"Teacher";
+    $("teacherName").textContent=name;
+    $("teacherAvatar").textContent=name.trim().charAt(0).toUpperCase();
+}
+$("todayDate").textContent=new Date().toLocaleDateString("en-US",{weekday:"short",day:"numeric",month:"short",year:"numeric"});
+$("menuToggle").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
+
+$("logoutBtn").addEventListener("click",event=>{
+    event.preventDefault();
+    if(!confirm("Are you sure you want to logout?"))return;
+    ["learnora_current_user","current_teacher","currentTeacher","logged_in_user","logged_in","user_role","user_email","user_id"].forEach(key=>localStorage.removeItem(key));
+    location.href="../login.html";
+});
+
+const users=readJSON("learnora_users",[]);
+const students=Array.isArray(users)?users.filter(u=>String(u.role||"").toLowerCase()==="student"):[];
+const defaultCourses=[
+    {code:"CS-401",name:"Software Engineering"},
+    {code:"CS-403",name:"Database Systems"},
+    {code:"DS-301",name:"Data Analytics"},
+    {code:"CS-405",name:"Web Engineering"},
+    {code:"SE-410",name:"Project Management"}
+];
+
+function normalizeCourse(c){
+    if(typeof c==="string"){
+        const m=c.trim().match(/^([A-Z]{2,5}[- ]?\d{2,4})\s*[-:|]?\s*(.*)$/i);
+        return {code:m?m[1].replace(/\s/g,"-").toUpperCase():"",name:m&&m[2]?m[2].trim():c.trim()};
+    }
+    if(!c||typeof c!=="object")return {code:"",name:""};
+    return {code:String(c.code||c.courseCode||c.course_code||"").trim().toUpperCase(),name:String(c.name||c.title||c.courseName||c.subject||c.code||"").trim()};
+}
+function getCourses(){
+    let raw=teacher&&(teacher.assignedCourses||teacher.assigned_courses||teacher.courses||teacher.subjects);
+    if(!Array.isArray(raw)||!raw.length){
+        const discovered=[];
+        students.forEach(s=>{
+            const list=s.courses||s.enrolledCourses||s.enrolled_courses||s.subjects||[];
+            if(!Array.isArray(list))return;
+            list.map(normalizeCourse).forEach(c=>{
+                if(!c.code&&!c.name)return;
+                if(!discovered.some(x=>(x.code&&c.code&&x.code===c.code)||(!x.code&&!c.code&&x.name.toLowerCase()===c.name.toLowerCase())))discovered.push(c);
+            });
+        });
+        raw=discovered.length?discovered:defaultCourses;
+    }
+    return raw.map(normalizeCourse).filter(c=>c.code||c.name);
+}
+const courses=getCourses();
+const courseSelect=$("courseSelect");
+courses.forEach(c=>{
+    const option=document.createElement("option");
+    option.value=c.code||c.name;
+    option.textContent=(c.code?c.code+" — ":"")+c.name;
+    courseSelect.appendChild(option);
+});
+
+const storageKey="learnora_teacher_assignments";
+let assignments=readJSON(storageKey,[]);
+if(!Array.isArray(assignments))assignments=[];
+let editingId=null;
+
+function escapeHTML(value){
+    return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function saveAll(){localStorage.setItem(storageKey,JSON.stringify(assignments))}
+function getCourseLabel(value){
+    const c=courses.find(x=>(x.code||x.name)===value);
+    return c?(c.code?c.code+" — ":"")+c.name:value;
+}
+function updateStats(){
+    const today=new Date();today.setHours(0,0,0,0);
+    $("totalCount").textContent=assignments.length;
+    $("publishedCount").textContent=assignments.filter(a=>a.status==="Published").length;
+    $("upcomingCount").textContent=assignments.filter(a=>a.status==="Published"&&a.dueDate&&new Date(a.dueDate+"T00:00:00")>=today).length;
+    $("marksCount").textContent=assignments.reduce((sum,a)=>sum+(Number(a.totalMarks)||0),0);
+}
+function renderAssignments(){
+    const query=$("searchInput").value.trim().toLowerCase();
+    const status=$("statusFilter").value;
+    const filtered=assignments.filter(a=>
+        (status==="All"||a.status===status)&&
+        (a.title.toLowerCase().includes(query)||getCourseLabel(a.course).toLowerCase().includes(query))
+    ).sort((a,b)=>(a.dueDate||"").localeCompare(b.dueDate||""));
+
+    if(!filtered.length){
+        $("assignmentBody").innerHTML='<tr><td colspan="5" class="empty">No matching assignments found.</td></tr>';
+        updateStats();return;
+    }
+    $("assignmentBody").innerHTML=filtered.map(a=>`
+        <tr>
+            <td><div class="assignment-title">${escapeHTML(a.title)}<small>${escapeHTML(getCourseLabel(a.course))}</small></div></td>
+            <td>${escapeHTML(a.dueDate||"—")}</td>
+            <td>${escapeHTML(a.totalMarks)}</td>
+            <td><span class="pill ${a.status==="Draft"?"closed":""}">${escapeHTML(a.status)}</span></td>
+            <td><div class="actions">
+                <button class="btn secondary small" data-action="edit" data-id="${escapeHTML(a.id)}" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn danger small" data-action="delete" data-id="${escapeHTML(a.id)}" title="Delete"><i class="fa-solid fa-trash"></i></button>
+            </div></td>
+        </tr>`).join("");
+    updateStats();
+}
+
+$("assignmentForm").addEventListener("submit",event=>{
+    event.preventDefault();
+    const title=$("assignmentTitle").value.trim();
+    const course=$("courseSelect").value;
+    const description=$("assignmentDescription").value.trim();
+    const dueDate=$("dueDate").value;
+    const totalMarks=Number($("totalMarks").value);
+    const status=$("assignmentStatus").value;
+
+    if(!title||!course||!description||!dueDate||!Number.isFinite(totalMarks)||totalMarks<1){
+        $("formMessage").style.color="#ff8585";
+        $("formMessage").textContent="Please complete all required fields correctly.";
+        return;
+    }
+    const item={
+        id:editingId||("ASG-"+Date.now()),
+        title,course,description,dueDate,totalMarks,status,
+        teacherId:teacher&&(teacher.id||teacher.email)||"",
+        teacherName:teacher&&(teacher.name||teacher.fullName)||"Teacher",
+        updatedAt:new Date().toISOString()
+    };
+    if(editingId){
+        const index=assignments.findIndex(a=>a.id===editingId);
+        if(index!==-1)assignments[index]={...assignments[index],...item};
+    }else{
+        item.createdAt=new Date().toISOString();
+        assignments.unshift(item);
+    }
+    saveAll();
+    renderAssignments();
+    resetForm();
+    $("formMessage").style.color="#64e3ae";
+    $("formMessage").textContent=editingId?"Assignment updated.":"Assignment saved successfully.";
+});
+
+function resetForm(){
+    editingId=null;
+    $("assignmentForm").reset();
+    $("totalMarks").value=100;
+    $("formHeading").textContent="Create Assignment";
+    $("submitBtn").innerHTML='<i class="fa-solid fa-floppy-disk"></i> Save Assignment';
+    $("cancelEditBtn").hidden=true;
+}
+$("cancelEditBtn").addEventListener("click",resetForm);
+
+$("assignmentBody").addEventListener("click",event=>{
+    const button=event.target.closest("button[data-action]");
+    if(!button)return;
+    const assignment=assignments.find(a=>a.id===button.dataset.id);
+    if(!assignment)return;
+
+    if(button.dataset.action==="edit"){
+        editingId=assignment.id;
+        $("assignmentTitle").value=assignment.title;
+        $("courseSelect").value=assignment.course;
+        $("assignmentDescription").value=assignment.description;
+        $("dueDate").value=assignment.dueDate;
+        $("totalMarks").value=assignment.totalMarks;
+        $("assignmentStatus").value=assignment.status;
+        $("formHeading").textContent="Edit Assignment";
+        $("submitBtn").innerHTML='<i class="fa-solid fa-floppy-disk"></i> Update Assignment';
+        $("cancelEditBtn").hidden=false;
+        $("formMessage").textContent="";
+        window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    if(button.dataset.action==="delete"){
+        if(!confirm("Delete this assignment permanently?"))return;
+        assignments=assignments.filter(a=>a.id!==assignment.id);
+        saveAll();renderAssignments();
+        $("listMessage").textContent="Assignment deleted.";
+    }
+});
+
+$("searchInput").addEventListener("input",renderAssignments);
+$("statusFilter").addEventListener("change",renderAssignments);
+
+const params=new URLSearchParams(location.search);
+const requestedCourse=params.get("course");
+if(requestedCourse){
+    const match=courses.find(c=>c.code.toLowerCase()===requestedCourse.toLowerCase()||c.name.toLowerCase()===requestedCourse.toLowerCase());
+    if(match)courseSelect.value=match.code||match.name;
+}
+const minDate=new Date();
+$("dueDate").min=minDate.toLocaleDateString("en-CA");
+
+renderAssignments();
+</script>
+</body>
+</html>

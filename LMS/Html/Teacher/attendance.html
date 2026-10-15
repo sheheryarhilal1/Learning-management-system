@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance | Learnora LMS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#07111f;color:#eaf2ff;display:flex;min-height:100vh}
+.sidebar{width:235px;background:#0b1728;border-right:1px solid #1b2b42;padding:26px 16px;flex-shrink:0}
+.logo{font:800 25px Manrope,sans-serif;color:#36bffa;padding:0 12px 32px}
+.logo span{color:white}
+.menu-label{color:#71839c;font-size:11px;letter-spacing:1.5px;margin:12px}
+.nav-link{display:flex;align-items:center;gap:13px;padding:13px 12px;color:#9eafc7;text-decoration:none;border-radius:9px;margin-bottom:6px;font-size:14px}
+.nav-link:hover,.nav-link.active{color:#54c9ff;background:#122b43}
+.main{flex:1;min-width:0}
+.topbar{height:78px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1b2b42;background:#091525}
+.topbar h2{font:700 20px Manrope,sans-serif}
+.topbar p{color:#8294ad;font-size:12px;margin-top:4px}
+.teacher{display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#123a57;color:#58caff;font-weight:700}
+.teacher small{color:#8ea1ba;display:block;margin-top:4px}
+.content{padding:30px 32px}
+.welcome{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+h1{font:800 26px Manrope,sans-serif;margin-bottom:8px}
+.muted{color:#91a3bb;font-size:13px}
+.card{background:#0d1b2d;border:1px solid #1c3049;border-radius:15px;padding:21px;min-width:0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:23px}
+.stat-label{display:flex;justify-content:space-between;align-items:center;color:#a2b2c8;font-size:13px;gap:8px}
+.stat-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#12344d;color:#4cc6ff}
+.stat-number{font:800 28px Manrope,sans-serif;margin-top:15px}
+.stat-note{font-size:12px;color:#8195ae;margin-top:6px}
+.filters{display:grid;grid-template-columns:1.3fr 1fr auto;gap:13px;margin-bottom:20px}
+input,select{width:100%;background:#091525;color:#eaf2ff;border:1px solid #2a3c53;border-radius:9px;padding:12px;font:13px 'DM Sans',sans-serif;outline:none}
+input:focus,select:focus{border-color:#36bffa}
+select option{background:#0d1b2d}
+.btn{border:0;border-radius:9px;background:#35b8f4;color:#061321;font-weight:700;padding:12px 16px;cursor:pointer;font-size:13px;white-space:nowrap}
+.btn:hover{background:#73d4ff}
+.btn.secondary{background:#152941;color:#bceaff;border:1px solid #28445e}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.section-head h3{font:700 16px Manrope,sans-serif}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th{text-align:left;color:#8195ae;font-size:11px;text-transform:uppercase;letter-spacing:.6px;padding:13px 10px;border-bottom:1px solid #263950}
+td{padding:14px 10px;border-bottom:1px solid #1b2b40;font-size:13px}
+tbody tr:last-child td{border-bottom:0}
+.student{display:flex;align-items:center;gap:10px}
+.student-avatar{width:35px;height:35px;border-radius:10px;background:#143650;color:#61ceff;display:grid;place-items:center;font-weight:700;flex-shrink:0}
+.student small{display:block;color:#8498b1;margin-top:4px;font-size:11px}
+.status-select{min-width:120px;padding:9px}
+.empty{text-align:center;padding:35px 10px;color:#8498b1;font-size:13px}
+.footer-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;flex-wrap:wrap}
+.message{font-size:12px;color:#64e3ae;margin-top:12px}
+.menu-toggle{display:none;background:none;border:0;color:white;font-size:20px;cursor:pointer}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.filters{grid-template-columns:1fr 1fr}.filters .btn{grid-column:1/-1}}
+@media(max-width:700px){.sidebar{position:fixed;top:0;bottom:0;left:-250px;z-index:10;transition:left .25s}.sidebar.open{left:0}.menu-toggle{display:block}.topbar{padding:0 17px;gap:10px}.topbar h2{font-size:16px}.content{padding:22px 15px}.welcome{align-items:flex-start;flex-direction:column}h1{font-size:23px}.teacher-info{display:none}.stats{gap:10px}.card{padding:15px}.stat-number{font-size:24px}}
+@media(max-width:380px){.stats,.filters{grid-template-columns:1fr}.filters .btn{grid-column:auto}}
+</style>
+</head>
+
+<body>
+<aside class="sidebar" id="sidebar">
+    <div class="logo">Learn<span>ora.</span></div>
+    <div class="menu-label">TEACHING MENU</div>
+    <a href="teacher.html" class="nav-link"><i class="fa-solid fa-house"></i> Dashboard</a>
+    <a href="courses.html" class="nav-link"><i class="fa-solid fa-book-open"></i> My Courses</a>
+    <a href="attendance.html" class="nav-link active"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+    <a href="assignments.html" class="nav-link"><i class="fa-solid fa-file-pen"></i> Assignments</a>
+    <a href="quizzes.html" class="nav-link"><i class="fa-solid fa-circle-question"></i> Quizzes & Exams</a>
+    <a href="results.html" class="nav-link"><i class="fa-solid fa-chart-column"></i> Results</a>
+    <a href="announcements.html" class="nav-link"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+    <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> My Profile</a>
+    <a href="#" class="nav-link" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</aside>
+
+<main class="main">
+<header class="topbar">
+    <div style="display:flex;align-items:center;gap:14px">
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <div><h2>Attendance Management</h2><p>Track attendance for your assigned courses</p></div>
+    </div>
+    <div class="teacher">
+        <div class="avatar" id="teacherAvatar">T</div>
+        <div class="teacher-info"><strong id="teacherName">Teacher</strong><small>Faculty Member</small></div>
+    </div>
+</header>
+
+<section class="content">
+    <div class="welcome">
+        <div><h1>Attendance <span style="color:#4cc6ff">Management</span></h1>
+        <p class="muted">Select a course and date, mark students present or absent, and save attendance.</p></div>
+        <span class="muted" id="todayDate"></span>
+    </div>
+
+    <div class="stats">
+        <div class="card"><div class="stat-label">Total Students <span class="stat-icon"><i class="fa-solid fa-users"></i></span></div><div class="stat-number" id="totalStudents">0</div><div class="stat-note">In selected course</div></div>
+        <div class="card"><div class="stat-label">Present <span class="stat-icon"><i class="fa-solid fa-user-check"></i></span></div><div class="stat-number" id="presentCount">0</div><div class="stat-note">Marked present</div></div>
+        <div class="card"><div class="stat-label">Absent <span class="stat-icon"><i class="fa-solid fa-user-xmark"></i></span></div><div class="stat-number" id="absentCount">0</div><div class="stat-note">Marked absent</div></div>
+        <div class="card"><div class="stat-label">Attendance Rate <span class="stat-icon"><i class="fa-solid fa-chart-line"></i></span></div><div class="stat-number" id="attendanceRate">0%</div><div class="stat-note">Based on current selection</div></div>
+    </div>
+
+    <section class="card">
+        <div class="section-head"><h3><i class="fa-solid fa-sliders" style="color:#4cc6ff;margin-right:8px"></i>Choose Class</h3></div>
+        <div class="filters">
+            <select id="courseSelect"><option value="">Select course</option></select>
+            <input type="date" id="attendanceDate">
+            <button class="btn" id="loadBtn"><i class="fa-solid fa-rotate"></i> Load Attendance</button>
+        </div>
+        <div class="filters" style="grid-template-columns:1fr 1fr">
+            <input type="search" id="searchInput" placeholder="Search student name or ID...">
+            <button class="btn secondary" id="markAllBtn"><i class="fa-solid fa-check-double"></i> Mark All Present</button>
+        </div>
+    </section>
+
+    <section class="card" style="margin-top:20px">
+        <div class="section-head">
+            <div><h3><i class="fa-solid fa-clipboard-user" style="color:#4cc6ff;margin-right:8px"></i>Student Attendance</h3>
+            <p class="muted" id="rosterInfo" style="margin-top:6px">Select a course to load students.</p></div>
+            <button class="btn secondary" id="exportBtn"><i class="fa-solid fa-download"></i> Export CSV</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Student</th><th>Student ID</th><th>Course</th><th>Attendance Status</th></tr></thead>
+                <tbody id="attendanceBody"><tr><td colspan="4" class="empty">Choose a course to view its enrolled students.</td></tr></tbody>
+            </table>
+        </div>
+        <div class="footer-actions">
+            <span class="muted">Changes are saved in this browser's localStorage.</span>
+            <button class="btn" id="saveBtn"><i class="fa-solid fa-floppy-disk"></i> Save Attendance</button>
+        </div>
+        <p class="message" id="message"></p>
+    </section>
+</section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const readJSON = (key, fallback = null) => {
+    try {
+        const value = JSON.parse(localStorage.getItem(key));
+        return value ?? fallback;
+    } catch { return fallback; }
+};
+
+const teacher = ["learnora_current_user","current_teacher","currentTeacher","logged_in_user"]
+    .map(key => readJSON(key))
+    .find(user => user && typeof user === "object");
+
+if (teacher) {
+    const role = String(teacher.role || "").toLowerCase();
+    if (role && role !== "teacher") {
+        if (role === "student") location.href = "../student/student.html";
+        else if (role === "parent") location.href = "../parent/parent.html";
+    }
+    const name = teacher.name || teacher.fullName || teacher.teacherName || teacher.username || "Teacher";
+    $("teacherName").textContent = name;
+    $("teacherAvatar").textContent = name.trim().charAt(0).toUpperCase();
+}
+
+$("todayDate").textContent = new Date().toLocaleDateString("en-US",{weekday:"short",day:"numeric",month:"short",year:"numeric"});
+$("menuToggle").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
+
+$("logoutBtn").addEventListener("click",event=>{
+    event.preventDefault();
+    if(!confirm("Are you sure you want to logout?")) return;
+    ["learnora_current_user","current_teacher","currentTeacher","logged_in_user","logged_in","user_role","user_email","user_id"]
+        .forEach(key=>localStorage.removeItem(key));
+    location.href="../login.html";
+});
+
+const users = readJSON("learnora_users",[]);
+const students = Array.isArray(users) ? users.filter(u=>String(u.role||"").toLowerCase()==="student") : [];
+const defaultCourses = [
+    {code:"CS-401",name:"Software Engineering"},
+    {code:"CS-403",name:"Database Systems"},
+    {code:"DS-301",name:"Data Analytics"},
+    {code:"CS-405",name:"Web Engineering"},
+    {code:"SE-410",name:"Project Management"}
+];
+
+function normalizeCourse(course) {
+    if(typeof course==="string") {
+        const text=course.trim();
+        const match=text.match(/^([A-Z]{2,5}[- ]?\d{2,4})\s*[-:|]?\s*(.*)$/i);
+        return {code:match?match[1].replace(/\s/g,"-").toUpperCase():"",name:match&&match[2]?match[2].trim():text};
+    }
+    if(!course || typeof course!=="object") return {code:"",name:""};
+    return {
+        code:String(course.code||course.courseCode||course.course_code||"").trim().toUpperCase(),
+        name:String(course.name||course.title||course.courseName||course.subject||course.code||"").trim()
+    };
+}
+
+function getStudentCourses(student) {
+    let courses=student.courses||student.enrolledCourses||student.enrolled_courses||student.subjects||[];
+    if(!Array.isArray(courses)) courses=[];
+    return courses.map(normalizeCourse);
+}
+
+function getAssignedCourses() {
+    let raw=teacher&&(teacher.assignedCourses||teacher.assigned_courses||teacher.courses||teacher.subjects);
+    if(!Array.isArray(raw)||!raw.length) {
+        const discovered=[];
+        students.forEach(student=>getStudentCourses(student).forEach(course=>{
+            if(!course.code&&!course.name) return;
+            if(!discovered.some(c=>(c.code&&course.code&&c.code===course.code)||(!c.code&&!course.code&&c.name.toLowerCase()===course.name.toLowerCase()))) discovered.push(course);
+        }));
+        raw=discovered.length?discovered:defaultCourses;
+    }
+    return raw.map(normalizeCourse).filter(c=>c.code||c.name);
+}
+
+const courses=getAssignedCourses();
+const attendanceKey="learnora_teacher_attendance";
+const courseSelect=$("courseSelect");
+let currentStudents=[];
+
+function escapeHTML(value) {
+    return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+}
+
+function sameCourse(studentCourse,course) {
+    if(course.code&&studentCourse.code&&course.code===studentCourse.code) return true;
+    const a=String(course.name||"").trim().toLowerCase();
+    const b=String(studentCourse.name||"").trim().toLowerCase();
+    return !!a&&a===b;
+}
+
+function courseStudents(course) {
+    return students.filter(student=>getStudentCourses(student).some(sc=>sameCourse(sc,course)));
+}
+
+courses.forEach((course,index)=>{
+    const option=document.createElement("option");
+    option.value=course.code||course.name;
+    option.textContent=(course.code?course.code+" — ":"")+course.name;
+    courseSelect.appendChild(option);
+});
+
+const params=new URLSearchParams(location.search);
+const requestedCourse=params.get("course");
+if(requestedCourse) {
+    const found=courses.find(c=>c.code.toLowerCase()===requestedCourse.toLowerCase()||c.name.toLowerCase()===requestedCourse.toLowerCase());
+    if(found) courseSelect.value=found.code||found.name;
+}
+if(!courseSelect.value&&courses.length) courseSelect.value=courses[0].code||courses[0].name;
+
+$("attendanceDate").value=new Date().toLocaleDateString("en-CA");
+
+function getRecords() {
+    const data=readJSON(attendanceKey,{});
+    return data&&typeof data==="object"?data:{};
+}
+
+function recordKey(course,date,student) {
+    return [course.code||course.name,date,student.id||student.studentId||student.email||student.name].join("|");
+}
+
+function getDisplayName(student) {
+    return student.name||student.fullName||student.studentName||student.username||"Student";
+}
+
+function getStudentId(student) {
+    return student.id||student.studentId||student.student_id||student.email||"—";
+}
+
+function loadAttendance() {
+    const selected=courses.find(c=>(c.code||c.name)===courseSelect.value);
+    const date=$("attendanceDate").value;
+    $("message").textContent="";
+    if(!selected) {
+        currentStudents=[];
+        $("attendanceBody").innerHTML='<tr><td colspan="4" class="empty">No course selected.</td></tr>';
+        updateStats();
+        return;
+    }
+
+    currentStudents=courseStudents(selected);
+    const records=getRecords();
+    currentStudents=currentStudents.map(student=>{
+        const key=recordKey(selected,date,student);
+        return {...student,_attendanceKey:key,_status:records[key]||"Present"};
+    });
+    $("rosterInfo").textContent=selected.name+" · "+currentStudents.length+" enrolled student(s) · "+date;
+    renderStudents();
+    updateStats();
+}
+
+function renderStudents() {
+    const query=$("searchInput").value.trim().toLowerCase();
+    const selected=courses.find(c=>(c.code||c.name)===courseSelect.value);
+    const filtered=currentStudents.filter(student=>
+        getDisplayName(student).toLowerCase().includes(query)||
+        String(getStudentId(student)).toLowerCase().includes(query)
+    );
+
+    if(!filtered.length) {
+        $("attendanceBody").innerHTML=`<tr><td colspan="4" class="empty">${currentStudents.length?"No matching students found.":"No enrolled students found for this course. Check the students' courses in learnora_users."}</td></tr>`;
+        return;
+    }
+
+    $("attendanceBody").innerHTML=filtered.map(student=>{
+        const name=getDisplayName(student);
+        const id=getStudentId(student);
+        const options=["Present","Absent","Late"];
+        return `<tr>
+            <td><div class="student"><div class="student-avatar">${escapeHTML(name.charAt(0).toUpperCase())}</div><div><strong>${escapeHTML(name)}</strong><small>${escapeHTML(student.email||"Student account")}</small></div></div></td>
+            <td>${escapeHTML(id)}</td>
+            <td>${escapeHTML(selected?selected.name:"—")}</td>
+            <td><select class="status-select" data-student-key="${escapeHTML(student._attendanceKey)}" aria-label="Attendance for ${escapeHTML(name)}">
+                ${options.map(option=>`<option value="${option}" ${student._status===option?"selected":""}>${option}</option>`).join("")}
+            </select></td>
+        </tr>`;
+    }).join("");
+
+    document.querySelectorAll(".status-select").forEach(select=>{
+        select.addEventListener("change",()=>{
+            const student=currentStudents.find(s=>s._attendanceKey===select.dataset.studentKey);
+            if(student) student._status=select.value;
+            updateStats();
+        });
+    });
+}
+
+function updateStats() {
+    const total=currentStudents.length;
+    const present=currentStudents.filter(s=>s._status==="Present").length;
+    const absent=currentStudents.filter(s=>s._status==="Absent").length;
+    const rate=total?Math.round((present/total)*100):0;
+    $("totalStudents").textContent=total;
+    $("presentCount").textContent=present;
+    $("absentCount").textContent=absent;
+    $("attendanceRate").textContent=rate+"%";
+}
+
+function saveAttendance() {
+    const selected=courses.find(c=>(c.code||c.name)===courseSelect.value);
+    const date=$("attendanceDate").value;
+    if(!selected||!date) {
+        $("message").style.color="#ff8585";
+        $("message").textContent="Please select a course and date first.";
+        return;
+    }
+    const records=getRecords();
+    currentStudents.forEach(student=>{records[student._attendanceKey]=student._status;});
+    localStorage.setItem(attendanceKey,JSON.stringify(records));
+    $("message").style.color="#64e3ae";
+    $("message").textContent="Attendance saved successfully for "+selected.name+" on "+date+".";
+    updateStats();
+}
+
+$("loadBtn").addEventListener("click",loadAttendance);
+$("courseSelect").addEventListener("change",loadAttendance);
+$("attendanceDate").addEventListener("change",loadAttendance);
+$("searchInput").addEventListener("input",renderStudents);
+$("saveBtn").addEventListener("click",saveAttendance);
+
+$("markAllBtn").addEventListener("click",()=>{
+    currentStudents.forEach(student=>student._status="Present");
+    renderStudents();
+    updateStats();
+    $("message").style.color="#64e3ae";
+    $("message").textContent="All students marked Present. Click Save Attendance to keep the changes.";
+});
+
+$("exportBtn").addEventListener("click",()=>{
+    const selected=courses.find(c=>(c.code||c.name)===courseSelect.value);
+    if(!selected) { alert("Please select a course first."); return; }
+    const date=$("attendanceDate").value;
+    const rows=[["Student Name","Student ID","Course","Date","Status"]];
+    currentStudents.forEach(student=>rows.push([getDisplayName(student),getStudentId(student),selected.name,date,student._status]));
+    const csv=rows.map(row=>row.map(value=>'"'+String(value??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+    const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement("a");
+    link.href=url;
+    link.download="attendance-"+(selected.code||"course")+"-"+date+".csv";
+    link.click();
+    URL.revokeObjectURL(url);
+});
+
+loadAttendance();
+</script>
+</body>
+</html>
