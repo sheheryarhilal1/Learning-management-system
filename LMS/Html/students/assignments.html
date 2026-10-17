@@ -1767,6 +1767,53 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
+
+<script>
+/* LEARNORA GLOBAL LOGOUT: always return to the login screen from any portal page. */
+(function () {
+    "use strict";
+    document.addEventListener("click", function (event) {
+        const control = event.target && event.target.closest
+            ? event.target.closest("#logoutBtn, #logoutLink, .logout-link, .logout-btn, [data-logout]")
+            : null;
+        if (!control) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        if (typeof event.stopImmediatePropagation === "function") {
+            event.stopImmediatePropagation();
+        }
+
+        if (!window.confirm("Are you sure you want to logout?")) return;
+
+        [
+            "learnora_current_user",
+            "learnora_current_parent",
+            "learnora_current_child",
+            "learnora_logged_in",
+            "learnora_user_role",
+            "learnora_user_email",
+            "learnora_user_id",
+            "learnora_remember_user",
+            "current_teacher",
+            "currentTeacher",
+            "logged_in_user",
+            "logged_in",
+            "user_role",
+            "user_email",
+            "user_id"
+        ].forEach(function (key) {
+            try { localStorage.removeItem(key); } catch (_) {}
+            try { sessionStorage.removeItem(key); } catch (_) {}
+        });
+
+        const path = window.location.pathname.toLowerCase();
+        const isNestedPortal = /\/(teacher|students|parent)\//.test(path);
+        window.location.href = isNestedPortal ? "../login.html" : "login.html";
+    }, true);
+})();
+</script>
+
 </body>
 
 </html>

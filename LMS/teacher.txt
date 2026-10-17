@@ -1,0 +1,9 @@
+Teacher login credentials
+Teacher                  	Email                           Password
+Dr. Ahmed Khan	           teacher@learnora.com	               Teacher@123
+Prof. Sarah Malik	sarah.malik@learnora.com	        Sarah@123
+Dr. Hamza Ali	         hamza.ali@learnora.com	                Hamza@123
+Dr. Usman Raza	         usman.raza@learnora.com	        Usman@123
+Mr. Bilal Ahmed	         bilal.ahmed@learnora.com	        Bilal@123
+Dr. Fatima Noor	         fatima.noor@learnora.com	        Fatima@123
+Dr. Ayesha Noor	         ayesha.noor@learnora.com	        Ayesha@123
