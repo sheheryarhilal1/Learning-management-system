@@ -221,6 +221,12 @@ h1{font-size:23px}
                     </div>
                 </div>
 
+                <div class="field">
+                    <label for="assessmentFile">Optional quiz/exam resource file (PDF, DOC, image, etc.)</label>
+                    <input id="assessmentFile" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.png,.jpg,.jpeg,.webp" />
+                    <small class="muted">Maximum 1.5 MB per file. You may create MCQs manually, attach a question file, or use both.</small>
+                </div>
+
                 <div class="section-head" style="margin-top:18px;margin-bottom:8px">
                     <h3>MCQ Questions</h3>
                     <span class="muted" id="questionCount">0 questions</span>
@@ -493,6 +499,12 @@ function addQuestion(seed = {}) {
             `).join("")}
         </div>
 
+        <div class="field">
+            <label>Optional attachment for this question</label>
+            <input class="qfile" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.png,.jpg,.jpeg,.webp" />
+            <small class="muted">Attach a question sheet, diagram or reference file (max 1.5 MB).</small>
+        </div>
+
         <div class="two">
             <div class="field">
                 <label>Correct Answer *</label>
@@ -540,6 +552,7 @@ function resetForm() {
     editingId = null;
     $("assessmentForm").reset();
     $("questions").innerHTML = "";
+    if ($("assessmentFile")) $("assessmentFile").value = "";
     $("duration").value = 20;
     $("passPercent").value = 50;
     $("assessmentType").value = "Quiz";
@@ -567,24 +580,45 @@ $("assessmentForm").addEventListener("reset", () => {
 
 $("cancelEditBtn").addEventListener("click", resetForm);
 
+/* FILE ATTACHMENTS: stored locally with the assessment; keep files small. */
+function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+        if (!file) return resolve(null);
+        if (file.size > 1.5 * 1024 * 1024) return reject(new Error(`File "${file.name}" is larger than 1.5 MB.`));
+        const reader = new FileReader();
+        reader.onload = () => resolve({ name: file.name, type: file.type || "application/octet-stream", size: file.size, dataUrl: reader.result });
+        reader.onerror = () => reject(new Error(`Could not read ${file.name}.`));
+        reader.readAsDataURL(file);
+    });
+}
+
 /* CREATE OR UPDATE ASSESSMENT */
-$("assessmentForm").addEventListener("submit", event => {
+$("assessmentForm").addEventListener("submit", async event => {
     event.preventDefault();
 
     const blocks = [...$("questions").children];
 
-    if (!blocks.length) {
-        showMessage("Please add at least one MCQ question.", true);
+    let questions;
+    let assessmentAttachment;
+    try {
+        questions = await Promise.all(blocks.map(async (box, index) => ({
+            id: "Q" + (index + 1),
+            question: box.querySelector(".qtext").value.trim(),
+            options: [...box.querySelectorAll(".opt")].map(input => input.value.trim()),
+            correctIndex: Number(box.querySelector(".correct").value),
+            marks: Number(box.querySelector(".qmarks").value),
+            attachment: await readFileAsDataURL(box.querySelector(".qfile")?.files?.[0])
+        })));
+        assessmentAttachment = await readFileAsDataURL($("assessmentFile")?.files?.[0]);
+    } catch (error) {
+        showMessage(error.message || "Could not read attachment.", true);
         return;
     }
 
-    const questions = blocks.map((box, index) => ({
-        id: "Q" + (index + 1),
-        question: box.querySelector(".qtext").value.trim(),
-        options: [...box.querySelectorAll(".opt")].map(input => input.value.trim()),
-        correctIndex: Number(box.querySelector(".correct").value),
-        marks: Number(box.querySelector(".qmarks").value)
-    }));
+    if (!blocks.length && !assessmentAttachment && !(editingId && data.quizzes.find(x => x.id === editingId)?.attachment)) {
+        showMessage("Add at least one MCQ or attach a question/resource file.", true);
+        return;
+    }
 
     const invalid = questions.some(question =>
         !question.question ||
@@ -605,7 +639,8 @@ $("assessmentForm").addEventListener("submit", event => {
     const duration = Number($("duration").value);
     const passPercent = Number($("passPercent").value);
     const dueDate = $("dueDate").value;
-    const totalMarks = questions.reduce((sum, question) => sum + question.marks, 0);
+    // File-only assessments are manually reviewed by the teacher; reserve 100 marks until graded.
+    const totalMarks = questions.length ? questions.reduce((sum, question) => sum + question.marks, 0) : 100;
 
     if (!title || !subject || !dueDate || !Number.isInteger(duration) ||
         duration < 1 || duration > 600 ||
@@ -634,6 +669,7 @@ $("assessmentForm").addEventListener("submit", event => {
         dueDate,
         passPercent,
         questions,
+        attachment: assessmentAttachment || existing?.attachment || null,
         totalMarks,
         status: $("assessmentStatus").value,
         published: $("assessmentStatus").value === "Published",
@@ -657,7 +693,7 @@ $("assessmentForm").addEventListener("submit", event => {
     resetForm();
 
     showMessage(wasEditing ? "Assessment updated successfully." :
-        `${assessment.type} saved successfully with ${questions.length} questions and ${totalMarks} total marks.`);
+        `${assessment.type} saved successfully with ${questions.length} MCQs and ${totalMarks} total marks${questions.length ? "" : " (file-based; teacher grades manually)"}.`);
 });
 
 /* ASSESSMENT STATS AND LIST */
@@ -714,6 +750,7 @@ function renderAssessments() {
                 <td>
                     <div class="item-title">${escapeHTML(item.title)}
                         <small>${escapeHTML(courseLabel(item.subject))}</small>
+                        ${item.attachment ? `<small><i class="fa-solid fa-paperclip"></i> ${escapeHTML(item.attachment.name || "Attachment")}</small>` : ""}
                         <span class="pill ${item.type === "Exam" ? "exam" : ""}">${escapeHTML(item.type)}</span>
                     </div>
                 </td>

@@ -7149,3 +7149,99 @@ function escapeHTML(
     );
 
 }
+
+/* =========================================================
+   TEACHER-PUBLISHED RESULTS & QUIZZES
+   Only the linked child's enrolled subjects are included.
+========================================================= */
+function parentNormalizeCourse(value) {
+    return String(value || "").toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]/g, "");
+}
+function parentChildIdentifiers(child) {
+    return [child && child.id, child && child.userId, child && child.user_id,
+        child && child.studentId, child && child.student_id, child && child.email,
+        child && child.username].filter(Boolean).map(v => String(v).trim().toLowerCase());
+}
+function parentChildCourses(child) {
+    const out = [];
+    const add = source => {
+        if (!source) return;
+        if (typeof source === "string") { source.split(",").forEach(v => v.trim() && out.push(v.trim())); return; }
+        if (Array.isArray(source)) { source.forEach(item => {
+            if (typeof item === "string") out.push(item);
+            else if (item && typeof item === "object") out.push(item.code || item.courseCode || item.course_code || item.name || item.title || item.subject || "");
+        }); return; }
+        if (typeof source === "object") Object.values(source).forEach(add);
+    };
+    [child && child.courses, child && child.enrolledCourses, child && child.enrolled_courses,
+     child && child.subjects, child && child.academicData && child.academicData.courses].forEach(add);
+    return [...new Set(out.map(v => String(v || "").trim()).filter(Boolean))];
+}
+function parentIsEnrolled(child, course) {
+    const target = parentNormalizeCourse(course);
+    return !!target && parentChildCourses(child).some(value => {
+        const normalized = parentNormalizeCourse(value);
+        return normalized === target || (normalized.length >= 4 && (normalized.includes(target) || target.includes(normalized)));
+    });
+}
+function parentPublishedTeacherResults() {
+    if (!currentChild) return [];
+    let items = [];
+    try { items = JSON.parse(localStorage.getItem("learnora_teacher_results") || "[]"); } catch (_) {}
+    if (!Array.isArray(items)) return [];
+    const ids = parentChildIdentifiers(currentChild);
+    return items.filter(item =>
+        String(item.status || "").toLowerCase() === "published" &&
+        ids.includes(String(item.studentId || "").trim().toLowerCase()) &&
+        parentIsEnrolled(currentChild, item.course)
+    ).map(item => ({
+        ...item,
+        course: item.course || item.courseName || item.subject || "—",
+        code: item.courseCode || item.course || "—",
+        creditHours: item.creditHours || item.credits || 0,
+        marks: Number(item.percentage ?? ((Number(item.obtainedMarks) / (Number(item.totalMarks) || 1)) * 100)),
+        score: Number(item.percentage ?? 0),
+        grade: item.grade || "—",
+        semester: "Latest published",
+        updatedAt: item.updatedAt || item.createdAt || ""
+    })).sort((a,b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0));
+}
+function getResults() {
+    const academic = getAcademicData();
+    const existing = academic.results || currentChild.results || [];
+    const oldResults = Array.isArray(existing) ? existing : [];
+    const teacherResults = parentPublishedTeacherResults();
+    const teacherIds = new Set(teacherResults.map(r => String(r.id)));
+    const combined = [...teacherResults, ...oldResults.filter(r => !teacherIds.has(String(r.id)))];
+    return combined;
+}
+function getQuizzes() {
+    const academic = getAcademicData();
+    const existing = academic.quizzes || currentChild.quizzes || [];
+    const oldQuizzes = Array.isArray(existing) ? existing : [];
+    let shared = [];
+    try {
+        const data = JSON.parse(localStorage.getItem("learnora_academic_data") || "{}");
+        shared = Array.isArray(data.quizzes) ? data.quizzes : [];
+    } catch (_) {}
+    const ids = parentChildIdentifiers(currentChild);
+    const published = shared.filter(q =>
+        (q.published === true || String(q.status || "").toLowerCase() === "published") &&
+        parentIsEnrolled(currentChild, q.subject || q.course || q.courseName)
+    ).map(q => ({
+        ...q,
+        course: q.subject || q.course || q.courseName || "—",
+        date: q.dueDate || q.updatedAt || q.createdAt || "",
+        score: q.score ?? q.marks,
+        status: q.status || "Published"
+    })).sort((a,b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0));
+    const known = new Set(oldQuizzes.map(q => String(q.id || q.title || q.name)));
+    return [...published.filter(q => !known.has(String(q.id || q.title || q.name))), ...oldQuizzes];
+}
+window.addEventListener("storage", function(event) {
+    if (event.key === "learnora_teacher_results" || event.key === "learnora_academic_data") {
+        const page = getCurrentPage();
+        if (page === "results.html") renderResultsPage();
+        if (page === "quizzes.html") renderQuizzesPage();
+    }
+});

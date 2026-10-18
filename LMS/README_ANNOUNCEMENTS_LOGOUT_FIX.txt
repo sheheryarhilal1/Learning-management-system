@@ -13,3 +13,11 @@ Changes included:
 
 Important limitation:
 This project uses browser localStorage. Announcement visibility is shared only in the same browser/profile on the same device. It does not send actual emails and does not synchronize across different devices/browsers. For real email notifications and multi-device updates, connect a backend/database and an email service.
+
+
+RESULTS & QUIZZES VISIBILITY UPDATE
+- Teacher results marked Published are now shown at the top of the matching student's Results page and the linked parent's Results page.
+- Draft results remain hidden from student and parent portals.
+- Published quizzes/exams stored in learnora_academic_data are shown to students and parents only when the course/subject matches the learner's enrolled courses.
+- Latest published items are sorted first.
+- The feature uses browser localStorage; for multi-device or different-browser access, a shared backend/database is required.

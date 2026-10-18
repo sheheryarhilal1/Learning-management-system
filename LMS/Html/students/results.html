@@ -2086,6 +2086,93 @@ document.addEventListener(
 })();
 </script>
 
+<script>
+
+/* LEARNORA: teacher-published results and assessments */
+(function () {
+  "use strict";
+  const read = (key, fallback) => {
+    try { const v = JSON.parse(localStorage.getItem(key)); return v == null ? fallback : v; }
+    catch (_) { return fallback; }
+  };
+  const listUsers = () => {
+    const u = read("learnora_users", []);
+    return Array.isArray(u) ? u : Object.values(u || {});
+  };
+  const getUser = () => {
+    let u = read("learnora_current_user", null) || read("current_student", null) || read("currentStudent", null) || read("logged_in_user", null);
+    if (!u) return null;
+    if (typeof u === "string") {
+      return listUsers().find(x => [x.id,x.studentId,x.student_id,x.email,x.username].some(v => String(v || "").toLowerCase() === u.toLowerCase())) || null;
+    }
+    const ids = [u.id,u.userId,u.user_id,u.studentId,u.student_id,u.email,u.username].filter(Boolean).map(v=>String(v).toLowerCase());
+    const match = listUsers().find(x => ids.some(id => [x.id,x.userId,x.user_id,x.studentId,x.student_id,x.email,x.username].some(v=>String(v||"").toLowerCase()===id)));
+    return match ? {...match,...u} : u;
+  };
+  const ident = u => [u && u.id,u && u.userId,u && u.user_id,u && u.studentId,u && u.student_id,u && u.email,u && u.username].filter(Boolean).map(v=>String(v).trim().toLowerCase());
+  const courseValues = u => {
+    const raw = [u && u.courses,u && u.enrolledCourses,u && u.enrolled_courses,u && u.subjects,u && u.academicData && u.academicData.courses];
+    const result=[];
+    const add = v => {
+      if (!v) return;
+      if (typeof v === "string") { v.split(",").forEach(x=>x.trim()&&result.push(x.trim())); return; }
+      if (Array.isArray(v)) { v.forEach(add); return; }
+      if (typeof v === "object") { Object.values(v).forEach(add); }
+    };
+    raw.forEach(add);
+    return [...new Set(result.map(x=>String(x).trim()).filter(Boolean))];
+  };
+  const norm = x => String(x||"").toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]/g,"");
+  const enrolled = (u, subject) => {
+    const target=norm(subject);
+    return !!target && courseValues(u).some(c=>{const v=norm(c); return v===target || (v.length>=4 && (v.includes(target)||target.includes(v)));});
+  };
+  const publishedResults = u => {
+    const ids=ident(u);
+    const all=read("learnora_teacher_results", []); return (Array.isArray(all)?all:[]).filter(r =>
+      String(r.status||"").toLowerCase()==="published" &&
+      ids.includes(String(r.studentId||"").trim().toLowerCase()) &&
+      enrolled(u,r.course)
+    ).sort((a,b)=>new Date(b.updatedAt||b.createdAt||0)-new Date(a.updatedAt||a.createdAt||0));
+  };
+  const publishedQuizzes = u => {
+    const d=read("learnora_academic_data",{});
+    const arr=Array.isArray(d.quizzes)?d.quizzes:[];
+    return arr.filter(q =>
+      (q.published === true || String(q.status||"").toLowerCase()==="published") &&
+      enrolled(u,q.subject || q.course || q.courseName)
+    ).sort((a,b)=>new Date(b.updatedAt||b.createdAt||0)-new Date(a.updatedAt||a.createdAt||0));
+  };
+  const esc = x => String(x==null?"":x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  window.LearnoraPublished = {read,getUser,ident,enrolled,publishedResults,publishedQuizzes,esc};
+})();
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const api=window.LearnoraPublished, user=api && api.getUser();
+  if (!user) return;
+  const results=api.publishedResults(user);
+  if (!results.length) return;
+  const esc=api.esc;
+  const section=document.createElement("section");
+  section.className="content-card";
+  section.style.marginBottom="22px";
+  section.innerHTML='<div class="card-header"><div><h2>Latest Published Results</h2><p>Results shared by your teacher. Latest results appear first.</p></div></div><div class="table-wrapper"><table class="data-table"><thead><tr><th>Assessment</th><th>Course</th><th>Marks</th><th>Percentage</th><th>Grade</th><th>Status</th><th>Date</th></tr></thead><tbody>'+results.map(r=>'<tr><td><strong>'+esc(r.assessmentTitle||"Assessment")+'</strong>'+(r.remarks?'<br><small>'+esc(r.remarks)+'</small>':'')+'</td><td>'+esc(r.course)+'</td><td>'+esc(r.obtainedMarks)+' / '+esc(r.totalMarks)+'</td><td>'+esc(r.percentage)+'%</td><td>'+esc(r.grade)+'</td><td>'+esc(r.outcome)+'</td><td>'+esc(new Date(r.updatedAt||r.createdAt||Date.now()).toLocaleDateString())+'</td></tr>').join("")+'</tbody></table></div>';
+  const container=document.querySelector(".dashboard-container, .content-area, main");
+  const table=document.getElementById("resultsTableBody");
+  if (container) {
+    if (table && table.closest("section")) table.closest("section").before(section);
+    else container.prepend(section);
+  }
+  window.addEventListener("storage",e=>{if(e.key==="learnora_teacher_results") location.reload();});
+});
+</script>
+
+<script src="../../Js/learnora_assessment_runtime.js"></script>
+<script>document.addEventListener("DOMContentLoaded",function(){const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};const u=["learnora_current_user","logged_in_user","current_user"].map(k=>read(k,null)).find(x=>x&&typeof x==="object");if(!u)return;const id=String(u.id||u.userId||u.studentId||u.email||u.username||u.name||"").toLowerCase();const d=read("learnora_academic_data",{}),arr=(Array.isArray(d.quizAttempts)?d.quizAttempts:[]).filter(a=>String(a.studentId||"").toLowerCase()===id).sort((a,b)=>new Date(b.submittedAt||0)-new Date(a.submittedAt||0));if(!arr.length)return;const host=document.querySelector("main")||document.querySelector(".main-content")||document.body;const box=document.createElement("section");box.style.cssText="margin:20px;padding:20px;border:1px solid #dbe4ef;border-radius:14px;background:var(--card-bg,#fff)";const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));box.innerHTML='<h2>Latest Quiz Marks</h2>'+arr.map(a=>'<article style="padding:12px 0;border-bottom:1px solid #e2e8f0"><strong>'+esc(a.title||"Quiz")+'</strong><p>Marks: '+esc(a.score??"File submitted")+' / '+esc(a.totalMarks||"—")+' · '+esc(a.percentage??"—")+'% · '+esc(a.submittedAt||"")+'</p>'+(a.attachment?'<p>Attached file: '+esc(a.attachment.name||"File")+'</p>':'')+'</article>').join("");host.prepend(box)});</script>
+
 </body>
 
 </html>

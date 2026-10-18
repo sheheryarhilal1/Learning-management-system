@@ -786,6 +786,23 @@
 })();
 </script>
 
+<script src="../../Js/learnora_assessment_runtime.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+ const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};const data=read("learnora_academic_data",{});const quizzes=Array.isArray(data.quizzes)?data.quizzes:[];const attempts=Array.isArray(data.quizAttempts)?data.quizAttempts:[];
+ const parent=["learnora_current_user","learnora_current_parent","current_parent","logged_in_user"].map(k=>read(k,null)).find(x=>x&&typeof x==="object")||{};
+ const users=read("learnora_users",[]);let child=read("learnora_current_child",null);if(typeof child==="string")child=users.find(x=>String(x.id||x.email||x.studentId)===child);if(!child&&child&&typeof child==="object"){}
+ if(!child){const wanted=String(parent.childId||parent.studentId||parent.child_id||parent.student_id||parent.childEmail||parent.studentEmail||"").toLowerCase();child=(Array.isArray(users)?users:[]).find(x=>String(x.id||x.studentId||x.email||"").toLowerCase()===wanted)||null;}
+ const childId=String(child?.id||child?.studentId||child?.email||child?.username||child?.name||parent.childId||parent.studentId||"").toLowerCase();
+ const relevant=quizzes.filter(q=>(q.published===true||String(q.status||"").toLowerCase()==="published")).sort((a,b)=>new Date(b.updatedAt||b.createdAt||0)-new Date(a.updatedAt||a.createdAt||0));
+ const relevantAttempts=attempts.filter(a=>!childId||String(a.studentId||"").toLowerCase()===childId).sort((a,b)=>new Date(b.submittedAt||0)-new Date(a.submittedAt||0));
+ const anchor=document.querySelector("main")||document.querySelector(".main-content")||document.body;const box=document.createElement("section");box.id="parentLatestQuizSummary";box.style.cssText="margin:20px;padding:20px;border-radius:14px;background:var(--card-bg,#fff);border:1px solid #dbe4ef";
+ const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ box.innerHTML='<h2 style="margin-bottom:6px">Latest Published Quizzes & Child Submissions</h2><p style="margin-bottom:15px;color:#64748b">Published assessments and the selected child’s submitted marks.</p>'+(relevant.length?relevant.map(q=>{const a=relevantAttempts.find(x=>String(x.quizId)===String(q.id));return '<article style="padding:14px;margin:10px 0;border:1px solid #e2e8f0;border-radius:10px"><strong>'+esc(q.title||"Quiz")+'</strong><p>'+esc(q.subject||q.course||q.courseName||"")+' · '+esc(q.type||"Quiz")+' · '+esc(q.totalMarks||"—")+' marks</p>'+(q.attachment?'<p>📎 '+esc(q.attachment.name||"Attached file")+'</p>':'')+(a?'<p style="color:#15803d;font-weight:700">Submitted: '+esc(a.score??"File submitted")+' / '+esc(a.totalMarks||q.totalMarks||"—")+' · '+esc(a.submittedAt||"")+'</p>': '<p style="color:#64748b">Not submitted yet</p>')+(a?.attachment?'<p>Student attachment: '+esc(a.attachment.name||"File")+'</p>':'')+'</article>'}).join(""):'<p>No published quizzes available.</p>');
+ anchor.prepend(box);
+});
+</script>
+
 </body>
 
 </html>
