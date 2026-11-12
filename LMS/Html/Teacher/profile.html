@@ -4,18 +4,21 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>My Profile | Learnora LMS</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+        /* =====================================
+           GLOBAL
+        ===================================== */
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -26,23 +29,44 @@
             font-family: 'DM Sans', sans-serif;
             background: #07111f;
             color: #eaf2ff;
-            display: flex;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* SIDEBAR - SAME AS TEACHER DASHBOARD */
+        /* =====================================
+           SIDEBAR
+        ===================================== */
 
         .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+
             width: 235px;
+            height: 100vh;
+
             background: #0b1728;
             border-right: 1px solid #1b2b42;
+
             padding: 26px 16px;
-            flex-shrink: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            z-index: 1000;
+
+            transform: none;
+            transition: none;
         }
 
         .logo {
             width: 100%;
             padding: 0 5px 32px;
+
             display: flex;
             justify-content: center;
             align-items: center;
@@ -61,41 +85,113 @@
             font-size: 11px;
             letter-spacing: 1.5px;
             margin: 12px;
+            font-weight: 700;
         }
+
+        /* NAVIGATION LINKS */
 
         .nav-link {
             display: flex;
             align-items: center;
             gap: 13px;
+
+            width: 100%;
             padding: 13px 12px;
+
             color: #9eafc7;
+            background: transparent;
+
             text-decoration: none;
             border-radius: 9px;
+
             margin-bottom: 6px;
+
             font-size: 14px;
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transform: none !important;
+            animation: none !important;
+
+            transition:
+                color .15s ease,
+                background-color .15s ease !important;
         }
 
-        .nav-link:hover,
-        .nav-link.active {
+        .nav-link i {
+            width: 19px;
+            min-width: 19px;
+            text-align: center;
+
+            transform: none !important;
+            transition: none !important;
+        }
+
+        /*
+           IMPORTANT:
+           Non-active links never receive the active
+           background from mouse hover.
+        */
+
+        .nav-link:hover:not(.active) {
+            color: #9eafc7;
+            background: transparent;
+            transform: none !important;
+        }
+
+        /* CURRENT PAGE ONLY */
+
+        .nav-link.active,
+        .nav-link.active:hover {
             color: #54c9ff;
             background: #122b43;
+            font-weight: 700;
+            transform: none !important;
         }
 
-        /* MAIN */
+        /* =====================================
+           MOBILE OVERLAY
+        ===================================== */
+
+        .sidebar-overlay {
+            display: none;
+        }
+
+        /* =====================================
+           MAIN CONTENT
+        ===================================== */
 
         .main {
-            flex: 1;
+            margin-left: 235px;
+            width: calc(100% - 235px);
+            min-height: 100vh;
             min-width: 0;
         }
 
+        /* =====================================
+           TOPBAR
+        ===================================== */
+
         .topbar {
-            height: 78px;
+            min-height: 78px;
             padding: 0 32px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             border-bottom: 1px solid #1b2b42;
             background: #091525;
+
+            gap: 15px;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
         }
 
         .topbar h2 {
@@ -112,17 +208,22 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-shrink: 0;
         }
 
         .avatar {
             width: 42px;
             height: 42px;
+
             display: grid;
             place-items: center;
+
             border-radius: 12px;
             background: #123a57;
+
             color: #58caff;
             font-weight: 700;
+
             overflow: hidden;
         }
 
@@ -132,11 +233,34 @@
             object-fit: cover;
         }
 
-        .teacher small {
+        .teacher-info strong {
+            font-size: 13px;
+        }
+
+        .teacher-info small {
             color: #8ea1ba;
             display: block;
             margin-top: 4px;
         }
+
+        /* MENU BUTTON */
+
+        .menu-toggle {
+            display: none;
+
+            border: none;
+            outline: none;
+
+            color: white;
+            background: transparent;
+
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* =====================================
+           PAGE CONTENT
+        ===================================== */
 
         .content {
             padding: 30px 32px;
@@ -156,7 +280,9 @@
             font-size: 13px;
         }
 
-        /* PROFILE LAYOUT */
+        /* =====================================
+           PROFILE LAYOUT
+        ===================================== */
 
         .profile-layout {
             display: grid;
@@ -173,7 +299,9 @@
             min-width: 0;
         }
 
-        /* PROFILE LEFT CARD */
+        /* =====================================
+           PROFILE LEFT CARD
+        ===================================== */
 
         .profile-card {
             text-align: center;
@@ -182,15 +310,22 @@
         .profile-photo {
             width: 110px;
             height: 110px;
+
             margin: 5px auto 18px;
+
             border-radius: 50%;
+
             background: #123a57;
             border: 3px solid #244e6c;
+
             color: #58caff;
+
             display: grid;
             place-items: center;
+
             font-size: 38px;
             font-weight: 700;
+
             overflow: hidden;
         }
 
@@ -203,6 +338,7 @@
         .profile-card h2 {
             font: 700 19px Manrope, sans-serif;
             margin-bottom: 6px;
+            overflow-wrap: anywhere;
         }
 
         .designation {
@@ -219,13 +355,19 @@
 
         .upload-btn {
             display: inline-block;
+
             margin-top: 18px;
             padding: 10px 15px;
+
             background: #12344d;
             color: #58caff;
+
             border-radius: 8px;
+
             font-size: 12px;
             cursor: pointer;
+
+            transition: background .2s ease;
         }
 
         .upload-btn:hover {
@@ -241,15 +383,20 @@
         .profile-detail {
             display: flex;
             justify-content: space-between;
+            align-items: flex-start;
+
             gap: 10px;
+
             font-size: 12px;
             padding: 11px 0;
+
             border-bottom: 1px solid #1b2b40;
             text-align: left;
         }
 
         .profile-detail span {
             color: #879bb4;
+            flex-shrink: 0;
         }
 
         .profile-detail strong {
@@ -257,12 +404,15 @@
             overflow-wrap: anywhere;
         }
 
-        /* FORM */
+        /* =====================================
+           PROFILE FORM
+        ===================================== */
 
         .section-head {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             gap: 10px;
             margin-bottom: 23px;
         }
@@ -300,14 +450,22 @@
         .form-group input,
         .form-group textarea {
             width: 100%;
+
             background: #091728;
             border: 1px solid #263a53;
+
             border-radius: 9px;
+
             padding: 12px 13px;
+
             color: #eaf2ff;
+
             font-family: inherit;
             font-size: 13px;
+
             outline: none;
+
+            transition: border-color .2s ease;
         }
 
         .form-group input:focus,
@@ -325,23 +483,34 @@
             min-height: 105px;
         }
 
+        /* =====================================
+           FORM BUTTONS
+        ===================================== */
+
         .form-actions {
             display: flex;
             justify-content: flex-end;
             gap: 12px;
+
             margin-top: 25px;
             padding-top: 20px;
+
             border-top: 1px solid #20334b;
         }
 
         .btn {
             border: 0;
             border-radius: 8px;
+
             padding: 11px 19px;
+
             font-size: 13px;
             font-weight: 600;
+
             cursor: pointer;
             font-family: inherit;
+
+            transition: background .2s ease;
         }
 
         .btn-primary {
@@ -362,39 +531,58 @@
             background: #243c58;
         }
 
-        /* MOBILE */
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
 
-        .menu-toggle {
-            display: none;
-            border: 0;
-            color: white;
-            background: transparent;
-            font-size: 20px;
-            cursor: pointer;
-        }
+        @media(max-width: 1100px) {
 
-        @media(max-width:1050px) {
             .profile-layout {
                 grid-template-columns: 1fr;
             }
+
+            .profile-card {
+                max-width: 100%;
+            }
+
         }
 
-        @media(max-width:700px) {
+        @media(max-width: 700px) {
+
             .sidebar {
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                left: -250px;
-                z-index: 10;
-                transition: left .25s;
-                overflow-y: auto;
+                width: 250px;
+                min-width: 250px;
+
+                left: 0;
+
+                transform: translateX(-100%) !important;
+
+                transition: transform .25s ease !important;
             }
 
             .sidebar.open {
-                left: 0;
+                transform: translateX(0) !important;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
             }
 
             .menu-toggle {
+                display: block;
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+                inset: 0;
+
+                background: rgba(0, 0, 0, .55);
+
+                z-index: 999;
+            }
+
+            .sidebar-overlay.show {
                 display: block;
             }
 
@@ -422,9 +610,11 @@
             .card {
                 padding: 17px;
             }
+
         }
 
-        @media(max-width:500px) {
+        @media(max-width: 500px) {
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
@@ -440,69 +630,92 @@
             .btn {
                 width: 100%;
             }
+
         }
+
     </style>
 </head>
 
 <body>
 
-    <!-- SIDEBAR - SAME AS TEACHER DASHBOARD -->
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
 
     <aside class="sidebar" id="sidebar">
 
         <div class="logo">
-            <img src="/assets/images/logo.PNG" alt="">
+            <img src="/assets/images/logo.PNG" alt="Learnora LMS">
         </div>
 
         <div class="menu-label">TEACHING MENU</div>
 
         <a href="teacher.html" class="nav-link">
-            <i class="fa-solid fa-house"></i> Dashboard
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
         </a>
 
         <a href="courses.html" class="nav-link">
-            <i class="fa-solid fa-book-open"></i> My Courses
+            <i class="fa-solid fa-book-open"></i>
+            <span>My Courses</span>
         </a>
 
         <a href="attendance.html" class="nav-link">
-            <i class="fa-solid fa-calendar-check"></i> Attendance
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Attendance</span>
         </a>
 
         <a href="assignments.html" class="nav-link">
-            <i class="fa-solid fa-file-pen"></i> Assignments
+            <i class="fa-solid fa-file-pen"></i>
+            <span>Assignments</span>
         </a>
 
         <a href="quizzes.html" class="nav-link">
-            <i class="fa-solid fa-circle-question"></i> Quizzes & Exams
+            <i class="fa-solid fa-circle-question"></i>
+            <span>Quizzes & Exams</span>
         </a>
 
         <a href="results.html" class="nav-link">
-            <i class="fa-solid fa-chart-column"></i> Results
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Results</span>
         </a>
 
         <a href="announcements.html" class="nav-link">
-            <i class="fa-solid fa-bullhorn"></i> Announcements
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>Announcements</span>
         </a>
 
-        <a href="profile.html" class="nav-link active">
-            <i class="fa-solid fa-user"></i> My Profile
+        <a href="profile.html" class="nav-link">
+            <i class="fa-solid fa-user"></i>
+            <span>My Profile</span>
         </a>
 
         <a href="#" class="nav-link" id="logoutBtn">
-            <i class="fa-solid fa-right-from-bracket"></i> Logout
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
         </a>
 
     </aside>
 
-    <!-- MAIN CONTENT -->
+    <!-- MOBILE OVERLAY -->
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
 
     <main class="main">
 
+        <!-- TOPBAR -->
+
         <header class="topbar">
 
-            <div style="display:flex;align-items:center;gap:14px">
+            <div class="topbar-left">
 
-                <button class="menu-toggle" id="menuToggle">
+                <button class="menu-toggle" id="menuToggle"
+                    type="button" aria-label="Toggle navigation">
                     <i class="fa-solid fa-bars"></i>
                 </button>
 
@@ -526,14 +739,23 @@
 
         </header>
 
+
+        <!-- =====================================
+             PROFILE CONTENT
+        ====================================== -->
+
         <section class="content">
 
             <div class="page-heading">
+
                 <h1>My Profile</h1>
+
                 <p class="muted">
                     View and update your personal and professional information.
                 </p>
+
             </div>
+
 
             <div class="profile-layout">
 
@@ -560,7 +782,10 @@
                         Change Photo
                     </label>
 
-                    <input type="file" id="photoInput" accept="image/*" hidden>
+                    <input type="file"
+                        id="photoInput"
+                        accept="image/*"
+                        hidden>
 
                     <hr class="profile-divider">
 
@@ -586,93 +811,155 @@
 
                 </section>
 
+
                 <!-- RIGHT PROFILE FORM -->
 
                 <section class="card">
 
                     <div class="section-head">
+
                         <h3>
                             <i class="fa-solid fa-user-pen"></i>
                             Personal Information
                         </h3>
+
                     </div>
+
 
                     <form id="profileForm">
 
                         <div class="form-grid">
 
                             <div class="form-group">
-                                <label>Full Name *</label>
-                                <input type="text" id="fullName"
-                                    placeholder="Enter full name" required>
+
+                                <label for="fullName">Full Name *</label>
+
+                                <input type="text"
+                                    id="fullName"
+                                    placeholder="Enter full name"
+                                    required>
+
                             </div>
 
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="email" id="email"
-                                    placeholder="Enter email" disabled>
-                            </div>
 
                             <div class="form-group">
-                                <label>Phone Number</label>
-                                <input type="tel" id="phone"
+
+                                <label for="email">Email Address</label>
+
+                                <input type="email"
+                                    id="email"
+                                    placeholder="Enter email"
+                                    disabled>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="phone">Phone Number</label>
+
+                                <input type="tel"
+                                    id="phone"
                                     placeholder="Enter phone number">
+
                             </div>
 
+
                             <div class="form-group">
-                                <label>Employee ID</label>
-                                <input type="text" id="employeeId"
+
+                                <label for="employeeId">Employee ID</label>
+
+                                <input type="text"
+                                    id="employeeId"
                                     placeholder="e.g. TCH-001">
+
                             </div>
 
+
                             <div class="form-group">
-                                <label>Department</label>
-                                <input type="text" id="department"
+
+                                <label for="department">Department</label>
+
+                                <input type="text"
+                                    id="department"
                                     placeholder="e.g. Computer Science">
+
                             </div>
 
+
                             <div class="form-group">
-                                <label>Designation</label>
-                                <input type="text" id="designation"
+
+                                <label for="designation">Designation</label>
+
+                                <input type="text"
+                                    id="designation"
                                     placeholder="e.g. Lecturer">
+
                             </div>
 
+
                             <div class="form-group">
-                                <label>Qualification</label>
-                                <input type="text" id="qualification"
+
+                                <label for="qualification">Qualification</label>
+
+                                <input type="text"
+                                    id="qualification"
                                     placeholder="e.g. BS Computer Science">
+
                             </div>
+
 
                             <div class="form-group">
-                                <label>Specialization</label>
-                                <input type="text" id="specialization"
+
+                                <label for="specialization">Specialization</label>
+
+                                <input type="text"
+                                    id="specialization"
                                     placeholder="e.g. Data Analytics">
+
                             </div>
 
+
                             <div class="form-group full">
-                                <label>Address</label>
-                                <input type="text" id="address"
+
+                                <label for="address">Address</label>
+
+                                <input type="text"
+                                    id="address"
                                     placeholder="Enter your address">
+
                             </div>
 
+
                             <div class="form-group full">
-                                <label>About Me</label>
+
+                                <label for="bio">About Me</label>
+
                                 <textarea id="bio"
                                     placeholder="Write a short professional introduction about yourself..."></textarea>
+
                             </div>
 
                         </div>
 
+
                         <div class="form-actions">
 
-                            <button type="reset" class="btn btn-secondary">
+                            <button type="reset"
+                                class="btn btn-secondary">
+
                                 <i class="fa-solid fa-rotate-left"></i>
                                 Reset
+
                             </button>
 
-                            <button type="submit" class="btn btn-primary">
+
+                            <button type="submit"
+                                class="btn btn-primary">
+
                                 <i class="fa-solid fa-floppy-disk"></i>
                                 Save Changes
+
                             </button>
 
                         </div>
@@ -687,41 +974,36 @@
 
     </main>
 
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
     <script>
 
-        const $ = id => document.getElementById(id);
+        (() => {
 
-        // FIND LOGGED-IN TEACHER
+            const $ = id => document.getElementById(id);
 
-        const userKeys = [
-            "learnora_current_user",
-            "current_teacher",
-            "currentTeacher",
-            "logged_in_user"
-        ];
+            const sidebar = $("sidebar");
+            const menuToggle = $("menuToggle");
+            const overlay = $("sidebarOverlay");
+            const logoutBtn = $("logoutBtn");
 
-        let activeKey = null;
-        let teacher = null;
 
-        for (const key of userKeys) {
+            /* =================================
+               1. AUTHENTICATION
+            ================================= */
 
-            try {
+            const userKeys = [
+                "learnora_current_user",
+                "current_teacher",
+                "currentTeacher",
+                "logged_in_user"
+            ];
 
-                const user = JSON.parse(localStorage.getItem(key));
-
-                if (user && typeof user === "object" &&
-                    (user.role || "").toLowerCase() === "teacher") {
-
-                    activeKey = key;
-                    teacher = user;
-                    break;
-                }
-
-            } catch (error) { }
-
-        }
-
-        if (!teacher) {
+            let activeKey = null;
+            let teacher = null;
 
             for (const key of userKeys) {
 
@@ -729,333 +1011,577 @@
 
                     const user = JSON.parse(localStorage.getItem(key));
 
-                    if (user && typeof user === "object") {
+                    if (
+                        user &&
+                        typeof user === "object" &&
+                        (user.role || "").toLowerCase() === "teacher"
+                    ) {
+
                         activeKey = key;
                         teacher = user;
                         break;
+
                     }
 
-                } catch (error) { }
+                } catch (error) {
+                    console.warn("Invalid user session:", key);
+                }
 
             }
 
-        }
 
-        if (!teacher) {
+            if (!teacher) {
 
-            alert("Please login first.");
-            location.href = "login.html";
+                alert("Please login first.");
 
-        } else {
+                window.location.replace("../login.html");
+
+                return;
+
+            }
+
+
+            /* =================================
+               2. ROLE VALIDATION
+            ================================= */
 
             const role = (teacher.role || "").toLowerCase();
 
             if (role === "student") {
-                location.href = "student.html";
+
+                window.location.replace("../students/dashboard.html");
+                return;
+
             }
 
             if (role === "parent") {
-                location.href = "parent.html";
-            }
 
-        }
-
-        let photoData = "";
-
-        // LOAD PROFILE
-
-        function loadProfile() {
-
-            if (!teacher) return;
-
-            $("fullName").value =
-                teacher.name ||
-                teacher.fullName ||
-                teacher.teacherName ||
-                teacher.username || "";
-
-            $("email").value =
-                teacher.email ||
-                teacher.user_email || "";
-
-            $("phone").value = teacher.phone || "";
-
-            $("employeeId").value = teacher.employeeId || "";
-
-            $("department").value = teacher.department || "";
-
-            $("designation").value = teacher.designation || "";
-
-            $("qualification").value = teacher.qualification || "";
-
-            $("specialization").value = teacher.specialization || "";
-
-            $("address").value = teacher.address || "";
-
-            $("bio").value = teacher.bio || "";
-
-            photoData = teacher.profilePhoto || "";
-
-            updatePreview();
-
-        }
-
-        // UPDATE PROFILE PREVIEW
-
-        function updatePreview() {
-
-            const name = $("fullName").value.trim() || "Teacher";
-
-            $("previewName").textContent = name;
-            $("topName").textContent = name;
-
-            $("previewEmail").textContent =
-                $("email").value || "Email not provided";
-
-            $("previewDesignation").textContent =
-                $("designation").value || "Faculty Member";
-
-            $("previewId").textContent =
-                $("employeeId").value || "Not provided";
-
-            $("previewDepartment").textContent =
-                $("department").value || "Not provided";
-
-            $("previewPhone").textContent =
-                $("phone").value || "Not provided";
-
-            const initial = name.charAt(0).toUpperCase();
-
-            if (photoData) {
-
-                const image = document.createElement("img");
-                image.src = photoData;
-                image.alt = "Teacher Profile";
-
-                $("profileAvatar").replaceChildren(image);
-
-                const topImage = document.createElement("img");
-                topImage.src = photoData;
-                topImage.alt = "Teacher";
-
-                $("topAvatar").replaceChildren(topImage);
-
-            } else {
-
-                $("profileAvatar").textContent = initial;
-                $("topAvatar").textContent = initial;
-
-            }
-
-        }
-
-        // LIVE PREVIEW
-
-        [
-            "fullName",
-            "phone",
-            "employeeId",
-            "department",
-            "designation"
-        ].forEach(id => {
-
-            $(id).addEventListener("input", updatePreview);
-
-        });
-
-        // PROFILE PHOTO UPLOAD
-
-        $("photoInput").addEventListener("change", event => {
-
-            const file = event.target.files[0];
-
-            if (!file) return;
-
-            if (!file.type.startsWith("image/")) {
-                alert("Please select a valid image.");
+                window.location.replace("../parent/dashboard.html");
                 return;
+
             }
 
-            if (file.size > 2 * 1024 * 1024) {
-                alert("Image size must be less than 2MB.");
-                event.target.value = "";
-                return;
-            }
 
-            const reader = new FileReader();
+            /* =================================
+               3. ACTIVE SIDEBAR NAVIGATION
+            ================================= */
 
-            reader.onload = e => {
+            function setActiveNavigation() {
 
-                photoData = e.target.result;
-                updatePreview();
+                const currentPage = window.location.pathname
+                    .split("/")
+                    .filter(Boolean)
+                    .pop()
+                    .toLowerCase();
 
-            };
+                const links = sidebar.querySelectorAll(".nav-link");
 
-            reader.readAsDataURL(file);
+                links.forEach(link => {
 
-        });
+                    link.classList.remove("active");
 
-        // SAVE PROFILE
+                    const href = link.getAttribute("href");
 
-        $("profileForm").addEventListener("submit", event => {
+                    if (!href || href === "#") return;
 
-            event.preventDefault();
+                    const linkPage = href
+                        .split("/")
+                        .pop()
+                        .toLowerCase();
 
-            if (!teacher || !activeKey) return;
+                    if (currentPage === linkPage) {
 
-            const updatedTeacher = {
+                        link.classList.add("active");
 
-                ...teacher,
-
-                name: $("fullName").value.trim(),
-                fullName: $("fullName").value.trim(),
-
-                phone: $("phone").value.trim(),
-
-                employeeId: $("employeeId").value.trim(),
-
-                department: $("department").value.trim(),
-
-                designation: $("designation").value.trim(),
-
-                qualification: $("qualification").value.trim(),
-
-                specialization: $("specialization").value.trim(),
-
-                address: $("address").value.trim(),
-
-                bio: $("bio").value.trim(),
-
-                profilePhoto: photoData
-
-            };
-
-            try {
-
-                localStorage.setItem(
-                    activeKey,
-                    JSON.stringify(updatedTeacher)
-                );
-
-                teacher = updatedTeacher;
-
-                // Update other existing teacher login keys
-                userKeys.forEach(key => {
-
-                    if (key === activeKey) return;
-
-                    try {
-
-                        const existing = JSON.parse(localStorage.getItem(key));
-
-                        if (
-                            existing &&
-                            typeof existing === "object" &&
-                            (existing.role || "").toLowerCase() === "teacher"
-                        ) {
-
-                            localStorage.setItem(
-                                key,
-                                JSON.stringify({
-                                    ...existing,
-                                    ...updatedTeacher
-                                })
-                            );
-
-                        }
-
-                    } catch (error) { }
+                    }
 
                 });
 
+            }
+
+            setActiveNavigation();
+
+
+            /* =================================
+               4. SIDEBAR OPEN
+            ================================= */
+
+            function openSidebar() {
+
+                sidebar.classList.add("open");
+
+                if (overlay) {
+                    overlay.classList.add("show");
+                }
+
+                document.body.style.overflow = "hidden";
+
+            }
+
+
+            /* =================================
+               5. SIDEBAR CLOSE
+            ================================= */
+
+            function closeSidebar() {
+
+                sidebar.classList.remove("open");
+
+                if (overlay) {
+                    overlay.classList.remove("show");
+                }
+
+                document.body.style.overflow = "";
+
+            }
+
+
+            /* =================================
+               6. SIDEBAR TOGGLE
+            ================================= */
+
+            if (menuToggle) {
+
+                menuToggle.addEventListener("click", function (event) {
+
+                    event.stopPropagation();
+
+                    if (sidebar.classList.contains("open")) {
+
+                        closeSidebar();
+
+                    } else {
+
+                        openSidebar();
+
+                    }
+
+                });
+
+            }
+
+
+            /* =================================
+               7. OVERLAY CLICK
+            ================================= */
+
+            if (overlay) {
+
+                overlay.addEventListener("click", closeSidebar);
+
+            }
+
+
+            /* =================================
+               8. NAVIGATION CLICK
+            ================================= */
+
+            sidebar.querySelectorAll(".nav-link").forEach(link => {
+
+                link.addEventListener("click", function (event) {
+
+                    if (link.id === "logoutBtn") return;
+
+                    const href = link.getAttribute("href");
+
+                    if (!href || href === "#") {
+
+                        event.preventDefault();
+                        return;
+
+                    }
+
+                    sidebar.querySelectorAll(".nav-link")
+                        .forEach(item => item.classList.remove("active"));
+
+                    link.classList.add("active");
+
+                    if (window.innerWidth <= 700) {
+                        closeSidebar();
+                    }
+
+                });
+
+            });
+
+
+            /* =================================
+               9. ESCAPE KEY
+            ================================= */
+
+            document.addEventListener("keydown", function (event) {
+
+                if (event.key === "Escape") {
+                    closeSidebar();
+                }
+
+            });
+
+
+            /* =================================
+               10. WINDOW RESIZE
+            ================================= */
+
+            window.addEventListener("resize", function () {
+
+                if (window.innerWidth > 700) {
+                    closeSidebar();
+                }
+
+            });
+
+
+            /* =================================
+               11. PROFILE PHOTO DATA
+            ================================= */
+
+            let photoData = "";
+
+
+            /* =================================
+               12. LOAD PROFILE
+            ================================= */
+
+            function loadProfile() {
+
+                if (!teacher) return;
+
+                $("fullName").value =
+                    teacher.name ||
+                    teacher.fullName ||
+                    teacher.teacherName ||
+                    teacher.username ||
+                    "";
+
+                $("email").value =
+                    teacher.email ||
+                    teacher.user_email ||
+                    "";
+
+                $("phone").value = teacher.phone || "";
+
+                $("employeeId").value = teacher.employeeId || "";
+
+                $("department").value = teacher.department || "";
+
+                $("designation").value = teacher.designation || "";
+
+                $("qualification").value = teacher.qualification || "";
+
+                $("specialization").value = teacher.specialization || "";
+
+                $("address").value = teacher.address || "";
+
+                $("bio").value = teacher.bio || "";
+
+                photoData = teacher.profilePhoto || "";
+
                 updatePreview();
 
-                alert("Profile updated successfully!");
+            }
 
-            } catch (error) {
 
-                alert("Unable to save profile. Browser storage may be full.");
+            /* =================================
+               13. UPDATE PROFILE PREVIEW
+            ================================= */
+
+            function updatePreview() {
+
+                const name =
+                    $("fullName").value.trim() || "Teacher";
+
+                $("previewName").textContent = name;
+
+                $("topName").textContent = name;
+
+                $("previewEmail").textContent =
+                    $("email").value || "Email not provided";
+
+                $("previewDesignation").textContent =
+                    $("designation").value || "Faculty Member";
+
+                $("previewId").textContent =
+                    $("employeeId").value || "Not provided";
+
+                $("previewDepartment").textContent =
+                    $("department").value || "Not provided";
+
+                $("previewPhone").textContent =
+                    $("phone").value || "Not provided";
+
+                const initial = name.charAt(0).toUpperCase();
+
+                if (photoData) {
+
+                    const image = document.createElement("img");
+
+                    image.src = photoData;
+                    image.alt = "Teacher Profile";
+
+                    $("profileAvatar").replaceChildren(image);
+
+
+                    const topImage = document.createElement("img");
+
+                    topImage.src = photoData;
+                    topImage.alt = "Teacher";
+
+                    $("topAvatar").replaceChildren(topImage);
+
+                } else {
+
+                    $("profileAvatar").textContent = initial;
+
+                    $("topAvatar").textContent = initial;
+
+                }
 
             }
 
-        });
 
-        // RESET FORM
-
-        $("profileForm").addEventListener("reset", () => {
-
-            setTimeout(() => {
-                loadProfile();
-                $("photoInput").value = "";
-            }, 0);
-
-        });
-
-        // MOBILE SIDEBAR
-
-        $("menuToggle").addEventListener("click", () => {
-
-            $("sidebar").classList.toggle("open");
-
-        });
-
-        document.addEventListener("click", event => {
-
-            if (
-                window.innerWidth <= 700 &&
-                $("sidebar").classList.contains("open") &&
-                !$("sidebar").contains(event.target) &&
-                !$("menuToggle").contains(event.target)
-            ) {
-
-                $("sidebar").classList.remove("open");
-
-            }
-
-        });
-
-        document.addEventListener("keydown", event => {
-
-            if (event.key === "Escape") {
-                $("sidebar").classList.remove("open");
-            }
-
-        });
-
-        window.addEventListener("resize", () => {
-
-            if (window.innerWidth > 700) {
-                $("sidebar").classList.remove("open");
-            }
-
-        });
-
-        // LOGOUT
-
-        $("logoutBtn").addEventListener("click", event => {
-
-            event.preventDefault();
-
-            if (!confirm("Are you sure you want to logout?")) return;
+            /* =================================
+               14. LIVE PREVIEW
+            ================================= */
 
             [
-                "learnora_current_user",
-                "current_teacher",
-                "currentTeacher",
-                "logged_in_user",
-                "logged_in",
-                "user_role",
-                "user_email",
-                "user_id"
-            ].forEach(key => localStorage.removeItem(key));
+                "fullName",
+                "phone",
+                "employeeId",
+                "department",
+                "designation"
+            ].forEach(id => {
 
-            location.href = "login.html";
+                $(id).addEventListener("input", updatePreview);
 
-        });
+            });
 
-        // INITIALIZE
 
-        loadProfile();
+            /* =================================
+               15. PROFILE PHOTO UPLOAD
+            ================================= */
+
+            $("photoInput").addEventListener("change", event => {
+
+                const file = event.target.files[0];
+
+                if (!file) return;
+
+                if (!file.type.startsWith("image/")) {
+
+                    alert("Please select a valid image.");
+
+                    event.target.value = "";
+                    return;
+
+                }
+
+                if (file.size > 2 * 1024 * 1024) {
+
+                    alert("Image size must be less than 2MB.");
+
+                    event.target.value = "";
+                    return;
+
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = e => {
+
+                    photoData = e.target.result;
+
+                    updatePreview();
+
+                };
+
+                reader.readAsDataURL(file);
+
+            });
+
+
+            /* =================================
+               16. SAVE PROFILE
+            ================================= */
+
+            $("profileForm").addEventListener("submit", event => {
+
+                event.preventDefault();
+
+                if (!teacher || !activeKey) return;
+
+                const updatedTeacher = {
+
+                    ...teacher,
+
+                    name: $("fullName").value.trim(),
+
+                    fullName: $("fullName").value.trim(),
+
+                    phone: $("phone").value.trim(),
+
+                    employeeId: $("employeeId").value.trim(),
+
+                    department: $("department").value.trim(),
+
+                    designation: $("designation").value.trim(),
+
+                    qualification: $("qualification").value.trim(),
+
+                    specialization: $("specialization").value.trim(),
+
+                    address: $("address").value.trim(),
+
+                    bio: $("bio").value.trim(),
+
+                    profilePhoto: photoData
+
+                };
+
+
+                try {
+
+                    localStorage.setItem(
+                        activeKey,
+                        JSON.stringify(updatedTeacher)
+                    );
+
+                    teacher = updatedTeacher;
+
+
+                    // Update other existing teacher login keys
+
+                    userKeys.forEach(key => {
+
+                        if (key === activeKey) return;
+
+                        try {
+
+                            const existing = JSON.parse(
+                                localStorage.getItem(key)
+                            );
+
+                            if (
+                                existing &&
+                                typeof existing === "object" &&
+                                (existing.role || "").toLowerCase() === "teacher"
+                            ) {
+
+                                localStorage.setItem(
+                                    key,
+                                    JSON.stringify({
+                                        ...existing,
+                                        ...updatedTeacher
+                                    })
+                                );
+
+                            }
+
+                        } catch (error) {
+                            console.warn("Profile sync skipped:", key);
+                        }
+
+                    });
+
+
+                    updatePreview();
+
+                    alert("Profile updated successfully!");
+
+                } catch (error) {
+
+                    alert(
+                        "Unable to save profile. Browser storage may be full."
+                    );
+
+                }
+
+            });
+
+
+            /* =================================
+               17. RESET FORM
+            ================================= */
+
+            $("profileForm").addEventListener("reset", () => {
+
+                setTimeout(() => {
+
+                    loadProfile();
+
+                    $("photoInput").value = "";
+
+                }, 0);
+
+            });
+
+
+            /* =================================
+               18. LOGOUT
+            ================================= */
+
+            if (logoutBtn) {
+
+                logoutBtn.addEventListener("click", event => {
+
+                    event.preventDefault();
+
+                    const confirmed = confirm(
+                        "Are you sure you want to logout?"
+                    );
+
+                    if (!confirmed) return;
+
+
+                    const sessionKeys = [
+
+                        "learnora_current_user",
+                        "learnora_logged_in",
+                        "learnora_current_role",
+
+                        "current_teacher",
+                        "currentTeacher",
+
+                        "current_student",
+                        "currentStudent",
+
+                        "current_parent",
+                        "current_child",
+
+                        "logged_in_user",
+                        "logged_in",
+
+                        "user_role",
+                        "user_email",
+                        "user_id"
+
+                    ];
+
+
+                    sessionKeys.forEach(key => {
+
+                        localStorage.removeItem(key);
+
+                    });
+
+
+                    sessionStorage.clear();
+
+                    closeSidebar();
+
+                    window.location.replace("../login.html");
+
+                });
+
+            }
+
+
+            /* =================================
+               19. INITIALIZE PROFILE
+            ================================= */
+
+            loadProfile();
+
+        })();
 
     </script>
 
