@@ -129,13 +129,13 @@ img {
 }
 
 
+
 /* =========================================================
-   SIDEBAR LOGO
-   ========================================================= */
+   SIDEBAR LOGO — FIXED FOR STRONG + SPAN HTML
+========================================================= */
 
 .sidebar-logo {
     height: var(--topbar-height);
-
     padding: 0 20px;
 
     display: flex;
@@ -143,8 +143,57 @@ img {
     gap: 12px;
 
     border-bottom: 1px solid var(--border);
-
     flex-shrink: 0;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--cyan)
+    );
+
+    color: white;
+    font-size: 18px;
+
+    box-shadow: 0 8px 25px rgba(40, 120, 255, 0.25);
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3px;
+    line-height: 1.1;
+}
+
+.logo-text strong {
+    font-family: "Manrope", sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.logo-text span {
+    font-family: "DM Sans", sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--cyan);
+    letter-spacing: 3px;
+    line-height: 1.2;
 }
 
 .logo-icon {
@@ -180,7 +229,7 @@ img {
 .logo-text h2 {
     font-family: "Manrope", sans-serif;
 
-    font-size: 21px;
+    font-size: 25px;
     font-weight: 800;
 
     letter-spacing: -0.5px;
