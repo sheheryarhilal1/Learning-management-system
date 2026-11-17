@@ -1,0 +1,768 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Learnora LMS</title>
+
+    <link rel="stylesheet" href="../../Css/student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .profile-page {
+            padding: 25px;
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h1 {
+            font-size: 27px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .page-heading p {
+            color: #7b8495;
+            font-size: 14px;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .profile-card,
+        .profile-section {
+            background: #fff;
+            border: 1px solid #e9edf3;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(20, 40, 80, 0.035);
+        }
+
+        .profile-card {
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            margin: 5px auto 15px;
+            background: #eaf3ff;
+            color: #2675df;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            font-weight: 800;
+            border: 4px solid #f1f6ff;
+        }
+
+        .profile-card h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .profile-card .student-email {
+            font-size: 13px;
+            color: #7b8495;
+            overflow-wrap: anywhere;
+        }
+
+        .student-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #eaf7ef;
+            color: #198754;
+            border-radius: 30px;
+            padding: 7px 13px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .profile-meta {
+            margin-top: 22px;
+            text-align: left;
+            border-top: 1px solid #edf0f4;
+            padding-top: 16px;
+        }
+
+        .meta-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .meta-item span:first-child {
+            color: #7b8495;
+        }
+
+        .meta-item span:last-child {
+            font-weight: 700;
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-heading h3 {
+            font-size: 17px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .section-heading i {
+            color: #2879e6;
+            margin-right: 7px;
+        }
+
+        .profile-form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 17px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #424c5d;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dfe5ed;
+            border-radius: 9px;
+            outline: none;
+            font-family: inherit;
+            font-size: 13px;
+            color: #303b4c;
+            background: #fff;
+            transition: .2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2879e6;
+            box-shadow: 0 0 0 3px rgba(40, 121, 230, .09);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 85px;
+        }
+
+        .form-group input[readonly] {
+            background: #f6f8fb;
+            color: #7b8495;
+            cursor: not-allowed;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 9px;
+            padding: 11px 18px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn-primary {
+            background: #2879e6;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #1766ce;
+        }
+
+        .btn-light {
+            background: #f0f3f7;
+            color: #4b5565;
+        }
+
+        .btn-light:hover {
+            background: #e5eaf0;
+        }
+
+        .account-info {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .info-box {
+            padding: 15px;
+            background: #f8faff;
+            border: 1px solid #edf1f8;
+            border-radius: 11px;
+        }
+
+        .info-box span {
+            display: block;
+            color: #7b8495;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .info-box strong {
+            font-size: 14px;
+            color: #303b4c;
+            overflow-wrap: anywhere;
+        }
+
+        .save-message {
+            display: none;
+            margin-top: 15px;
+            padding: 11px 14px;
+            background: #eaf7ef;
+            color: #198754;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1000px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .profile-page {
+                padding: 16px;
+            }
+
+            .profile-form,
+            .account-info {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-section,
+            .profile-card {
+                padding: 18px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+            }
+
+            .page-heading h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SAME SIDEBAR AS STUDENT ANNOUNCEMENTS -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <img src="/assets/images/logo.PNG" alt="Learnora LMS Logo">
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section-title">MAIN</div>
+
+            <a href="dashboard.html" class="nav-link">
+                <i class="fa-solid fa-grid-2"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="courses.html" class="nav-link">
+                <i class="fa-solid fa-book-open"></i>
+                <span>My Courses</span>
+            </a>
+
+            <a href="courses.html#add-drop" class="nav-link">
+                <i class="fa-solid fa-plus-minus"></i>
+                <span>Add / Drop Course</span>
+            </a>
+
+            <a href="lectures.html" class="nav-link">
+                <i class="fa-solid fa-chalkboard"></i>
+                <span>Lectures</span>
+            </a>
+
+            <a href="recordings.html" class="nav-link">
+                <i class="fa-solid fa-circle-play"></i>
+                <span>Recordings</span>
+            </a>
+
+            <div class="nav-section-title">ACADEMICS</div>
+
+            <a href="assignments.html" class="nav-link">
+                <i class="fa-solid fa-file-pen"></i>
+                <span>Assignments</span>
+            </a>
+
+            <a href="quizzes.html" class="nav-link">
+                <i class="fa-solid fa-clipboard-question"></i>
+                <span>Quizzes & Tests</span>
+            </a>
+
+            <a href="results.html" class="nav-link">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Results & Grades</span>
+            </a>
+
+            <a href="attendance.html" class="nav-link">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Attendance</span>
+            </a>
+
+            <a href="schedule.html" class="nav-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Schedule</span>
+            </a>
+
+            <a href="materials.html" class="nav-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Study Materials</span>
+            </a>
+
+            <div class="nav-section-title">COMMUNICATION</div>
+
+            <a href="announcements.html" class="nav-link">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Announcements</span>
+            </a>
+
+            <a href="messages.html" class="nav-link">
+                <i class="fa-solid fa-message"></i>
+                <span>Messages</span>
+            </a>
+
+            <div class="nav-section-title">ACCOUNT</div>
+
+            <a href="profile.html" class="nav-link active">
+                <i class="fa-solid fa-user"></i>
+                <span>My Profile</span>
+            </a>
+
+            <a href="settings.html" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="../login.html" class="nav-link logout-link" id="logoutLink">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div>
+                <h2>My Profile</h2>
+                <p>Manage your personal information</p>
+            </div>
+        </header>
+
+        <div class="profile-page">
+
+            <div class="page-heading">
+                <h1>My Profile</h1>
+                <p>View and update your student account information.</p>
+            </div>
+
+            <div class="profile-layout">
+
+                <!-- PROFILE CARD -->
+
+                <section class="profile-card">
+
+                    <div class="profile-avatar" id="profileAvatar">S</div>
+
+                    <h2 id="displayName">Student Name</h2>
+
+                    <p class="student-email" id="displayEmail">
+                        student@example.com
+                    </p>
+
+                    <div class="student-badge">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Active Student
+                    </div>
+
+                    <div class="profile-meta">
+
+                        <div class="meta-item">
+                            <span>Student ID</span>
+                            <span id="displayStudentId">Not available</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span>Role</span>
+                            <span>Student</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span>Department</span>
+                            <span id="displayDepartment">Not specified</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span>Semester</span>
+                            <span id="displaySemester">Not specified</span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- PROFILE CONTENT -->
+
+                <div class="profile-content">
+
+                    <!-- PERSONAL INFORMATION -->
+
+                    <section class="profile-section">
+
+                        <div class="section-heading">
+                            <h3>
+                                <i class="fa-solid fa-user"></i>
+                                Personal Information
+                            </h3>
+                        </div>
+
+                        <form id="profileForm">
+
+                            <div class="profile-form">
+
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" placeholder="Your registered email" readonly>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" placeholder="Enter phone number">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender">
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dateOfBirth">Date of Birth</label>
+                                    <input type="date" id="dateOfBirth">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="department">Department</label>
+                                    <input type="text" id="department" placeholder="Enter department">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="semester">Current Semester</label>
+                                    <select id="semester">
+                                        <option value="">Select Semester</option>
+                                        <option>1st Semester</option>
+                                        <option>2nd Semester</option>
+                                        <option>3rd Semester</option>
+                                        <option>4th Semester</option>
+                                        <option>5th Semester</option>
+                                        <option>6th Semester</option>
+                                        <option>7th Semester</option>
+                                        <option>8th Semester</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="studentId">Student ID</label>
+                                    <input type="text" id="studentId" placeholder="Student ID" readonly>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="address">Address</label>
+                                    <textarea id="address" placeholder="Enter your complete address"></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="save-message" id="saveMessage">
+                                <i class="fa-solid fa-circle-check"></i>
+                                Profile updated successfully!
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="reset" class="btn btn-light">
+                                    Reset
+                                </button>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    Save Changes
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- ACCOUNT INFORMATION -->
+
+                    <section class="profile-section">
+
+                        <div class="section-heading">
+                            <h3>
+                                <i class="fa-solid fa-shield-halved"></i>
+                                Account Information
+                            </h3>
+                        </div>
+
+                        <div class="account-info">
+
+                            <div class="info-box">
+                                <span>Account Type</span>
+                                <strong>Student Account</strong>
+                            </div>
+
+                            <div class="info-box">
+                                <span>Account Status</span>
+                                <strong style="color:#198754;">Active</strong>
+                            </div>
+
+                            <div class="info-box">
+                                <span>Learning Platform</span>
+                                <strong>Learnora LMS</strong>
+                            </div>
+
+                            <div class="info-box">
+                                <span>Profile Management</span>
+                                <strong>Student Portal</strong>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+    const $ = selector => document.querySelector(selector);
+
+    // Get logged-in student from existing Learnora localStorage keys
+    function getStudent() {
+        const possibleKeys = [
+            'learnora_current_user',
+            'current_student',
+            'currentStudent',
+            'logged_in_user'
+        ];
+
+        for (const key of possibleKeys) {
+            try {
+                const value = JSON.parse(localStorage.getItem(key));
+
+                if (value && typeof value === 'object') {
+                    return value;
+                }
+            } catch (error) {
+                // Ignore invalid stored JSON
+            }
+        }
+
+        return {};
+    }
+
+    const student = getStudent();
+
+    function getValue(...keys) {
+        for (const key of keys) {
+            if (student[key] !== undefined && student[key] !== null && student[key] !== '') {
+                return student[key];
+            }
+        }
+
+        return '';
+    }
+
+    const name = getValue('name', 'fullName', 'full_name', 'studentName', 'username') || 'Student Name';
+    const email = getValue('email', 'studentEmail');
+    const studentId = getValue('studentId', 'student_id', 'id', 'rollNumber');
+    const department = getValue('department', 'program', 'faculty');
+    const semester = getValue('semester', 'currentSemester');
+
+    // Populate profile
+    $('#displayName').textContent = name;
+    $('#displayEmail').textContent = email || 'Email not available';
+    $('#displayStudentId').textContent = studentId || 'Not available';
+    $('#displayDepartment').textContent = department || 'Not specified';
+    $('#displaySemester').textContent = semester || 'Not specified';
+
+    $('#profileAvatar').textContent = name.charAt(0).toUpperCase();
+
+    $('#fullName').value = name === 'Student Name' ? '' : name;
+    $('#email').value = email;
+    $('#studentId').value = studentId;
+    $('#department').value = department;
+    $('#semester').value = semester;
+
+    $('#phone').value = getValue('phone', 'phoneNumber', 'mobile');
+    $('#gender').value = getValue('gender');
+    $('#dateOfBirth').value = getValue('dateOfBirth', 'dob');
+    $('#address').value = getValue('address');
+
+    // Save profile information
+    $('#profileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const updatedStudent = {
+            ...student,
+            name: $('#fullName').value.trim(),
+            phone: $('#phone').value.trim(),
+            gender: $('#gender').value,
+            dateOfBirth: $('#dateOfBirth').value,
+            department: $('#department').value.trim(),
+            semester: $('#semester').value,
+            address: $('#address').value.trim()
+        };
+
+        // Update the existing logged-in user record
+        const storageKeys = [
+            'learnora_current_user',
+            'current_student',
+            'currentStudent',
+            'logged_in_user'
+        ];
+
+        let saved = false;
+
+        for (const key of storageKeys) {
+            if (localStorage.getItem(key)) {
+                localStorage.setItem(key, JSON.stringify(updatedStudent));
+                saved = true;
+                break;
+            }
+        }
+
+        if (!saved) {
+            localStorage.setItem('learnora_current_user', JSON.stringify(updatedStudent));
+        }
+
+        // Update profile card
+        $('#displayName').textContent = updatedStudent.name || 'Student Name';
+        $('#displayDepartment').textContent = updatedStudent.department || 'Not specified';
+        $('#displaySemester').textContent = updatedStudent.semester || 'Not specified';
+        $('#profileAvatar').textContent = (updatedStudent.name || 'S').charAt(0).toUpperCase();
+
+        const message = $('#saveMessage');
+        message.style.display = 'block';
+
+        setTimeout(() => {
+            message.style.display = 'none';
+        }, 3000);
+    });
+
+</script>
+
+<script src="../../js/student.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,773 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | Learnora LMS</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../Css/student.css">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .page-header p {
+            color: #8791a5;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .message-container {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            height: calc(100vh - 145px);
+            min-height: 550px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e9edf4;
+            box-shadow: 0 5px 25px rgba(20, 35, 70, .04);
+        }
+
+        /* MESSAGE LIST */
+
+        .message-sidebar {
+            border-right: 1px solid #edf0f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .message-sidebar-header {
+            padding: 22px;
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .message-sidebar-header h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #e5e9f0;
+            border-radius: 9px;
+            outline: none;
+            font-size: 13px;
+            background: #f9fafc;
+        }
+
+        .search-box:focus {
+            border-color: #079cff;
+        }
+
+        .conversation-list {
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .conversation {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f3f7;
+            transition: .2s;
+        }
+
+        .conversation:hover,
+        .conversation.active {
+            background: #f0f8ff;
+        }
+
+        .conversation.active {
+            border-left: 3px solid #079cff;
+        }
+
+        .avatar {
+            width: 43px;
+            height: 43px;
+            min-width: 43px;
+            border-radius: 50%;
+            background: #e5f3ff;
+            color: #078ce5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .conversation-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .conversation-info h4 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .conversation-info p {
+            color: #8993a5;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conversation-meta {
+            text-align: right;
+            font-size: 10px;
+            color: #9aa3b3;
+        }
+
+        .unread {
+            background: #079cff;
+            color: #fff;
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 7px;
+        }
+
+        /* CHAT AREA */
+
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .chat-header {
+            padding: 17px 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .chat-header h3 {
+            font-size: 14px;
+        }
+
+        .chat-header p {
+            color: #17a875;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+            background: #fcfdff;
+        }
+
+        .date-divider {
+            text-align: center;
+            font-size: 11px;
+            color: #a0a8b7;
+            margin: 5px 0;
+        }
+
+        .message {
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .message.received {
+            align-self: flex-start;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+        }
+
+        .message-bubble {
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .received .message-bubble {
+            background: #eef2f7;
+            color: #344054;
+            border-bottom-left-radius: 3px;
+        }
+
+        .sent .message-bubble {
+            background: #079cff;
+            color: white;
+            border-bottom-right-radius: 3px;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #a1a9b6;
+        }
+
+        .sent .message-time {
+            text-align: right;
+        }
+
+        /* MESSAGE INPUT */
+
+        .message-input-area {
+            padding: 17px 22px;
+            border-top: 1px solid #edf0f5;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .message-input {
+            flex: 1;
+            border: 1px solid #e5e9f0;
+            background: #f9fafc;
+            border-radius: 10px;
+            padding: 13px 15px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .message-input:focus {
+            border-color: #079cff;
+        }
+
+        .send-btn {
+            border: none;
+            background: #079cff;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .send-btn:hover {
+            background: #087fd0;
+        }
+
+        .empty-chat {
+            margin: auto;
+            text-align: center;
+            color: #9aa3b3;
+            font-size: 13px;
+        }
+
+        .empty-chat h3 {
+            color: #344054;
+            margin-bottom: 7px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 1000px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+
+        @media(max-width: 700px) {
+            .message-container {
+                grid-template-columns: 1fr;
+                height: calc(100vh - 130px);
+                min-height: 500px;
+            }
+
+            .message-sidebar {
+                display: none;
+            }
+
+            .message-sidebar.show-list {
+                display: flex;
+            }
+
+            .chat-area.hide-chat {
+                display: none;
+            }
+
+            .message {
+                max-width: 88%;
+            }
+
+            .page-header h1 {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- STUDENT SIDEBAR -->
+  
+<!-- SIDEBAR — SAME AS STUDENT ANNOUNCEMENTS -->
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        <img src="/assets/images/logo.PNG" alt="Learnora LMS Logo">
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <div class="nav-section-title">MAIN</div>
+
+        <a href="dashboard.html" class="nav-link">
+            <i class="fa-solid fa-grid-2"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="courses.html" class="nav-link">
+            <i class="fa-solid fa-book-open"></i>
+            <span>My Courses</span>
+        </a>
+
+        <a href="courses.html#add-drop" class="nav-link">
+            <i class="fa-solid fa-plus-minus"></i>
+            <span>Add / Drop Course</span>
+        </a>
+
+        <a href="lectures.html" class="nav-link">
+            <i class="fa-solid fa-chalkboard"></i>
+            <span>Lectures</span>
+        </a>
+
+        <a href="recordings.html" class="nav-link">
+            <i class="fa-solid fa-circle-play"></i>
+            <span>Recordings</span>
+        </a>
+
+        <div class="nav-section-title">ACADEMICS</div>
+
+        <a href="assignments.html" class="nav-link">
+            <i class="fa-solid fa-file-pen"></i>
+            <span>Assignments</span>
+        </a>
+
+        <a href="quizzes.html" class="nav-link">
+            <i class="fa-solid fa-clipboard-question"></i>
+            <span>Quizzes & Tests</span>
+        </a>
+
+        <a href="results.html" class="nav-link">
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Results & Grades</span>
+        </a>
+
+        <a href="attendance.html" class="nav-link">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Attendance</span>
+        </a>
+
+        <a href="schedule.html" class="nav-link">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Schedule</span>
+        </a>
+
+        <a href="materials.html" class="nav-link">
+            <i class="fa-solid fa-folder-open"></i>
+            <span>Study Materials</span>
+        </a>
+
+        <div class="nav-section-title">COMMUNICATION</div>
+
+        <a href="announcements.html" class="nav-link">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>Announcements</span>
+        </a>
+
+        <a href="messages.html" class="nav-link active">
+            <i class="fa-solid fa-message"></i>
+            <span>Messages</span>
+        </a>
+
+        <div class="nav-section-title">ACCOUNT</div>
+
+        <a href="profile.html" class="nav-link">
+            <i class="fa-solid fa-user"></i>
+            <span>My Profile</span>
+        </a>
+
+        <a href="settings.html" class="nav-link">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+        <a href="../login.html" class="nav-link logout-link" id="logoutLink">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+</aside>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <div class="page-header">
+            <div>
+                <h1>Messages</h1>
+                <p>Communicate with your teachers and university staff.</p>
+            </div>
+        </div>
+
+        <section class="message-container">
+
+            <!-- CONVERSATIONS -->
+            <div class="message-sidebar" id="messageSidebar">
+
+                <div class="message-sidebar-header">
+                    <h2>Inbox</h2>
+                    <input type="text" class="search-box"
+                        id="searchConversation"
+                        placeholder="Search conversations...">
+                </div>
+
+                <div class="conversation-list" id="conversationList">
+
+                    <div class="conversation active"
+                        data-name="Dr. Ahmed Khan"
+                        onclick="openChat('Dr. Ahmed Khan', 'AK')">
+
+                        <div class="avatar">AK</div>
+
+                        <div class="conversation-info">
+                            <h4>Dr. Ahmed Khan</h4>
+                            <p>Please review the latest lecture notes.</p>
+                        </div>
+
+                        <div class="conversation-meta">
+                            10:30 AM
+                            <span class="unread">1</span>
+                        </div>
+                    </div>
+
+                    <div class="conversation"
+                        data-name="Ms. Sara Ali"
+                        onclick="openChat('Ms. Sara Ali', 'SA')">
+
+                        <div class="avatar">SA</div>
+
+                        <div class="conversation-info">
+                            <h4>Ms. Sara Ali</h4>
+                            <p>Your assignment submission is received.</p>
+                        </div>
+
+                        <div class="conversation-meta">
+                            Yesterday
+                        </div>
+                    </div>
+
+                    <div class="conversation"
+                        data-name="University Admin"
+                        onclick="openChat('University Admin', 'UA')">
+
+                        <div class="avatar">UA</div>
+
+                        <div class="conversation-info">
+                            <h4>University Admin</h4>
+                            <p>Important academic update.</p>
+                        </div>
+
+                        <div class="conversation-meta">
+                            2 days ago
+                        </div>
+                    </div>
+
+                    <div class="conversation"
+                        data-name="Mr. Bilal Ahmed"
+                        onclick="openChat('Mr. Bilal Ahmed', 'BA')">
+
+                        <div class="avatar">BA</div>
+
+                        <div class="conversation-info">
+                            <h4>Mr. Bilal Ahmed</h4>
+                            <p>Thank you for your response.</p>
+                        </div>
+
+                        <div class="conversation-meta">
+                            3 days ago
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CHAT WINDOW -->
+            <div class="chat-area" id="chatArea">
+
+                <div class="chat-header">
+                    <div class="avatar" id="chatAvatar">AK</div>
+
+                    <div>
+                        <h3 id="chatName">Dr. Ahmed Khan</h3>
+                        <p>● Available</p>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+
+                    <div class="date-divider">Today</div>
+
+                    <div class="message received">
+                        <div class="message-bubble">
+                            Hello! I hope you are doing well.
+                        </div>
+                        <span class="message-time">10:15 AM</span>
+                    </div>
+
+                    <div class="message received">
+                        <div class="message-bubble">
+                            Please review the latest lecture notes before our next class.
+                        </div>
+                        <span class="message-time">10:20 AM</span>
+                    </div>
+
+                    <div class="message sent">
+                        <div class="message-bubble">
+                            Thank you, sir. I will review them today.
+                        </div>
+                        <span class="message-time">10:25 AM</span>
+                    </div>
+
+                    <div class="message received">
+                        <div class="message-bubble">
+                            Please let me know if you have any questions.
+                        </div>
+                        <span class="message-time">10:30 AM</span>
+                    </div>
+
+                </div>
+
+                <form class="message-input-area" id="messageForm">
+
+                    <input type="text"
+                        class="message-input"
+                        id="messageInput"
+                        placeholder="Type your message..."
+                        autocomplete="off"
+                        required>
+
+                    <button type="submit" class="send-btn">
+                        Send ➤
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        const $ = selector => document.querySelector(selector);
+
+        const chatMessages = $('#chatMessages');
+        const messageForm = $('#messageForm');
+        const messageInput = $('#messageInput');
+
+        const chatData = {
+            'Dr. Ahmed Khan': [
+                {
+                    type: 'received',
+                    text: 'Hello! I hope you are doing well.',
+                    time: '10:15 AM'
+                },
+                {
+                    type: 'received',
+                    text: 'Please review the latest lecture notes before our next class.',
+                    time: '10:20 AM'
+                },
+                {
+                    type: 'sent',
+                    text: 'Thank you, sir. I will review them today.',
+                    time: '10:25 AM'
+                },
+                {
+                    type: 'received',
+                    text: 'Please let me know if you have any questions.',
+                    time: '10:30 AM'
+                }
+            ],
+            'Ms. Sara Ali': [
+                {
+                    type: 'received',
+                    text: 'Your assignment submission is received.',
+                    time: 'Yesterday'
+                }
+            ],
+            'University Admin': [
+                {
+                    type: 'received',
+                    text: 'Important academic update. Please check your student portal regularly.',
+                    time: '2 days ago'
+                }
+            ],
+            'Mr. Bilal Ahmed': [
+                {
+                    type: 'received',
+                    text: 'Thank you for your response.',
+                    time: '3 days ago'
+                }
+            ]
+        };
+
+        let activeChat = 'Dr. Ahmed Khan';
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[char]);
+        }
+
+        function renderMessages() {
+            const messages = chatData[activeChat] || [];
+
+            chatMessages.innerHTML =
+                '<div class="date-divider">Conversation</div>';
+
+            messages.forEach(message => {
+                const item = document.createElement('div');
+                item.className = `message ${message.type}`;
+
+                const bubble = document.createElement('div');
+                bubble.className = 'message-bubble';
+                bubble.textContent = message.text;
+
+                const time = document.createElement('span');
+                time.className = 'message-time';
+                time.textContent = message.time;
+
+                item.append(bubble, time);
+                chatMessages.appendChild(item);
+            });
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function openChat(name, initials) {
+            activeChat = name;
+
+            $('#chatName').textContent = name;
+            $('#chatAvatar').textContent = initials;
+
+            document.querySelectorAll('.conversation').forEach(item => {
+                item.classList.toggle(
+                    'active',
+                    item.dataset.name === name
+                );
+            });
+
+            if (!chatData[name]) {
+                chatData[name] = [];
+            }
+
+            renderMessages();
+
+            if (window.innerWidth <= 700) {
+                $('#messageSidebar').classList.remove('show-list');
+                $('#chatArea').classList.remove('hide-chat');
+            }
+        }
+
+        messageForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const text = messageInput.value.trim();
+
+            if (!text) return;
+
+            const now = new Date();
+            const time = now.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            chatData[activeChat] = chatData[activeChat] || [];
+
+            chatData[activeChat].push({
+                type: 'sent',
+                text,
+                time
+            });
+
+            renderMessages();
+            messageInput.value = '';
+            messageInput.focus();
+        });
+
+        $('#searchConversation').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+
+            document.querySelectorAll('.conversation').forEach(item => {
+                item.style.display =
+                    item.dataset.name.toLowerCase().includes(query)
+                        ? 'flex'
+                        : 'none';
+            });
+        });
+
+        renderMessages();
+    </script>
+
+</body>
+</html>
