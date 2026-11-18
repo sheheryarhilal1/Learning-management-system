@@ -1,63 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learnora LMS Student Lectures — Access your enrolled course lectures and track learning progress.">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <title>Lectures | Learnora LMS</title>
 
-    <meta
-        name="description"
-        content="Learnora LMS Student Lectures — Access your enrolled course lectures and track learning progress.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <title>Lectures — Learnora LMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-
-    <!-- =====================================================
-         GOOGLE FONTS
-    ====================================================== -->
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-
-    <!-- =====================================================
-         FONT AWESOME
-    ====================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-
-    <!-- =====================================================
-         STUDENT CSS
-    ====================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="../../Css/student.css">
-
-
-    <!-- =====================================================
-         PAGE-SPECIFIC CSS
-    ====================================================== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../../Css/student.css">
 
     <style>
-
         .lecture-course-select {
             display: flex;
             flex-direction: column;
@@ -78,7 +38,7 @@
             padding: 12px 15px;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
-            background: #ffffff;
+            background: #fff;
             color: #1e293b;
             font-family: inherit;
             font-size: 14px;
@@ -89,13 +49,8 @@
 
         .lecture-course-select select:focus {
             border-color: #2878ff;
-            box-shadow: 0 0 0 3px rgba(40, 120, 255, .10);
+            box-shadow: 0 0 0 3px rgba(40,120,255,.10);
         }
-
-
-        /* =====================================================
-           EMPTY STATE
-        ====================================================== */
 
         .lecture-empty-state {
             text-align: center;
@@ -129,21 +84,11 @@
             font-size: 14px;
         }
 
-
-        /* =====================================================
-           COURSE INFO
-        ====================================================== */
-
         .selected-course-description {
             margin-top: 7px;
             color: #64748b;
             font-size: 14px;
         }
-
-
-        /* =====================================================
-           COURSE PERCENT
-        ====================================================== */
 
         .course-percent {
             font-size: 22px;
@@ -151,20 +96,10 @@
             color: #2878ff;
         }
 
-
-        /* =====================================================
-           NO DATA VALUE
-        ====================================================== */
-
         .no-data-value {
             color: #94a3b8;
             font-size: 22px;
         }
-
-
-        /* =====================================================
-           LECTURE FILTERS
-        ====================================================== */
 
         .lecture-filters {
             display: flex;
@@ -175,7 +110,7 @@
 
         .filter-btn {
             border: 1px solid #e2e8f0;
-            background: #ffffff;
+            background: #fff;
             color: #64748b;
             padding: 8px 13px;
             border-radius: 9px;
@@ -193,17 +128,11 @@
 
         .filter-btn.active {
             background: #2878ff;
-            color: #ffffff;
+            color: #fff;
             border-color: #2878ff;
         }
 
-
-        /* =====================================================
-           RESPONSIVE
-        ====================================================== */
-
-        @media (max-width: 768px) {
-
+        @media(max-width:768px) {
             .page-intro {
                 flex-direction: column;
                 align-items: flex-start;
@@ -228,480 +157,152 @@
             .filter-btn {
                 flex: 1;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
 <div class="app">
 
+    <!-- SIDEBAR: SAME STRUCTURE AS SETTINGS PAGE -->
+   <!-- SIDEBAR -->
+     <aside class="sidebar" id="sidebar">
 
-    <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
-
-    <aside
-        class="sidebar"
-        id="sidebar">
-
-
-        <!-- BRAND -->
-
-       <div class="logo">
-        <img src="/assets/images/logo.PNG" alt="">
-    </div>
-
-        <!-- PROFILE -->
-
-        <div class="sidebar-profile">
-
-            <div
-                class="profile-avatar"
-                id="sidebarAvatar">
-
-                ST
-
-            </div>
-
-            <div class="profile-info">
-
-                <strong id="sidebarName">
-                    Student
-                </strong>
-
-                <span id="sidebarProgram">
-                    Student
-                </span>
-
-            </div>
-
+        <div class="logo">
+            <img src="/assets/images/logo.PNG" alt="Learnora LMS Logo">
         </div>
-
-
-        <!-- NAVIGATION -->
 
         <nav class="sidebar-nav">
 
-
-            <!-- MAIN -->
-
-            <div class="nav-section">
-
-                <p class="nav-title">
-                    MAIN
-                </p>
-
-                <a
-                    href="dashboard.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-house"></i>
-
-                    </span>
-
-                    <span>
-                        Dashboard
-                    </span>
-
-                </a>
-
-            </div>
-
-
-            <!-- ACADEMICS -->
-
-            <div class="nav-section">
-
-                <p class="nav-title">
-                    ACADEMICS
-                </p>
-
-
-                <a
-                    href="courses.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-book-open"></i>
-
-                    </span>
-
-                    <span>
-                        My Courses
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="courses.html#add-drop"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-plus-minus"></i>
-
-                    </span>
-
-                    <span>
-                        Add / Drop Course
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="lectures.html"
-                    class="nav-link active">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-chalkboard-user"></i>
-
-                    </span>
-
-                    <span>
-                        Lectures
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="recordings.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-circle-play"></i>
-
-                    </span>
-
-                    <span>
-                        Recordings
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="assignments.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-file-lines"></i>
-
-                    </span>
-
-                    <span>
-                        Assignments
-                    </span>
-
-                    <span
-                        class="nav-badge"
-                        id="assignmentBadge">
-
-                        0
-
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="quizzes.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-clipboard-question"></i>
-
-                    </span>
-
-                    <span>
-                        Quizzes & Tests
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="results.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-chart-column"></i>
-
-                    </span>
-
-                    <span>
-                        Results & Grades
-                    </span>
-
-                </a>
-
-            </div>
-
-
-            <!-- MY LEARNING -->
-
-            <div class="nav-section">
-
-                <p class="nav-title">
-                    MY LEARNING
-                </p>
-
-
-                <a
-                    href="attendance.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-calendar-check"></i>
-
-                    </span>
-
-                    <span>
-                        Attendance
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="schedule.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-calendar-days"></i>
-
-                    </span>
-
-                    <span>
-                        Schedule
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="materials.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-folder-open"></i>
-
-                    </span>
-
-                    <span>
-                        Study Materials
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="announcements.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-bullhorn"></i>
-
-                    </span>
-
-                    <span>
-                        Announcements
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="messages.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-envelope"></i>
-
-                    </span>
-
-                    <span>
-                        Messages
-                    </span>
-
-                </a>
-
-            </div>
-
-
-            <!-- ACCOUNT -->
-
-            <div class="nav-section">
-
-                <p class="nav-title">
-                    ACCOUNT
-                </p>
-
-
-                <a
-                    href="profile.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-user"></i>
-
-                    </span>
-
-                    <span>
-                        My Profile
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="settings.html"
-                    class="nav-link">
-
-                    <span class="nav-icon">
-
-                        <i class="fa-solid fa-gear"></i>
-
-                    </span>
-
-                    <span>
-                        Settings
-                    </span>
-
-                </a>
-
-            </div>
+            <div class="nav-section-title">MAIN</div>
+
+            <a href="dashboard.html" class="nav-link">
+                <i class="fa-solid fa-grid-2"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="courses.html" class="nav-link">
+                <i class="fa-solid fa-book-open"></i>
+                <span>My Courses</span>
+            </a>
+
+            <a href="courses.html#add-drop" class="nav-link">
+                <i class="fa-solid fa-plus-minus"></i>
+                <span>Add / Drop Course</span>
+            </a>
+
+            <a href="lectures.html" class="nav-link">
+                <i class="fa-solid fa-chalkboard"></i>
+                <span>Lectures</span>
+            </a>
+
+            <a href="recordings.html" class="nav-link">
+                <i class="fa-solid fa-circle-play"></i>
+                <span>Recordings</span>
+            </a>
+
+            <div class="nav-section-title">ACADEMICS</div>
+
+            <a href="assignments.html" class="nav-link">
+                <i class="fa-solid fa-file-pen"></i>
+                <span>Assignments</span>
+            </a>
+
+            <a href="quizzes.html" class="nav-link">
+                <i class="fa-solid fa-clipboard-question"></i>
+                <span>Quizzes & Tests</span>
+            </a>
+
+            <a href="results.html" class="nav-link">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Results & Grades</span>
+            </a>
+
+            <a href="attendance.html" class="nav-link">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Attendance</span>
+            </a>
+
+            <a href="schedule.html" class="nav-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Schedule</span>
+            </a>
+
+            <a href="materials.html" class="nav-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Study Materials</span>
+            </a>
+
+            <div class="nav-section-title">COMMUNICATION</div>
+
+            <a href="announcements.html" class="nav-link">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Announcements</span>
+            </a>
+
+            <a href="messages.html" class="nav-link">
+                <i class="fa-solid fa-message"></i>
+                <span>Messages</span>
+            </a>
+
+            <div class="nav-section-title">ACCOUNT</div>
+
+            <a href="profile.html" class="nav-link active">
+                <i class="fa-solid fa-user"></i>
+                <span>My Profile</span>
+            </a>
+
+            <a href="settings.html" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
 
         </nav>
 
-
-        <!-- LOGOUT -->
-
         <div class="sidebar-bottom">
-
-            <a
-                href="../login.html"
-                class="logout-link">
-
-                <span class="nav-icon">
-
-                    <i class="fa-solid fa-right-from-bracket"></i>
-
-                </span>
-
-                <span>
-                    Logout
-                </span>
-
+            <a href="../login.html" class="nav-link logout-link" id="logoutLink">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
             </a>
-
         </div>
 
     </aside>
 
-
-
-    <!-- =====================================================
-         MAIN CONTENT
-    ====================================================== -->
+    <!-- MAIN CONTENT -->
 
     <main class="main-content">
 
-
-        <!-- TOPBAR -->
-
         <header class="topbar">
 
-
-            <button
-                class="mobile-menu-btn"
-                id="mobileMenuBtn">
-
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
                 <i class="fa-solid fa-bars"></i>
-
             </button>
 
-
             <div class="topbar-title">
-
-                <span class="page-label">
-                    Student Portal
-                </span>
-
-                <h1>
-                    Lectures
-                </h1>
-
+                <span class="page-label">Student Portal</span>
+                <h1>Lectures</h1>
             </div>
-
 
             <div class="topbar-actions">
 
-
-                <button class="topbar-icon">
-
+                <button class="topbar-icon" aria-label="Search">
                     <i class="fa-solid fa-magnifying-glass"></i>
-
                 </button>
 
-
-                <button class="topbar-icon">
-
+                <button class="topbar-icon" aria-label="Notifications">
                     <i class="fa-regular fa-bell"></i>
-
                     <span class="notification-dot"></span>
-
                 </button>
 
+                <a href="profile.html" class="topbar-profile">
 
-                <a
-                    href="profile.html"
-                    class="topbar-profile">
-
-
-                    <div
-                        class="topbar-avatar"
-                        id="topbarAvatar">
-
-                        ST
-
-                    </div>
-
+                    <div class="topbar-avatar" id="topbarAvatar">ST</div>
 
                     <div class="topbar-user">
-
-                        <strong id="topbarName">
-                            Student
-                        </strong>
-
-                        <span>
-                            Student
-                        </span>
-
+                        <strong id="topbarName">Student</strong>
+                        <span>Student</span>
                     </div>
-
 
                     <i class="fa-solid fa-chevron-down"></i>
 
@@ -711,389 +312,168 @@
 
         </header>
 
-
-
-        <!-- =====================================================
-             DASHBOARD CONTAINER
-        ====================================================== -->
-
         <div class="dashboard-container">
 
-
-            <!-- =================================================
-                 PAGE INTRO
-            ================================================== -->
+            <!-- PAGE INTRO -->
 
             <section class="page-intro">
 
-
                 <div>
+                    <span class="card-eyebrow">LEARNING</span>
 
-                    <span class="card-eyebrow">
-                        LEARNING
-                    </span>
-
-                    <h2>
-                        Course Lectures
-                    </h2>
+                    <h2>Course Lectures</h2>
 
                     <p>
                         Select one of your enrolled courses
                         to access its lectures and learning content.
                     </p>
-
                 </div>
 
-
                 <div class="lecture-course-select">
-
-                    <label for="courseSelector">
-                        Select Course
-                    </label>
-
-                    <select
-                        id="courseSelector">
-
-                    </select>
-
+                    <label for="courseSelector">Select Course</label>
+                    <select id="courseSelector"></select>
                 </div>
 
             </section>
 
-
-
-            <!-- =================================================
-                 LECTURE SUMMARY
-            ================================================== -->
+            <!-- LECTURE SUMMARY -->
 
             <section class="stats-grid">
 
-
-                <!-- TOTAL -->
-
                 <div class="stat-card">
-
                     <div class="stat-icon blue">
-
                         <i class="fa-solid fa-video"></i>
-
                     </div>
 
                     <div class="stat-content">
-
-                        <span>
-                            Total Lectures
-                        </span>
-
-                        <strong
-                            id="totalLectures">
-
-                            —
-
-                        </strong>
-
-                        <small>
-                            Selected course
-                        </small>
-
+                        <span>Total Lectures</span>
+                        <strong id="totalLectures">—</strong>
+                        <small>Selected course</small>
                     </div>
-
                 </div>
 
-
-                <!-- COMPLETED -->
-
                 <div class="stat-card">
-
                     <div class="stat-icon green">
-
                         <i class="fa-solid fa-circle-check"></i>
-
                     </div>
 
                     <div class="stat-content">
-
-                        <span>
-                            Completed
-                        </span>
-
-                        <strong
-                            id="completedLectures">
-
-                            —
-
-                        </strong>
-
-                        <small
-                            id="completedText">
-
-                            Lecture data unavailable
-
-                        </small>
-
+                        <span>Completed</span>
+                        <strong id="completedLectures">—</strong>
+                        <small id="completedText">Lecture data unavailable</small>
                     </div>
-
                 </div>
 
-
-                <!-- REMAINING -->
-
                 <div class="stat-card">
-
                     <div class="stat-icon orange">
-
                         <i class="fa-solid fa-clock"></i>
-
                     </div>
 
                     <div class="stat-content">
-
-                        <span>
-                            Remaining
-                        </span>
-
-                        <strong
-                            id="remainingLectures">
-
-                            —
-
-                        </strong>
-
-                        <small>
-                            Lecture data unavailable
-                        </small>
-
+                        <span>Remaining</span>
+                        <strong id="remainingLectures">—</strong>
+                        <small>Lecture data unavailable</small>
                     </div>
-
                 </div>
 
-
-                <!-- PROGRESS -->
-
                 <div class="stat-card">
-
                     <div class="stat-icon purple">
-
                         <i class="fa-solid fa-chart-line"></i>
-
                     </div>
 
                     <div class="stat-content">
-
-                        <span>
-                            Course Progress
-                        </span>
-
-                        <strong
-                            id="courseProgress">
-
-                            0%
-
-                        </strong>
-
-                        <small>
-                            From your account
-                        </small>
-
+                        <span>Course Progress</span>
+                        <strong id="courseProgress">0%</strong>
+                        <small>From your account</small>
                     </div>
-
                 </div>
 
             </section>
 
-
-
-            <!-- =================================================
-                 COURSE PROGRESS
-            ================================================== -->
+            <!-- COURSE PROGRESS -->
 
             <section class="dashboard-card">
-
 
                 <div class="card-header">
 
                     <div>
+                        <span class="card-eyebrow" id="selectedCourseCode">COURSE</span>
+                        <h3 id="selectedCourseName">Course</h3>
 
-                        <span
-                            class="card-eyebrow"
-                            id="selectedCourseCode">
-
-                            COURSE
-
-                        </span>
-
-                        <h3
-                            id="selectedCourseName">
-
-                            Course
-
-                        </h3>
-
-                        <p
-                            class="selected-course-description"
-                            id="selectedCourseInstructor">
-
+                        <p class="selected-course-description" id="selectedCourseInstructor">
                             Instructor
-
                         </p>
-
                     </div>
 
-
-                    <span
-                        class="course-percent"
-                        id="coursePercent">
-
-                        0%
-
-                    </span>
+                    <span class="course-percent" id="coursePercent">0%</span>
 
                 </div>
-
 
                 <div class="learning-progress">
 
                     <div class="progress-label">
-
-                        <span>
-                            Course Progress
-                        </span>
-
-                        <strong
-                            id="progressText">
-
-                            0%
-
-                        </strong>
-
+                        <span>Course Progress</span>
+                        <strong id="progressText">0%</strong>
                     </div>
 
-
                     <div class="progress-bar large">
-
-                        <span
-                            id="courseProgressBar"
-                            style="width:0%;">
-
-                        </span>
-
+                        <span id="courseProgressBar" style="width:0%;"></span>
                     </div>
 
                 </div>
 
             </section>
 
-
-
-            <!-- =================================================
-                 LECTURE LIST
-            ================================================== -->
+            <!-- LECTURE LIST -->
 
             <section class="dashboard-card">
 
-
                 <div class="card-header">
 
-
                     <div>
-
-                        <span class="card-eyebrow">
-                            ALL LECTURES
-                        </span>
-
-                        <h3 id="lectureListTitle">
-                            Course Lectures
-                        </h3>
-
+                        <span class="card-eyebrow">ALL LECTURES</span>
+                        <h3 id="lectureListTitle">Course Lectures</h3>
                     </div>
 
+                    <div class="lecture-filters" id="lectureFilters">
 
-                    <div
-                        class="lecture-filters"
-                        id="lectureFilters">
-
-                        <button
-                            class="filter-btn active"
-                            data-filter="all">
-
+                        <button class="filter-btn active" data-filter="all">
                             All
-
                         </button>
 
-                        <button
-                            class="filter-btn"
-                            data-filter="completed">
-
+                        <button class="filter-btn" data-filter="completed">
                             Completed
-
                         </button>
 
-                        <button
-                            class="filter-btn"
-                            data-filter="pending">
-
+                        <button class="filter-btn" data-filter="pending">
                             Pending
-
                         </button>
 
                     </div>
 
                 </div>
 
+                <div class="lecture-list" id="lectureList"></div>
 
-                <!-- DYNAMIC LECTURE LIST -->
-
-                <div
-                    class="lecture-list"
-                    id="lectureList">
-
-                </div>
-
-
-                <!-- EMPTY STATE -->
-
-                <div
-                    class="lecture-empty-state"
-                    id="lectureEmptyState"
-                    style="display:none;">
+                <div class="lecture-empty-state" id="lectureEmptyState" style="display:none;">
 
                     <div class="empty-icon">
-
                         <i class="fa-solid fa-video-slash"></i>
-
                     </div>
 
-                    <h4>
-                        Lecture data not available
-                    </h4>
+                    <h4>Lecture data not available</h4>
 
                     <p id="emptyStateText">
-
-                        Lecture-level information has not been
-                        added to this student account yet.
-
+                        Lecture-level information has not been added to this student account yet.
                     </p>
 
                 </div>
 
             </section>
 
-
-
-            <!-- =================================================
-                 FOOTER
-            ================================================== -->
-
             <footer class="dashboard-footer">
-
-                <span>
-                    © 2026 Learnora LMS
-                </span>
-
-                <span id="footerCourse">
-                    Smart Learning Management System
-                </span>
-
+                <span>© 2026 Learnora LMS</span>
+                <span id="footerCourse">Smart Learning Management System</span>
             </footer>
 
         </div>
@@ -1102,1115 +482,403 @@
 
 </div>
 
-
-
-<!-- =====================================================
-     SIDEBAR OVERLAY
-====================================================== -->
-
-<div
-    class="sidebar-overlay"
-    id="sidebarOverlay">
-</div>
-
-
-
-<!-- =====================================================
-     STUDENT JS
-====================================================== -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <script src="../../js/student.js"></script>
 
-
-
-<!-- =====================================================
-     ACCOUNT-BASED LECTURES SCRIPT
-====================================================== -->
-
 <script>
+document.addEventListener("DOMContentLoaded", function () {
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+    /* CURRENT USER */
 
+    const storedUser = localStorage.getItem("learnora_current_user");
 
-        /* =====================================================
-           GET CURRENT USER
-        ====================================================== */
+    if (!storedUser) {
+        window.location.href = "../login.html";
+        return;
+    }
 
-        const storedUser =
-            localStorage.getItem(
-                "learnora_current_user"
-            );
+    let currentUser;
 
+    try {
+        currentUser = JSON.parse(storedUser);
+    } catch (error) {
+        console.error("Unable to read current user:", error);
+        localStorage.removeItem("learnora_current_user");
+        window.location.href = "../login.html";
+        return;
+    }
 
-        if (!storedUser) {
+    /* ROLE CHECK */
 
-            window.location.href =
-                "../login.html";
+    if (currentUser.role !== "student") {
 
-            return;
-
+        if (currentUser.role === "teacher") {
+            window.location.href = "../teacher/dashboard.html";
+        } else if (currentUser.role === "parent") {
+            window.location.href = "../parent/dashboard.html";
+        } else {
+            window.location.href = "../login.html";
         }
 
+        return;
+    }
 
-        let currentUser;
+    /* DATA */
 
+    const courses = Array.isArray(currentUser.courses)
+        ? currentUser.courses
+        : [];
 
-        try {
+    const assignments = Array.isArray(currentUser.assignments)
+        ? currentUser.assignments
+        : [];
 
-            currentUser =
-                JSON.parse(storedUser);
+    /* ELEMENTS */
 
-        } catch (error) {
+    const sidebarName = document.getElementById("sidebarName");
+    const sidebarProgram = document.getElementById("sidebarProgram");
+    const topbarAvatar = document.getElementById("topbarAvatar");
+    const topbarName = document.getElementById("topbarName");
+    const assignmentBadge = document.getElementById("assignmentNavBadge");
 
-            console.error(
-                "Unable to read current user:",
-                error
-            );
+    const courseSelector = document.getElementById("courseSelector");
 
-            localStorage.removeItem(
-                "learnora_current_user"
-            );
+    const totalLectures = document.getElementById("totalLectures");
+    const completedLectures = document.getElementById("completedLectures");
+    const completedText = document.getElementById("completedText");
+    const remainingLectures = document.getElementById("remainingLectures");
+    const courseProgress = document.getElementById("courseProgress");
 
-            window.location.href =
-                "../login.html";
+    const selectedCourseCode = document.getElementById("selectedCourseCode");
+    const selectedCourseName = document.getElementById("selectedCourseName");
+    const selectedCourseInstructor = document.getElementById("selectedCourseInstructor");
+
+    const coursePercent = document.getElementById("coursePercent");
+    const progressText = document.getElementById("progressText");
+    const courseProgressBar = document.getElementById("courseProgressBar");
+
+    const lectureListTitle = document.getElementById("lectureListTitle");
+    const lectureList = document.getElementById("lectureList");
+    const lectureEmptyState = document.getElementById("lectureEmptyState");
+    const emptyStateText = document.getElementById("emptyStateText");
+    const footerCourse = document.getElementById("footerCourse");
+
+    /* USER PROFILE */
+
+    const userName = currentUser.name || "Student";
+    const userAvatar = currentUser.avatar || getInitials(userName);
+    const userProgram = currentUser.program || currentUser.department || "Student Program";
+
+    sidebarName.textContent = userName;
+    sidebarProgram.textContent = userProgram;
+
+    topbarAvatar.textContent = userAvatar;
+    topbarName.textContent = userName;
+
+    /* ASSIGNMENT BADGE */
+
+    assignmentBadge.textContent = assignments.length;
+
+    /* NO COURSES */
+
+    if (!courses.length) {
+
+        courseSelector.innerHTML = `
+            <option value="">No courses available</option>
+        `;
+
+        selectedCourseCode.textContent = "NO COURSE";
+        selectedCourseName.textContent = "No enrolled courses";
+        selectedCourseInstructor.textContent =
+            "Please contact your academic department.";
+
+        courseProgress.textContent = "0%";
+        coursePercent.textContent = "0%";
+        progressText.textContent = "0%";
+        courseProgressBar.style.width = "0%";
+
+        lectureList.style.display = "none";
+        lectureEmptyState.style.display = "block";
+
+        emptyStateText.textContent =
+            "No enrolled courses are available for this account.";
+
+        return;
+    }
+
+    /* COURSE SELECTOR */
+
+    courses.forEach(function (course) {
+
+        const option = document.createElement("option");
+
+        option.value = course.code || "";
+
+        option.textContent =
+            `${course.code || "N/A"} — ${course.name || "Unnamed Course"}`;
+
+        courseSelector.appendChild(option);
+    });
+
+    /* URL COURSE */
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedCourse = params.get("course");
+
+    let selectedCourse = courses.find(function (course) {
+        return course.code === requestedCourse;
+    });
+
+    if (!selectedCourse) {
+        selectedCourse = courses[0];
+    }
+
+    courseSelector.value = selectedCourse.code;
+
+    renderCourse(selectedCourse);
+
+    /* COURSE SELECT CHANGE */
+
+    courseSelector.addEventListener("change", function () {
+
+        const selectedCode = this.value;
+
+        const course = courses.find(function (item) {
+            return item.code === selectedCode;
+        });
+
+        if (!course) return;
+
+        const newUrl =
+            `${window.location.pathname}?course=${encodeURIComponent(course.code)}`;
+
+        window.history.replaceState({}, "", newUrl);
+
+        renderCourse(course);
+    });
+
+    /* RENDER COURSE */
+
+    function renderCourse(course) {
+
+        if (!course) return;
+
+        selectedCourse = course;
+
+        const progress = clampProgress(Number(course.progress || 0));
+
+        const instructor = course.instructor || "Instructor not available";
+        const code = course.code || "N/A";
+        const name = course.name || "Unnamed Course";
+
+        selectedCourseCode.textContent = code;
+        selectedCourseName.textContent = name;
+
+        selectedCourseInstructor.textContent =
+            `${instructor} · ${course.credits || 0} Credit ${
+                Number(course.credits || 0) === 1 ? "Hour" : "Hours"
+            }`;
+
+        courseProgress.textContent = `${progress}%`;
+        coursePercent.textContent = `${progress}%`;
+        progressText.textContent = `${progress}%`;
+        courseProgressBar.style.width = `${progress}%`;
+
+        footerCourse.textContent = `${code} · ${name}`;
+
+        const lectures = Array.isArray(course.lectures)
+            ? course.lectures
+            : [];
+
+        renderLectureSummary(lectures);
+        renderLectures(lectures, name);
+    }
+
+    /* LECTURE SUMMARY */
+
+    function renderLectureSummary(lectures) {
+
+        if (!lectures.length) {
+
+            totalLectures.textContent = "—";
+            completedLectures.textContent = "—";
+            remainingLectures.textContent = "—";
+            completedText.textContent = "Lecture data unavailable";
 
             return;
-
         }
 
+        const completed = lectures.filter(function (lecture) {
+            return normalize(lecture.status) === "completed";
+        }).length;
 
+        const remaining = Math.max(lectures.length - completed, 0);
 
-        /* =====================================================
-           ROLE CHECK
-        ====================================================== */
+        totalLectures.textContent = lectures.length;
+        completedLectures.textContent = completed;
+        remainingLectures.textContent = remaining;
 
-        if (
-            currentUser.role !==
-            "student"
-        ) {
+        const completionPercentage = Math.round(
+            (completed / lectures.length) * 100
+        );
 
-            if (
-                currentUser.role ===
-                "teacher"
-            ) {
+        completedText.textContent = `${completionPercentage}% completed`;
+    }
 
-                window.location.href =
-                    "../teacher/dashboard.html";
+    /* RENDER LECTURES */
 
-            }
+    function renderLectures(lectures, courseName) {
 
-            else if (
-                currentUser.role ===
-                "parent"
-            ) {
+        lectureList.innerHTML = "";
+        lectureListTitle.textContent = `${courseName} Lectures`;
 
-                window.location.href =
-                    "../parent/dashboard.html";
+        if (!lectures.length) {
 
-            }
-
-            else {
-
-                window.location.href =
-                    "../login.html";
-
-            }
-
-            return;
-
-        }
-
-
-
-        /* =====================================================
-           COURSES
-        ====================================================== */
-
-        const courses =
-            Array.isArray(
-                currentUser.courses
-            )
-                ? currentUser.courses
-                : [];
-
-
-        const assignments =
-            Array.isArray(
-                currentUser.assignments
-            )
-                ? currentUser.assignments
-                : [];
-
-
-
-        /* =====================================================
-           ELEMENTS
-        ====================================================== */
-
-        const sidebarAvatar =
-            document.getElementById(
-                "sidebarAvatar"
-            );
-
-
-        const sidebarName =
-            document.getElementById(
-                "sidebarName"
-            );
-
-
-        const sidebarProgram =
-            document.getElementById(
-                "sidebarProgram"
-            );
-
-
-        const topbarAvatar =
-            document.getElementById(
-                "topbarAvatar"
-            );
-
-
-        const topbarName =
-            document.getElementById(
-                "topbarName"
-            );
-
-
-        const assignmentBadge =
-            document.getElementById(
-                "assignmentBadge"
-            );
-
-
-        const courseSelector =
-            document.getElementById(
-                "courseSelector"
-            );
-
-
-        const totalLectures =
-            document.getElementById(
-                "totalLectures"
-            );
-
-
-        const completedLectures =
-            document.getElementById(
-                "completedLectures"
-            );
-
-
-        const completedText =
-            document.getElementById(
-                "completedText"
-            );
-
-
-        const remainingLectures =
-            document.getElementById(
-                "remainingLectures"
-            );
-
-
-        const courseProgress =
-            document.getElementById(
-                "courseProgress"
-            );
-
-
-        const selectedCourseCode =
-            document.getElementById(
-                "selectedCourseCode"
-            );
-
-
-        const selectedCourseName =
-            document.getElementById(
-                "selectedCourseName"
-            );
-
-
-        const selectedCourseInstructor =
-            document.getElementById(
-                "selectedCourseInstructor"
-            );
-
-
-        const coursePercent =
-            document.getElementById(
-                "coursePercent"
-            );
-
-
-        const progressText =
-            document.getElementById(
-                "progressText"
-            );
-
-
-        const courseProgressBar =
-            document.getElementById(
-                "courseProgressBar"
-            );
-
-
-        const lectureListTitle =
-            document.getElementById(
-                "lectureListTitle"
-            );
-
-
-        const lectureList =
-            document.getElementById(
-                "lectureList"
-            );
-
-
-        const lectureEmptyState =
-            document.getElementById(
-                "lectureEmptyState"
-            );
-
-
-        const emptyStateText =
-            document.getElementById(
-                "emptyStateText"
-            );
-
-
-        const footerCourse =
-            document.getElementById(
-                "footerCourse"
-            );
-
-
-
-        /* =====================================================
-           USER PROFILE
-        ====================================================== */
-
-        const userName =
-            currentUser.name ||
-            "Student";
-
-
-        const userAvatar =
-            currentUser.avatar ||
-            getInitials(userName);
-
-
-        const userProgram =
-            currentUser.program ||
-            "Student";
-
-
-        sidebarAvatar.textContent =
-            userAvatar;
-
-
-        sidebarName.textContent =
-            userName;
-
-
-        sidebarProgram.textContent =
-            userProgram;
-
-
-        topbarAvatar.textContent =
-            userAvatar;
-
-
-        topbarName.textContent =
-            userName;
-
-
-
-        /* =====================================================
-           ASSIGNMENT BADGE
-        ====================================================== */
-
-        assignmentBadge.textContent =
-            assignments.length;
-
-
-
-        /* =====================================================
-           NO COURSES
-        ====================================================== */
-
-        if (!courses.length) {
-
-            courseSelector.innerHTML =
-                `
-                <option value="">
-                    No courses available
-                </option>
-                `;
-
-
-            selectedCourseCode.textContent =
-                "NO COURSE";
-
-
-            selectedCourseName.textContent =
-                "No enrolled courses";
-
-
-            selectedCourseInstructor.textContent =
-                "Please contact your academic department.";
-
-
-            courseProgress.textContent =
-                "0%";
-
-
-            coursePercent.textContent =
-                "0%";
-
-
-            progressText.textContent =
-                "0%";
-
-
-            courseProgressBar.style.width =
-                "0%";
-
-
-            lectureList.style.display =
-                "none";
-
-
-            lectureEmptyState.style.display =
-                "block";
-
+            lectureList.style.display = "none";
+            lectureEmptyState.style.display = "block";
 
             emptyStateText.textContent =
-                "No enrolled courses are available for this account.";
-
+                `Lecture-level content for ${courseName} has not been added to this account yet. Course progress is available from the student account data.`;
 
             return;
-
         }
 
+        lectureList.style.display = "";
+        lectureEmptyState.style.display = "none";
 
+        lectures.forEach(function (lecture, index) {
+            const item = createLectureItem(lecture, index);
+            lectureList.appendChild(item);
+        });
 
-        /* =====================================================
-           BUILD COURSE SELECTOR
-        ====================================================== */
+        initializeFilters();
+    }
 
-        courses.forEach(
-            function (course) {
+    /* CREATE LECTURE ITEM */
 
-                const option =
-                    document.createElement(
-                        "option"
-                    );
+    function createLectureItem(lecture, index) {
 
+        const article = document.createElement("article");
 
-                option.value =
-                    course.code || "";
+        const status = normalize(lecture.status);
 
+        let itemClass = "lecture-item";
 
-                option.textContent =
-                    `${course.code || "N/A"} — ${course.name || "Unnamed Course"}`;
-
-
-                courseSelector.appendChild(
-                    option
-                );
-
-            }
-        );
-
-
-
-        /* =====================================================
-           URL COURSE
-        ====================================================== */
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-
-        const requestedCourse =
-            params.get(
-                "course"
-            );
-
-
-
-        let selectedCourse =
-            courses.find(
-                function (course) {
-
-                    return (
-                        course.code ===
-                        requestedCourse
-                    );
-
-                }
-            );
-
-
-        if (!selectedCourse) {
-
-            selectedCourse =
-                courses[0];
-
+        if (status === "completed") {
+            itemClass += " completed";
+        } else if (status === "current" || status === "in-progress") {
+            itemClass += " current";
+        } else if (status === "locked") {
+            itemClass += " locked";
+        } else {
+            itemClass += " pending";
         }
 
+        article.className = itemClass;
 
+        const number = String(lecture.id || index + 1).padStart(2, "0");
 
-        courseSelector.value =
-            selectedCourse.code;
+        const title = lecture.title || `Lecture ${index + 1}`;
+        const description = lecture.description || "Lecture description not available.";
+        const duration = lecture.duration || "—";
+        const type = lecture.type || "Lecture";
 
+        const isCompleted = status === "completed";
+        const isLocked = status === "locked";
+        const isCurrent = status === "current" || status === "in-progress";
 
+        let statusIcon = "fa-solid fa-play";
 
-        /* =====================================================
-           RENDER SELECTED COURSE
-        ====================================================== */
-
-        renderCourse(
-            selectedCourse
-        );
-
-
-
-        /* =====================================================
-           COURSE SELECT CHANGE
-        ====================================================== */
-
-        courseSelector.addEventListener(
-            "change",
-            function () {
-
-                const selectedCode =
-                    this.value;
-
-
-                const course =
-                    courses.find(
-                        function (item) {
-
-                            return (
-                                item.code ===
-                                selectedCode
-                            );
-
-                        }
-                    );
-
-
-                if (!course) {
-                    return;
-                }
-
-
-                const newUrl =
-                    `${window.location.pathname}?course=${encodeURIComponent(course.code)}`;
-
-
-                window.history.replaceState(
-                    {},
-                    "",
-                    newUrl
-                );
-
-
-                renderCourse(
-                    course
-                );
-
-            }
-        );
-
-
-
-        /* =====================================================
-           RENDER COURSE
-        ====================================================== */
-
-        function renderCourse(
-            course
-        ) {
-
-
-            if (!course) {
-                return;
-            }
-
-
-            const progress =
-                clampProgress(
-                    Number(
-                        course.progress || 0
-                    )
-                );
-
-
-            const instructor =
-                course.instructor ||
-                "Instructor not available";
-
-
-            const code =
-                course.code ||
-                "N/A";
-
-
-            const name =
-                course.name ||
-                "Unnamed Course";
-
-
-
-            /* =================================================
-               COURSE INFORMATION
-            ================================================== */
-
-            selectedCourseCode.textContent =
-                code;
-
-
-            selectedCourseName.textContent =
-                name;
-
-
-            selectedCourseInstructor.textContent =
-                `${instructor} · ${course.credits || 0} Credit ${
-                    Number(course.credits || 0) === 1
-                        ? "Hour"
-                        : "Hours"
-                }`;
-
-
-
-            /* =================================================
-               PROGRESS
-            ================================================== */
-
-            courseProgress.textContent =
-                `${progress}%`;
-
-
-            coursePercent.textContent =
-                `${progress}%`;
-
-
-            progressText.textContent =
-                `${progress}%`;
-
-
-            courseProgressBar.style.width =
-                `${progress}%`;
-
-
-
-            /* =================================================
-               FOOTER
-            ================================================== */
-
-            footerCourse.textContent =
-                `${code} · ${name}`;
-
-
-
-            /* =================================================
-               LECTURE DATA
-            ==================================================
-
-               Current login.js course objects do not contain
-               lecture-level data.
-
-               Future structure can be:
-
-               lectures: [
-                   {
-                       id: 1,
-                       title: "...",
-                       description: "...",
-                       duration: "45 min",
-                       type: "Video",
-                       status: "completed"
-                   }
-               ]
-
-            ================================================== */
-
-            const lectures =
-                Array.isArray(
-                    course.lectures
-                )
-                    ? course.lectures
-                    : [];
-
-
-            renderLectureSummary(
-                lectures,
-                progress
-            );
-
-
-            renderLectures(
-                lectures,
-                name
-            );
-
+        if (isCompleted) {
+            statusIcon = "fa-solid fa-check";
+        } else if (isLocked) {
+            statusIcon = "fa-solid fa-lock";
         }
 
+        let statusLabel = "Pending";
+        let statusClass = "";
 
-
-        /* =====================================================
-           LECTURE SUMMARY
-        ====================================================== */
-
-        function renderLectureSummary(
-            lectures,
-            progress
-        ) {
-
-
-            if (!lectures.length) {
-
-                totalLectures.textContent =
-                    "—";
-
-
-                completedLectures.textContent =
-                    "—";
-
-
-                remainingLectures.textContent =
-                    "—";
-
-
-                completedText.textContent =
-                    "Lecture data unavailable";
-
-
-                return;
-
-            }
-
-
-            const completed =
-                lectures.filter(
-                    function (lecture) {
-
-                        return normalize(
-                            lecture.status
-                        ) ===
-                        "completed";
-
-                    }
-                ).length;
-
-
-            const remaining =
-                Math.max(
-                    lectures.length -
-                    completed,
-                    0
-                );
-
-
-            totalLectures.textContent =
-                lectures.length;
-
-
-            completedLectures.textContent =
-                completed;
-
-
-            remainingLectures.textContent =
-                remaining;
-
-
-            const completionPercentage =
-                lectures.length
-                    ? Math.round(
-                        (
-                            completed /
-                            lectures.length
-                        ) * 100
-                    )
-                    : 0;
-
-
-            completedText.textContent =
-                `${completionPercentage}% completed`;
-
+        if (isCompleted) {
+            statusLabel = "Completed";
+            statusClass = "completed-label";
+        } else if (isCurrent) {
+            statusLabel = "Continue";
+            statusClass = "current-label";
+        } else if (isLocked) {
+            statusLabel = "Locked";
         }
 
+        article.innerHTML = `
 
+            <div class="lecture-number">
+                <span>${escapeHTML(number)}</span>
+                <i class="${statusIcon}"></i>
+            </div>
 
-        /* =====================================================
-           RENDER LECTURES
-        ====================================================== */
+            <div class="lecture-main">
 
-        function renderLectures(
-            lectures,
-            courseName
-        ) {
-
-
-            lectureList.innerHTML =
-                "";
-
-
-            lectureListTitle.textContent =
-                `${courseName} Lectures`;
-
-
-            if (!lectures.length) {
-
-                lectureList.style.display =
-                    "none";
-
-
-                lectureEmptyState.style.display =
-                    "block";
-
-
-                emptyStateText.textContent =
-                    `Lecture-level content for ${courseName} has not been added to this account yet. Course progress is available from the student account data.`;
-
-
-                return;
-
-            }
-
-
-            lectureList.style.display =
-                "";
-
-
-            lectureEmptyState.style.display =
-                "none";
-
-
-            lectures.forEach(
-                function (
-                    lecture,
-                    index
-                ) {
-
-                    const item =
-                        createLectureItem(
-                            lecture,
-                            index
-                        );
-
-
-                    lectureList.appendChild(
-                        item
-                    );
-
-                }
-            );
-
-
-            initializeFilters();
-
-        }
-
-
-
-        /* =====================================================
-           CREATE LECTURE ITEM
-        ====================================================== */
-
-        function createLectureItem(
-            lecture,
-            index
-        ) {
-
-
-            const article =
-                document.createElement(
-                    "article"
-                );
-
-
-            const status =
-                normalize(
-                    lecture.status
-                );
-
-
-            let itemClass =
-                "lecture-item";
-
-
-            if (
-                status ===
-                "completed"
-            ) {
-
-                itemClass +=
-                    " completed";
-
-            }
-
-            else if (
-                status ===
-                "current" ||
-                status ===
-                "in-progress"
-            ) {
-
-                itemClass +=
-                    " current";
-
-            }
-
-            else if (
-                status ===
-                "locked"
-            ) {
-
-                itemClass +=
-                    " locked";
-
-            }
-
-            else {
-
-                itemClass +=
-                    " pending";
-
-            }
-
-
-            article.className =
-                itemClass;
-
-
-            const number =
-                String(
-                    lecture.id ||
-                    index + 1
-                )
-                .padStart(
-                    2,
-                    "0"
-                );
-
-
-            const title =
-                lecture.title ||
-                `Lecture ${index + 1}`;
-
-
-            const description =
-                lecture.description ||
-                "Lecture description not available.";
-
-
-            const duration =
-                lecture.duration ||
-                "—";
-
-
-            const type =
-                lecture.type ||
-                "Lecture";
-
-
-            const isCompleted =
-                status ===
-                "completed";
-
-
-            const isLocked =
-                status ===
-                "locked";
-
-
-            const isCurrent =
-                status ===
-                "current" ||
-                status ===
-                "in-progress";
-
-
-
-            let statusIcon =
-                "fa-solid fa-play";
-
-
-            if (isCompleted) {
-
-                statusIcon =
-                    "fa-solid fa-check";
-
-            }
-
-            else if (isLocked) {
-
-                statusIcon =
-                    "fa-solid fa-lock";
-
-            }
-
-
-
-            let statusLabel =
-                "Pending";
-
-
-            let statusClass =
-                "";
-
-
-            if (isCompleted) {
-
-                statusLabel =
-                    "Completed";
-
-                statusClass =
-                    "completed-label";
-
-            }
-
-            else if (isCurrent) {
-
-                statusLabel =
-                    "Continue";
-
-                statusClass =
-                    "current-label";
-
-            }
-
-            else if (isLocked) {
-
-                statusLabel =
-                    "Locked";
-
-            }
-
-
-
-            article.innerHTML = `
-
-                <div class="lecture-number">
+                <div class="lecture-title">
 
                     <span>
-                        ${escapeHTML(number)}
+                        ${escapeHTML(lecture.category || type)}
                     </span>
 
-                    <i class="${statusIcon}"></i>
+                    <h4>${escapeHTML(title)}</h4>
+
+                    <p>${escapeHTML(description)}</p>
 
                 </div>
 
+                <div class="lecture-meta">
 
-                <div class="lecture-main">
+                    <span>
+                        <i class="fa-solid fa-clock"></i>
+                        ${escapeHTML(duration)}
+                    </span>
 
-                    <div class="lecture-title">
+                    <span>
+                        <i class="fa-solid fa-circle-play"></i>
+                        ${escapeHTML(type)}
+                    </span>
 
-                        <span>
-                            ${escapeHTML(
-                                lecture.category ||
-                                type
-                            )}
-                        </span>
-
-                        <h4>
-                            ${escapeHTML(title)}
-                        </h4>
-
-                        <p>
-                            ${escapeHTML(description)}
-                        </p>
-
-                    </div>
-
-
-                    <div class="lecture-meta">
-
-                        <span>
-
-                            <i class="fa-solid fa-clock"></i>
-
-                            ${escapeHTML(
-                                duration
-                            )}
-
-                        </span>
-
-
-                        <span>
-
-                            <i class="fa-solid fa-circle-play"></i>
-
-                            ${escapeHTML(
-                                type
-                            )}
-
-                        </span>
-
-
-                        ${
-                            statusClass
-                                ? `
+                    ${
+                        statusClass
+                            ? `
                                 <span class="${statusClass}">
                                     <i class="fa-solid ${
-                                        isCompleted
-                                            ? "fa-check-circle"
-                                            : "fa-play"
+                                        isCompleted ? "fa-check-circle" : "fa-play"
                                     }"></i>
-
                                     ${statusLabel}
                                 </span>
-                                `
-                                : `
+                            `
+                            : `
                                 <span>
                                     <i class="fa-solid fa-circle"></i>
                                     ${statusLabel}
                                 </span>
-                                `
-                        }
-
-                    </div>
+                            `
+                    }
 
                 </div>
 
+            </div>
 
-                ${
-                    isLocked
-                        ? `
-                        <button
-                            type="button"
-                            class="lecture-action disabled"
-                            disabled>
-
+            ${
+                isLocked
+                    ? `
+                        <button type="button" class="lecture-action disabled" disabled>
                             <i class="fa-solid fa-lock"></i>
-
                             Locked
-
                         </button>
-                        `
-                        : `
+                    `
+                    : `
                         <a
-                            href="course-detail.html?course=${encodeURIComponent(
-                                selectedCourse.code
-                            )}"
-                            class="lecture-action ${
-                                isCurrent
-                                    ? "primary"
-                                    : ""
-                            }">
+                            href="course-detail.html?course=${encodeURIComponent(selectedCourse.code || "")}"
+                            class="lecture-action ${isCurrent ? "primary" : ""}">
 
                             <i class="fa-solid ${
-                                isCompleted
-                                    ? "fa-rotate-right"
-                                    : "fa-play"
+                                isCompleted ? "fa-rotate-right" : "fa-play"
                             }"></i>
 
                             ${
@@ -2222,284 +890,129 @@ document.addEventListener(
                             }
 
                         </a>
-                        `
-                }
-
-            `;
-
-
-            return article;
-
-        }
-
-
-
-        /* =====================================================
-           FILTERS
-        ====================================================== */
-
-        function initializeFilters() {
-
-
-            const filterButtons =
-                document.querySelectorAll(
-                    ".filter-btn"
-                );
-
-
-            filterButtons.forEach(
-                function (button) {
-
-                    button.addEventListener(
-                        "click",
-                        function () {
-
-                            filterButtons.forEach(
-                                function (item) {
-
-                                    item.classList.remove(
-                                        "active"
-                                    );
-
-                                }
-                            );
-
-
-                            this.classList.add(
-                                "active"
-                            );
-
-
-                            const filter =
-                                this.dataset.filter;
-
-
-                            applyLectureFilter(
-                                filter
-                            );
-
-                        }
-                    );
-
-                }
-            );
-
-        }
-
-
-
-        /* =====================================================
-           APPLY FILTER
-        ====================================================== */
-
-        function applyLectureFilter(
-            filter
-        ) {
-
-
-            const items =
-                document.querySelectorAll(
-                    ".lecture-item"
-                );
-
-
-            items.forEach(
-                function (item) {
-
-
-                    if (
-                        filter ===
-                        "all"
-                    ) {
-
-                        item.style.display =
-                            "";
-
-                        return;
-
-                    }
-
-
-                    if (
-                        filter ===
-                        "completed"
-                    ) {
-
-                        item.style.display =
-                            item.classList.contains(
-                                "completed"
-                            )
-                                ? ""
-                                : "none";
-
-                        return;
-
-                    }
-
-
-                    if (
-                        filter ===
-                        "pending"
-                    ) {
-
-                        item.style.display =
-                            (
-                                item.classList.contains(
-                                    "pending"
-                                ) ||
-                                item.classList.contains(
-                                    "current"
-                                )
-                            )
-                                ? ""
-                                : "none";
-
-                    }
-
-                }
-            );
-
-        }
-
-
-
-        /* =====================================================
-           GET INITIALS
-        ====================================================== */
-
-        function getInitials(
-            name
-        ) {
-
-            return String(
-                name
-            )
-                .trim()
-                .split(/\s+/)
-                .map(
-                    function (word) {
-
-                        return word
-                            .charAt(0);
-
-                    }
-                )
-                .join("")
-                .substring(
-                    0,
-                    2
-                )
-                .toUpperCase();
-
-        }
-
-
-
-        /* =====================================================
-           NORMALIZE
-        ====================================================== */
-
-        function normalize(
-            value
-        ) {
-
-            return String(
-                value || ""
-            )
-                .trim()
-                .toLowerCase()
-                .replace(
-                    /\s+/g,
-                    " "
-                );
-
-        }
-
-
-
-        /* =====================================================
-           CLAMP PROGRESS
-        ====================================================== */
-
-        function clampProgress(
-            value
-        ) {
-
-            if (
-                isNaN(value)
-            ) {
-
-                return 0;
-
+                    `
             }
+        `;
 
-
-            return Math.min(
-                Math.max(
-                    value,
-                    0
-                ),
-                100
-            );
-
-        }
-
-
-
-        /* =====================================================
-           ESCAPE HTML
-        ====================================================== */
-
-        function escapeHTML(
-            value
-        ) {
-
-            return String(
-                value ?? ""
-            )
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-                .replace(
-                    /"/g,
-                    "&quot;"
-                )
-                .replace(
-                    /'/g,
-                    "&#039;"
-                );
-
-        }
-
+        return article;
     }
 
-);
+    /* FILTERS */
 
+    function initializeFilters() {
+
+        const filterButtons = document.querySelectorAll(".filter-btn");
+
+        filterButtons.forEach(function (button) {
+
+            button.addEventListener("click", function () {
+
+                filterButtons.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+
+                this.classList.add("active");
+
+                applyLectureFilter(this.dataset.filter);
+            });
+        });
+    }
+
+    /* APPLY FILTER */
+
+    function applyLectureFilter(filter) {
+
+        const items = document.querySelectorAll(".lecture-item");
+
+        items.forEach(function (item) {
+
+            if (filter === "all") {
+                item.style.display = "";
+                return;
+            }
+
+            if (filter === "completed") {
+                item.style.display =
+                    item.classList.contains("completed") ? "" : "none";
+                return;
+            }
+
+            if (filter === "pending") {
+                item.style.display =
+                    (
+                        item.classList.contains("pending") ||
+                        item.classList.contains("current")
+                    ) ? "" : "none";
+            }
+        });
+    }
+
+    /* GET INITIALS */
+
+    function getInitials(name) {
+
+        return String(name)
+            .trim()
+            .split(/\s+/)
+            .map(function (word) {
+                return word.charAt(0);
+            })
+            .join("")
+            .substring(0, 2)
+            .toUpperCase();
+    }
+
+    /* NORMALIZE */
+
+    function normalize(value) {
+
+        return String(value || "")
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, " ");
+    }
+
+    /* CLAMP PROGRESS */
+
+    function clampProgress(value) {
+
+        if (isNaN(value)) return 0;
+
+        return Math.min(Math.max(value, 0), 100);
+    }
+
+    /* ESCAPE HTML */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+});
 </script>
 
-
+<!-- GLOBAL LOGOUT -->
 
 <script>
-/* LEARNORA GLOBAL LOGOUT: always return to the login screen from any portal page. */
 (function () {
     "use strict";
+
     document.addEventListener("click", function (event) {
+
         const control = event.target && event.target.closest
             ? event.target.closest("#logoutBtn, #logoutLink, .logout-link, .logout-btn, [data-logout]")
             : null;
+
         if (!control) return;
 
         event.preventDefault();
         event.stopPropagation();
+
         if (typeof event.stopImmediatePropagation === "function") {
             event.stopImmediatePropagation();
         }
@@ -2523,17 +1036,27 @@ document.addEventListener(
             "user_email",
             "user_id"
         ].forEach(function (key) {
-            try { localStorage.removeItem(key); } catch (_) {}
-            try { sessionStorage.removeItem(key); } catch (_) {}
+
+            try {
+                localStorage.removeItem(key);
+            } catch (_) {}
+
+            try {
+                sessionStorage.removeItem(key);
+            } catch (_) {}
         });
 
         const path = window.location.pathname.toLowerCase();
         const isNestedPortal = /\/(teacher|students|parent)\//.test(path);
-        window.location.href = isNestedPortal ? "../login.html" : "login.html";
+
+        window.location.href = isNestedPortal
+            ? "../login.html"
+            : "login.html";
+
     }, true);
+
 })();
 </script>
 
 </body>
-
 </html>

@@ -1,0 +1,1562 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | Learnora LMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../../Css/student.css">
+
+    <style>
+        /* SETTINGS PAGE */
+
+        .settings-container {
+            padding: 28px 30px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .settings-heading {
+            margin-bottom: 25px;
+        }
+
+        .settings-heading h2 {
+            font-size: 23px;
+            font-weight: 800;
+            margin-bottom: 7px;
+            color: var(--text-primary, #172033);
+        }
+
+        .settings-heading p {
+            color: var(--text-secondary, #7b8496);
+            font-size: 14px;
+        }
+
+        .settings-layout {
+            display: grid;
+            grid-template-columns: 245px minmax(0, 1fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .settings-navigation,
+        .settings-panel {
+            background: var(--card-bg, #ffffff);
+            border: 1px solid var(--border-color, #e8edf4);
+            border-radius: 15px;
+        }
+
+        .settings-navigation {
+            padding: 15px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .settings-nav-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #929bad;
+            padding: 10px 12px;
+            letter-spacing: 1px;
+        }
+
+        .settings-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary, #747f91);
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .settings-nav-link i {
+            width: 19px;
+            font-size: 15px;
+        }
+
+        .settings-nav-link:hover,
+        .settings-nav-link.active {
+            background: rgba(40, 120, 255, .09);
+            color: #2878ff;
+        }
+
+        .settings-panel {
+            padding: 25px;
+            min-width: 0;
+        }
+
+        .settings-section {
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+            animation: fadeIn .25s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            padding-bottom: 19px;
+            border-bottom: 1px solid var(--border-color, #e8edf4);
+            margin-bottom: 23px;
+        }
+
+        .section-header h3 {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--text-primary, #172033);
+        }
+
+        .section-header p {
+            font-size: 13px;
+            color: var(--text-secondary, #7b8496);
+        }
+
+        .settings-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary, #273449);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            min-width: 0;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color, #dfe5ed);
+            border-radius: 9px;
+            background: var(--input-bg, #ffffff);
+            color: var(--text-primary, #172033);
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: .2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2878ff;
+            box-shadow: 0 0 0 3px rgba(40, 120, 255, .10);
+        }
+
+        .form-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .profile-settings-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: var(--soft-bg, #f7f9fc);
+            border: 1px solid var(--border-color, #e8edf4);
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .settings-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2878ff, #27d9f4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 21px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .profile-settings-info strong {
+            display: block;
+            font-size: 15px;
+            color: var(--text-primary, #172033);
+        }
+
+        .profile-settings-info span {
+            display: block;
+            color: var(--text-secondary, #7b8496);
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .settings-divider {
+            border: none;
+            border-top: 1px solid var(--border-color, #e8edf4);
+            margin: 23px 0;
+        }
+
+        .setting-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 17px 0;
+            border-bottom: 1px solid var(--border-color, #edf0f5);
+        }
+
+        .setting-option:last-child {
+            border-bottom: none;
+        }
+
+        .setting-option-info strong {
+            display: block;
+            font-size: 13px;
+            color: var(--text-primary, #172033);
+            margin-bottom: 5px;
+        }
+
+        .setting-option-info span {
+            font-size: 12px;
+            color: var(--text-secondary, #7b8496);
+            line-height: 1.5;
+        }
+
+        .toggle {
+            width: 43px;
+            height: 23px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: #d8dee8;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .toggle-slider::before {
+            content: "";
+            position: absolute;
+            width: 17px;
+            height: 17px;
+            left: 3px;
+            top: 3px;
+            border-radius: 50%;
+            background: white;
+            transition: .25s;
+        }
+
+        .toggle input:checked + .toggle-slider {
+            background: #2878ff;
+        }
+
+        .toggle input:checked + .toggle-slider::before {
+            transform: translateX(20px);
+        }
+
+        .settings-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color, #e8edf4);
+        }
+
+        .settings-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 11px 19px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .settings-btn.primary {
+            background: #2878ff;
+            color: white;
+        }
+
+        .settings-btn.primary:hover {
+            background: #1766e8;
+        }
+
+        .settings-btn.secondary {
+            background: var(--soft-bg, #f0f3f8);
+            color: var(--text-secondary, #687386);
+        }
+
+        .settings-btn.danger {
+            background: #fff0f0;
+            color: #e34848;
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .password-input input {
+            padding-right: 42px;
+        }
+
+        .password-input button {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #929bad;
+        }
+
+        .settings-message {
+            display: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: #e9f9ef;
+            color: #18834a;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .settings-message.show {
+            display: block;
+        }
+
+        .security-note {
+            padding: 14px;
+            background: rgba(40, 120, 255, .07);
+            border-radius: 9px;
+            color: #2878ff;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-top: 20px;
+        }
+
+        .danger-card {
+            border: 1px solid #ffd9d9;
+            border-radius: 11px;
+            padding: 18px;
+            margin-top: 25px;
+        }
+
+        .danger-card h4 {
+            color: #e34848;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .danger-card p {
+            font-size: 12px;
+            color: var(--text-secondary, #7b8496);
+            margin-bottom: 15px;
+        }
+
+        @media(max-width: 900px) {
+            .settings-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-navigation {
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .settings-nav-title {
+                display: none;
+            }
+
+            .settings-nav-link {
+                width: auto;
+                flex: 1 1 130px;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .settings-container {
+                padding: 20px 14px;
+            }
+
+            .settings-panel {
+                padding: 17px;
+            }
+
+            .settings-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .settings-actions {
+                flex-direction: column-reverse;
+            }
+
+            .settings-actions button {
+                width: 100%;
+            }
+
+            .settings-nav-link {
+                font-size: 11px;
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <img src="/assets/images/logo.PNG" alt="Learnora LMS Logo">
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section-title">MAIN</div>
+
+            <a href="dashboard.html" class="nav-link">
+                <i class="fa-solid fa-grid-2"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="courses.html" class="nav-link">
+                <i class="fa-solid fa-book-open"></i>
+                <span>My Courses</span>
+            </a>
+
+            <a href="courses.html#add-drop" class="nav-link">
+                <i class="fa-solid fa-plus-minus"></i>
+                <span>Add / Drop Course</span>
+            </a>
+
+            <a href="lectures.html" class="nav-link">
+                <i class="fa-solid fa-chalkboard"></i>
+                <span>Lectures</span>
+            </a>
+
+            <a href="recordings.html" class="nav-link">
+                <i class="fa-solid fa-circle-play"></i>
+                <span>Recordings</span>
+            </a>
+
+            <div class="nav-section-title">ACADEMICS</div>
+
+            <a href="assignments.html" class="nav-link">
+                <i class="fa-solid fa-file-pen"></i>
+                <span>Assignments</span>
+            </a>
+
+            <a href="quizzes.html" class="nav-link">
+                <i class="fa-solid fa-clipboard-question"></i>
+                <span>Quizzes & Tests</span>
+            </a>
+
+            <a href="results.html" class="nav-link">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Results & Grades</span>
+            </a>
+
+            <a href="attendance.html" class="nav-link">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Attendance</span>
+            </a>
+
+            <a href="schedule.html" class="nav-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Schedule</span>
+            </a>
+
+            <a href="materials.html" class="nav-link">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Study Materials</span>
+            </a>
+
+            <div class="nav-section-title">COMMUNICATION</div>
+
+            <a href="announcements.html" class="nav-link">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Announcements</span>
+            </a>
+
+            <a href="messages.html" class="nav-link">
+                <i class="fa-solid fa-message"></i>
+                <span>Messages</span>
+            </a>
+
+            <div class="nav-section-title">ACCOUNT</div>
+
+            <a href="profile.html" class="nav-link active">
+                <i class="fa-solid fa-user"></i>
+                <span>My Profile</span>
+            </a>
+
+            <a href="settings.html" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="../login.html" class="nav-link logout-link" id="logoutLink">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn"
+                aria-label="Open menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="topbar-title">
+                <span class="page-label">Student Portal</span>
+                <h1>Settings</h1>
+            </div>
+
+            <div class="topbar-actions">
+
+                <button class="topbar-icon" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+                <button class="topbar-icon notification-btn"
+                    aria-label="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <a href="profile.html" class="topbar-profile">
+
+                    <div class="topbar-avatar" data-user-avatar>SA</div>
+
+                    <div class="topbar-user">
+                        <strong data-user-name>Student</strong>
+                        <span>Student</span>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </a>
+
+            </div>
+
+        </header>
+
+        <!-- SETTINGS CONTENT -->
+        <div class="settings-container">
+
+            <div class="settings-heading">
+                <h2>Account Settings</h2>
+                <p>Manage your account, preferences and security settings.</p>
+            </div>
+
+            <div class="settings-layout">
+
+                <!-- SETTINGS NAVIGATION -->
+                <aside class="settings-navigation">
+
+                    <div class="settings-nav-title">GENERAL</div>
+
+                    <button class="settings-nav-link active"
+                        data-section="account">
+                        <i class="fa-solid fa-user"></i>
+                        Account Information
+                    </button>
+
+                    <button class="settings-nav-link"
+                        data-section="preferences">
+                        <i class="fa-solid fa-sliders"></i>
+                        Preferences
+                    </button>
+
+                    <div class="settings-nav-title">PREFERENCES</div>
+
+                    <button class="settings-nav-link"
+                        data-section="notifications">
+                        <i class="fa-solid fa-bell"></i>
+                        Notifications
+                    </button>
+
+                    <button class="settings-nav-link"
+                        data-section="appearance">
+                        <i class="fa-solid fa-palette"></i>
+                        Appearance
+                    </button>
+
+                    <div class="settings-nav-title">SECURITY</div>
+
+                    <button class="settings-nav-link"
+                        data-section="password">
+                        <i class="fa-solid fa-lock"></i>
+                        Change Password
+                    </button>
+
+                    <button class="settings-nav-link"
+                        data-section="privacy">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        Privacy & Security
+                    </button>
+
+                </aside>
+
+                <!-- SETTINGS PANEL -->
+                <div class="settings-panel">
+
+                    <div class="settings-message" id="settingsMessage">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Changes saved successfully.
+                    </div>
+
+                    <!-- ACCOUNT -->
+                    <section class="settings-section active"
+                        id="account">
+
+                        <div class="section-header">
+                            <h3>Account Information</h3>
+                            <p>Update your personal account information.</p>
+                        </div>
+
+                        <div class="profile-settings-card">
+
+                            <div class="settings-avatar" data-user-avatar>
+                                SA
+                            </div>
+
+                            <div class="profile-settings-info">
+                                <strong data-user-name>Student</strong>
+                                <span>Student Account</span>
+                            </div>
+
+                        </div>
+
+                        <form id="accountForm">
+
+                            <div class="settings-form-grid">
+
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="fullName"
+                                        placeholder="Enter your full name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="email"
+                                        placeholder="Enter email address" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" id="phone"
+                                        placeholder="Enter phone number">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Student ID</label>
+                                    <input type="text" id="studentId"
+                                        placeholder="Student ID" readonly>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Department</label>
+                                    <input type="text" id="department"
+                                        placeholder="Your department">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Semester</label>
+                                    <select id="semester">
+                                        <option value="">Select Semester</option>
+                                        <option>1st Semester</option>
+                                        <option>2nd Semester</option>
+                                        <option>3rd Semester</option>
+                                        <option>4th Semester</option>
+                                        <option>5th Semester</option>
+                                        <option>6th Semester</option>
+                                        <option>7th Semester</option>
+                                        <option>8th Semester</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group full">
+                                    <label>Address</label>
+                                    <textarea id="address"
+                                        placeholder="Enter your address"></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="settings-actions">
+                                <button type="reset" class="settings-btn secondary">
+                                    Reset
+                                </button>
+
+                                <button type="submit"
+                                    class="settings-btn primary">
+                                    <i class="fa-solid fa-check"></i>
+                                    Save Changes
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- PREFERENCES -->
+                    <section class="settings-section" id="preferences">
+
+                        <div class="section-header">
+                            <h3>Learning Preferences</h3>
+                            <p>Customize your learning experience.</p>
+                        </div>
+
+                        <form id="preferencesForm">
+
+                            <div class="settings-form-grid">
+
+                                <div class="form-group">
+                                    <label>Preferred Language</label>
+                                    <select id="language">
+                                        <option value="English">English</option>
+                                        <option value="Urdu">Urdu</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Time Zone</label>
+                                    <select id="timezone">
+                                        <option value="Asia/Karachi">
+                                            Pakistan Standard Time (PKT)
+                                        </option>
+                                        <option value="Asia/Dubai">
+                                            Gulf Standard Time
+                                        </option>
+                                        <option value="UTC">
+                                            UTC
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Date Format</label>
+                                    <select id="dateFormat">
+                                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Study Reminder</label>
+                                    <select id="studyReminder">
+                                        <option value="15">15 Minutes Before</option>
+                                        <option value="30">30 Minutes Before</option>
+                                        <option value="60">1 Hour Before</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="settings-actions">
+                                <button type="submit"
+                                    class="settings-btn primary">
+                                    Save Preferences
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- NOTIFICATIONS -->
+                    <section class="settings-section"
+                        id="notifications">
+
+                        <div class="section-header">
+                            <h3>Notification Settings</h3>
+                            <p>Choose which notifications you want to receive.</p>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Email Notifications</strong>
+                                <span>Receive important updates through email.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" data-setting="emailNotifications" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Assignment Reminders</strong>
+                                <span>Get reminders about upcoming assignments.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" data-setting="assignmentNotifications" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Quiz & Test Alerts</strong>
+                                <span>Receive alerts about upcoming quizzes and tests.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" data-setting="quizNotifications" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Course Announcements</strong>
+                                <span>Stay informed about new course announcements.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" data-setting="announcementNotifications" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Attendance Alerts</strong>
+                                <span>Receive updates about attendance records.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" data-setting="attendanceNotifications">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-actions">
+                            <button class="settings-btn primary"
+                                id="saveNotifications">
+                                Save Notification Settings
+                            </button>
+                        </div>
+
+                    </section>
+
+                    <!-- APPEARANCE -->
+                    <section class="settings-section" id="appearance">
+
+                        <div class="section-header">
+                            <h3>Appearance Settings</h3>
+                            <p>Customize how Learnora looks on your device.</p>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Dark Mode</strong>
+                                <span>Enable dark appearance if supported by your theme.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" id="darkMode">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Compact Layout</strong>
+                                <span>Use a more compact interface for your dashboard.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" id="compactLayout">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-group" style="margin-top:22px;">
+                            <label>Accent Color</label>
+                            <select id="accentColor">
+                                <option value="#2878ff">Learnora Blue</option>
+                                <option value="#7c4dff">Purple</option>
+                                <option value="#00a88f">Green</option>
+                                <option value="#e58a22">Orange</option>
+                            </select>
+                        </div>
+
+                        <div class="settings-actions">
+                            <button class="settings-btn primary"
+                                id="saveAppearance">
+                                Apply Appearance
+                            </button>
+                        </div>
+
+                    </section>
+
+                    <!-- PASSWORD -->
+                    <section class="settings-section" id="password">
+
+                        <div class="section-header">
+                            <h3>Change Password</h3>
+                            <p>Update your account password regularly.</p>
+                        </div>
+
+                        <form id="passwordForm">
+
+                            <div class="settings-form-grid">
+
+                                <div class="form-group full">
+                                    <label>Current Password</label>
+                                    <div class="password-input">
+                                        <input type="password" id="currentPassword"
+                                            placeholder="Enter current password" required>
+                                        <button type="button" data-password="currentPassword">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <div class="password-input">
+                                        <input type="password" id="newPassword"
+                                            placeholder="New password" minlength="8" required>
+                                        <button type="button" data-password="newPassword">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <div class="password-input">
+                                        <input type="password" id="confirmPassword"
+                                            placeholder="Confirm new password" required>
+                                        <button type="button" data-password="confirmPassword">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="security-note">
+                                <i class="fa-solid fa-shield-halved"></i>
+                                Use a strong password containing at least 8 characters.
+                                Avoid reusing passwords from other websites.
+                            </div>
+
+                            <div class="settings-actions">
+                                <button type="submit" class="settings-btn primary">
+                                    Update Password
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- PRIVACY -->
+                    <section class="settings-section" id="privacy">
+
+                        <div class="section-header">
+                            <h3>Privacy & Security</h3>
+                            <p>Manage your account privacy and security preferences.</p>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Login Notifications</strong>
+                                <span>Receive alerts when a new login is detected.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" data-setting="loginAlerts" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Show Profile to Students</strong>
+                                <span>Allow other students to view your basic profile.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" data-setting="publicProfile" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-option">
+                            <div class="setting-option-info">
+                                <strong>Remember This Device</strong>
+                                <span>Keep your login session active on this device.</span>
+                            </div>
+
+                            <label class="toggle">
+                                <input type="checkbox" data-setting="rememberDevice">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="danger-card">
+                            <h4>
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                Account Actions
+                            </h4>
+
+                            <p>
+                                Log out from your current Learnora account on this device.
+                            </p>
+
+                            <button class="settings-btn danger"
+                                id="securityLogout">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                Logout
+                            </button>
+                        </div>
+
+                        <div class="settings-actions">
+                            <button class="settings-btn primary"
+                                id="savePrivacy">
+                                Save Security Settings
+                            </button>
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+            <footer class="dashboard-footer">
+                <span>© 2026 Learnora LMS</span>
+                <span>Smart Learning Management System</span>
+            </footer>
+
+        </div>
+
+    </main>
+
+</div>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script src="../../js/student.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* LOGIN PROTECTION */
+
+    let user = null;
+
+    try {
+        user = JSON.parse(
+            localStorage.getItem("learnora_current_user")
+        );
+    } catch (error) {
+        console.error("User data error:", error);
+    }
+
+    const loggedIn = localStorage.getItem("learnora_logged_in");
+    const role = localStorage.getItem("learnora_user_role");
+
+    if (loggedIn !== "true" || !user || role !== "student") {
+        window.location.href = "../login.html";
+        return;
+    }
+
+    /* USER INFORMATION */
+
+    function updateUserInformation() {
+
+        const fullName = user.name || "Student";
+
+        const avatar = user.avatar ||
+            fullName.split(" ")
+                .map(name => name.charAt(0))
+                .join("")
+                .substring(0, 2)
+                .toUpperCase();
+
+        document.querySelectorAll("[data-user-name]")
+            .forEach(el => el.textContent = fullName);
+
+        document.querySelectorAll("[data-user-avatar]")
+            .forEach(el => el.textContent = avatar);
+
+        document.querySelectorAll("[data-user-program]")
+            .forEach(el => {
+                el.textContent =
+                    user.program ||
+                    user.department ||
+                    "Student Program";
+            });
+
+    }
+
+    updateUserInformation();
+
+    /* ACCOUNT DATA */
+
+    const accountFields = [
+        "fullName",
+        "email",
+        "phone",
+        "studentId",
+        "department",
+        "semester",
+        "address"
+    ];
+
+    const accountKey = "learnora_student_settings";
+
+    function loadAccount() {
+
+        const saved = JSON.parse(
+            localStorage.getItem(accountKey) || "{}"
+        );
+
+        document.getElementById("fullName").value =
+            saved.fullName || user.name || "";
+
+        document.getElementById("email").value =
+            saved.email || user.email || "";
+
+        document.getElementById("phone").value =
+            saved.phone || user.phone || "";
+
+        document.getElementById("studentId").value =
+            saved.studentId || user.studentId || user.id || "";
+
+        document.getElementById("department").value =
+            saved.department || user.department || user.program || "";
+
+        document.getElementById("semester").value =
+            saved.semester || user.semester || "";
+
+        document.getElementById("address").value =
+            saved.address || user.address || "";
+
+    }
+
+    loadAccount();
+
+    /* MESSAGE */
+
+    function showMessage(message) {
+
+        const box = document.getElementById("settingsMessage");
+
+        box.innerHTML =
+            '<i class="fa-solid fa-circle-check"></i> ' + message;
+
+        box.classList.add("show");
+
+        setTimeout(() => {
+            box.classList.remove("show");
+        }, 3000);
+
+    }
+
+    /* SETTINGS NAVIGATION */
+
+    const navButtons =
+        document.querySelectorAll(".settings-nav-link");
+
+    const sections =
+        document.querySelectorAll(".settings-section");
+
+    navButtons.forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            const target = this.dataset.section;
+
+            navButtons.forEach(btn =>
+                btn.classList.remove("active")
+            );
+
+            sections.forEach(section =>
+                section.classList.remove("active")
+            );
+
+            this.classList.add("active");
+
+            document.getElementById(target)
+                .classList.add("active");
+
+        });
+
+    });
+
+    /* SAVE ACCOUNT */
+
+    document.getElementById("accountForm")
+        .addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const data = {};
+
+            accountFields.forEach(field => {
+                data[field] =
+                    document.getElementById(field).value.trim();
+            });
+
+            localStorage.setItem(
+                accountKey,
+                JSON.stringify(data)
+            );
+
+            user.name = data.fullName;
+            user.email = data.email;
+            user.phone = data.phone;
+            user.department = data.department;
+            user.program = data.department;
+
+            localStorage.setItem(
+                "learnora_current_user",
+                JSON.stringify(user)
+            );
+
+            updateUserInformation();
+
+            showMessage("Account information updated successfully.");
+
+        });
+
+    /* PREFERENCES */
+
+    const preferenceFields = [
+        "language",
+        "timezone",
+        "dateFormat",
+        "studyReminder"
+    ];
+
+    const preferenceKey = "learnora_preferences";
+
+    function loadPreferences() {
+
+        const saved = JSON.parse(
+            localStorage.getItem(preferenceKey) || "{}"
+        );
+
+        preferenceFields.forEach(field => {
+
+            if (saved[field] !== undefined) {
+                document.getElementById(field).value = saved[field];
+            }
+
+        });
+
+    }
+
+    loadPreferences();
+
+    document.getElementById("preferencesForm")
+        .addEventListener("submit", function(e) {
+
+            e.preventDefault();
+
+            const data = {};
+
+            preferenceFields.forEach(field => {
+                data[field] =
+                    document.getElementById(field).value;
+            });
+
+            localStorage.setItem(
+                preferenceKey,
+                JSON.stringify(data)
+            );
+
+            showMessage("Learning preferences saved successfully.");
+
+        });
+
+    /* TOGGLE SETTINGS */
+
+    function loadToggles() {
+
+        document.querySelectorAll("[data-setting]")
+            .forEach(toggle => {
+
+                const key = toggle.dataset.setting;
+
+                const saved = JSON.parse(
+                    localStorage.getItem("learnora_toggles") || "{}"
+                );
+
+                if (saved[key] !== undefined) {
+                    toggle.checked = saved[key];
+                }
+
+            });
+
+    }
+
+    function saveToggles() {
+
+        const data = {};
+
+        document.querySelectorAll("[data-setting]")
+            .forEach(toggle => {
+
+                data[toggle.dataset.setting] =
+                    toggle.checked;
+
+            });
+
+        localStorage.setItem(
+            "learnora_toggles",
+            JSON.stringify(data)
+        );
+
+    }
+
+    loadToggles();
+
+    document.getElementById("saveNotifications")
+        .addEventListener("click", function() {
+
+            saveToggles();
+            showMessage("Notification settings saved.");
+
+        });
+
+    document.getElementById("savePrivacy")
+        .addEventListener("click", function() {
+
+            saveToggles();
+            showMessage("Security preferences saved.");
+
+        });
+
+    /* PASSWORD VISIBILITY */
+
+    document.querySelectorAll("[data-password]")
+        .forEach(button => {
+
+            button.addEventListener("click", function() {
+
+                const input = document.getElementById(
+                    this.dataset.password
+                );
+
+                const icon = this.querySelector("i");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.replace("fa-eye", "fa-eye-slash");
+                } else {
+                    input.type = "password";
+                    icon.classList.replace("fa-eye-slash", "fa-eye");
+                }
+
+            });
+
+        });
+
+    /* PASSWORD UPDATE */
+
+    document.getElementById("passwordForm")
+        .addEventListener("submit", function(e) {
+
+            e.preventDefault();
+
+            const current = document.getElementById("currentPassword").value;
+            const next = document.getElementById("newPassword").value;
+            const confirm = document.getElementById("confirmPassword").value;
+
+            if (next.length < 8) {
+                alert("New password must contain at least 8 characters.");
+                return;
+            }
+
+            if (next !== confirm) {
+                alert("New password and confirm password do not match.");
+                return;
+            }
+
+            /*
+             Demo frontend only:
+             A real password change requires backend authentication.
+             Do not store plaintext passwords in localStorage.
+            */
+
+            alert(
+                "Password changes require backend verification. " +
+                "Connect this form to your authentication API."
+            );
+
+        });
+
+    /* APPEARANCE */
+
+    const appearanceKey = "learnora_appearance";
+
+    function loadAppearance() {
+
+        const saved = JSON.parse(
+            localStorage.getItem(appearanceKey) || "{}"
+        );
+
+        document.getElementById("darkMode").checked =
+            saved.darkMode || false;
+
+        document.getElementById("compactLayout").checked =
+            saved.compactLayout || false;
+
+        document.getElementById("accentColor").value =
+            saved.accentColor || "#2878ff";
+
+    }
+
+    loadAppearance();
+
+    document.getElementById("saveAppearance")
+        .addEventListener("click", function() {
+
+            const data = {
+                darkMode: document.getElementById("darkMode").checked,
+                compactLayout: document.getElementById("compactLayout").checked,
+                accentColor: document.getElementById("accentColor").value
+            };
+
+            localStorage.setItem(
+                appearanceKey,
+                JSON.stringify(data)
+            );
+
+            document.documentElement.style.setProperty(
+                "--primary-color",
+                data.accentColor
+            );
+
+            if (data.darkMode) {
+                document.body.classList.add("dark-mode");
+            } else {
+                document.body.classList.remove("dark-mode");
+            }
+
+            showMessage("Appearance preferences saved.");
+
+        });
+
+    /* LOGOUT */
+
+    function logout() {
+
+        if (confirm("Are you sure you want to logout?")) {
+
+            localStorage.removeItem("learnora_logged_in");
+            localStorage.removeItem("learnora_user_role");
+            localStorage.removeItem("learnora_current_user");
+
+            window.location.href = "../login.html";
+
+        }
+
+    }
+
+    const logoutButton = document.getElementById("securityLogout");
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", logout);
+    }
+
+    const sidebarLogout = document.getElementById("logoutBtn");
+
+    if (sidebarLogout) {
+        sidebarLogout.addEventListener("click", function(e) {
+            e.preventDefault();
+            logout();
+        });
+    }
+
+});
+</script>
+
+</body>
+</html>
